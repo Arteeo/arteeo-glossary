@@ -1,0 +1,4 @@
+https://www.kylejlarson.com/blog/how-to-create-a-wordpress-database-table/
+https://codex.wordpress.org/Creating_Tables_with_Plugins
+https://codex.wordpress.org/Writing_a_Plugin#Saving_Plugin_Data_to_the_Database
+
