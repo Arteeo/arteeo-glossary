@@ -37,7 +37,7 @@ function generate_url($parameters){
 	}
 
   foreach ($parameters as $key => $parameter) {
-    if ($parameter != null) {
+    if ($parameter != null && $parameter != 'null') {
       $url = $url.'&'.$key.'='.$parameter;
     }
   }

@@ -72,9 +72,9 @@ function glossary_entry_crud($action, $id) {
 						echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'message_type' => 'success', 'message' => 'Eintrag wurde angelegt')).'">';
 					} else if ($_POST['action'] == 'edit_glossary_entry') {
 						if ($result == 0) {
-							echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'message_type' => 'success', 'message' => 'Keine Änderungen wurden vorgenommen.')).'">';
+							echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'success', 'message' => 'Keine Änderungen wurden vorgenommen.')).'">';
 						} else {
-							echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'message_type' => 'success', 'message' => 'Eintrag wurde angepasst')).'">';
+							echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null',  'message_type' => 'success', 'message' => 'Eintrag wurde angepasst')).'">';
 						}
 					}
 				}
@@ -101,6 +101,26 @@ function glossary_entry_crud($action, $id) {
 				} else {
 					glossary_entry_form(null, "Id nicht gültig.");
 				}
+		} else if ($action == 'delete') {
+			if(is_numeric($id)) {
+				$entries = $wpdb->get_results("SELECT * FROM $glossary_table_name WHERE id = $id");
+				if($wpdb->num_rows == 1) {
+					glossary_delete_form($id, $entries[0]->term);
+					return;
+				}
+			}
+			echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')).'">';
+			exit;
+		} else if ($action == 'force-delete') {
+			if(is_numeric($id)) {
+				$entries = $wpdb->get_results("SELECT * FROM $glossary_table_name WHERE id = $id");
+				if($wpdb->num_rows == 1) {
+					glossary_delete_entry($id);
+					return;
+				}
+			}
+			echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')).'">';
+			exit;
 		}
 	}
 }
@@ -242,7 +262,47 @@ function glossary_entry_form_check_errors() {
 				return;
 			}
 		}
-		echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')).'">';
+		echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')).'">';
 		exit;
+	}
+}
+
+/**
+ * Show delete form
+ * 
+ * Used for deleting entries
+ * @param string 	$id the id of the entry to be deleted
+ * @param string 	$term the name of the entry
+ */
+function glossary_delete_form($id, $term) {
+	?>
+	<div class="wrap">
+		<h1 class="delete-entry"><?php echo __('Glossar Eintrag löschen'); ?></h1>
+		<p>Wollen Sie den Eintrag "<?php echo $term; ?>" wirklich löschen?</p>
+		<a id="entry_delete" class="button button-primary" href="<?php echo generate_url(array('action' => 'force-delete', 'id' => $id)); ?>">Löschen</a>
+	</div>
+	<?php
+}
+
+/**
+ * Delete the entry
+ * 
+ * Used for deleting entries
+ * @param string 	$id the id of the entry to be deleted
+ * @param string 	$term the name of the entry
+ */
+function glossary_delete_entry($id) {
+	global $wpdb;
+	global $glossary_table_name;
+	// Default usage.
+	$result = $wpdb->delete( $glossary_table_name, array( 'id' => $id ));
+	if ($result === false) {
+		echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'message_type' => 'error', 'message' => 'Datenbank fehler')).'">';
+	} else {
+		if ($result == 0) {
+			echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Eintrag nicht gefunden.')).'">';
+		} else {
+			echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null',  'message_type' => 'success', 'message' => 'Eintrag wurde gelöscht.')).'">';
+		}
 	}
 }

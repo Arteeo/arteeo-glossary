@@ -39,10 +39,14 @@ function create_glossary_admin_page() {
       glossary_entry_crud('add', null);
       $handled = true;
     } else if ($_GET['action'] == 'edit'){
-      if(is_numeric($_GET['id'])) {
-        glossary_entry_crud('edit', $_GET['id']);
-        $handled = true;
-      }
+      glossary_entry_crud('edit', $_GET['id']);
+      $handled = true;
+    } else if ($_GET['action'] == 'delete'){
+      glossary_entry_crud('delete', $_GET['id']);
+      $handled = true;
+    } else if ($_GET['action'] == 'force-delete'){
+      glossary_entry_crud('force-delete', $_GET['id']);
+      $handled = true;
     }
   }
 
