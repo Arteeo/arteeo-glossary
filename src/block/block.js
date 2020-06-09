@@ -12,7 +12,7 @@ import './style.scss';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor;
 const { PanelBody, ColorPicker } = wp.components;
 
 /**
@@ -33,16 +33,6 @@ registerBlockType( 'cgb/block-glossary', {
 	title: __( 'Glossary' ), // Block title.
 	icon: 'book-alt', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'embed', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
-	attributes: {
-        primaryColor: {
-            type: 'string',
-            default: '#0065AE',
-		},
-		secondaryColor: {
-            type: 'string',
-            default: '#82878c',
-		},
-    },
 	keywords: [
 		__( 'glossary — A simple beautiful glossary' ),
 		__( 'glossary' ),
@@ -60,20 +50,12 @@ registerBlockType( 'cgb/block-glossary', {
 	 * @returns {Mixed} JSX Component.
 	 */
 	edit: ( props ) => {
-		const {
-            attributes: {
-				primaryColor,
-				secondaryColor,
-            },
-            className,
-		} = props;
-		
 		const setPrimaryColor = ( color ) => {
-            props.setAttributes( { primaryColor: color === undefined ? '#0065AE' : color.hex } );
+			props.setAttributes( { primaryColor: color === undefined ? '#0065AE' : color.hex } );
 		};
 
 		const setSecondaryColor = ( color ) => {
-            props.setAttributes( { secondaryColor: color === undefined ? '#0065AE' : color.hex } );
+			props.setAttributes( { secondaryColor: color === undefined ? '#0065AE' : color.hex } );
 		};
 
 		// Creates a <div class='wp-block-cgb-block-glossary'></siv>.
@@ -107,17 +89,17 @@ registerBlockType( 'cgb/block-glossary', {
 					<section class="sidebar">
 						<div class="sidebar-header" style={{ backgroundColor: props.attributes.primaryColor}}>
 						<div class="letter">
-							<h2>A</h2>
+							<h2>E</h2>
 						</div>
 						</div>
 						<div class="sidebar-content">
 							<h3 style={{ color: props.attributes.secondaryColor}} >Wählen Sie einen Buchstaben:</h3>
 							<div class="letters">
-								<span class="active" style={{ color: props.attributes.secondaryColor, borderColor: props.attributes.secondaryColor}}>A</span>
+								<span>A</span>
 								<span>B</span>
 								<span>C</span>
 								<span>D</span>
-								<span>E</span>
+								<span class="active" style={{ color: props.attributes.secondaryColor, borderColor: props.attributes.secondaryColor}}>E</span>
 								<span>F</span>
 								<span>G</span>
 								<span>H</span>
@@ -145,31 +127,31 @@ registerBlockType( 'cgb/block-glossary', {
 					<main class="content">
 						<article class="entry">
 						<div class="name">
-							<h2 style={{ color: props.attributes.secondaryColor}} >Armenia</h2>
+							<h2 style={{ color: props.attributes.secondaryColor}} >Example 1</h2>
 						</div>
 						<div class="description">
 							<p>
-							Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolorLorem Ipsum dolor Lorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolor
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam semper, nisl et ornare lacinia, metus quam sodales dui, sed convallis lacus nunc ac nisi. Aliquam mattis nisi ut nulla vehicula, et feugiat tellus sollicitudin. Suspendisse potenti. Suspendisse bibendum erat eu elit sodales vehicula. Duis vitae mi nibh. Fusce scelerisque fermentum ornare. Proin aliquet egestas tellus nec euismod. 
 							</p>
 						</div>
 						</article>
 						<article class="entry">
 						<div class="name">
-							<h2 style={{ color: props.attributes.secondaryColor}}>Articulation</h2>
+							<h2 style={{ color: props.attributes.secondaryColor}}>Example 2</h2>
 						</div>
 						<div class="description">
 							<p>
-							Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolorLorem Ipsum dolor Lorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolor
+								Lorem ipsum dolor sit amet. 
 							</p>
 						</div>
 						</article>
 						<article class="entry">
 						<div class="name">
-							<h2 style={{ color: props.attributes.secondaryColor}}>Artisan</h2>
+							<h2 style={{ color: props.attributes.secondaryColor}}>Example 3</h2>
 						</div>
 						<div class="description">
 							<p>
-							Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolorLorem Ipsum dolor Lorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolorLorem Ipsum dolor
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut accumsan nunc in lectus pretium tempus. Sed eget maximus ex. Aliquam.
 							</p>
 						</div>
 						</article>
@@ -178,7 +160,6 @@ registerBlockType( 'cgb/block-glossary', {
 			</div>
 		);
 	},
-
 	/**
 	 * The save function defines the way in which the different attributes should be combined
 	 * into the final markup, which is then serialized by Gutenberg into post_content.
@@ -191,21 +172,7 @@ registerBlockType( 'cgb/block-glossary', {
 	 * @returns {Mixed} JSX Frontend HTML.
 	 */
 	save: ( props ) => {
-		return (
-			<div className={ props.className }>
-				<p>— Hello from the frontend.</p>
-				<p>
-					CGB BLOCK: <code>glossary</code> is a new Gutenberg block.
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
-			</div>
-		);
+		// Enable server side rendering
+		return null;
 	},
 } );

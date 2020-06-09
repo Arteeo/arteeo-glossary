@@ -1,6 +1,7 @@
 // Extra small
 .wp-block-cgb-block-glossary {
     .sidebar {
+        padding: 0;
         width: 100%;
         margin: 0px;
         margin-bottom: 50px;
@@ -40,10 +41,13 @@
             .letters {
                 display: flex;
                 flex-wrap: wrap;
-                span {
+                a {
+                    text-decoration: none;
+                    color: $text-color;
                     font-weight: 800;
                     margin: 5px;
                     border-top: solid black 2px;
+                    cursor: pointer;
                     
                     &.active {
                         color: $eh-letter-active;

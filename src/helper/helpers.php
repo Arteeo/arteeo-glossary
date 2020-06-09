@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Page helpers
+ * Helpers
  */
 
 // Exit if accessed directly.

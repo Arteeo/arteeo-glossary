@@ -22,6 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Include helpers
+require_once plugin_dir_path( __FILE__ ) . 'src/helper/helpers.php';
+
 /**
  * Block Initializer.
  */
@@ -34,7 +37,7 @@ register_uninstall_hook( __FILE__, 'drop_glossary_table' );
 /**
  * Create DB
  */
-require_once plugin_dir_path( __FILE__ ) . 'src/db.php';
+require_once plugin_dir_path( __FILE__ ) . 'src/db/db.php';
 
 /**
  * Admin Page

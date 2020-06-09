@@ -10,8 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Include helpers
-require_once plugin_dir_path( __FILE__ ) . 'admin-page-helpers.php';
 // Include table view
 require_once plugin_dir_path( __FILE__ ) . 'admin-page-table.php';
 // Include CRUD views
