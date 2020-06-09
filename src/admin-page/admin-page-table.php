@@ -28,7 +28,7 @@ function create_glossary_admin_table(){
 	$entries;
 	$glossary_show;
 	if (isset($_GET['glossary_show']) && strlen($_GET['glossary_show']) == 1) {
-		$glossary_show = htmlspecialchars($_GET['glossary_show']);
+		$glossary_show = sanitize_text_field($_GET['glossary_show']);
 		$entries = $wpdb->get_results( "SELECT id, letter, term, description FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
 	} else if (isset($_GET['glossary_show']) && $_GET['glossary_show'] == "hashtag") {
 		$glossary_show = '#';
@@ -42,6 +42,26 @@ function create_glossary_admin_table(){
 	<div class="wrap">
 		<h1 class="wp-heading-inline">Glossary</h1><span>v<?php echo $glossary_version; ?></span><a class="page-title-action aria-button-if-js" role="button" aria-expanded="false" href="<?php echo generate_url(array('action'=>'add')); ?>"><?php echo __('Eintrag hinzufügen'); ?></a>
 		<hr class="wp-header-end">
+		<?php
+			if (isset($_GET['message']) && isset($_GET['message_type'])) {
+				if($_GET['message_type'] == 'success') {
+					echo '
+						<div id="message" class="updated notice is-dismissible">
+							<p>'.sanitize_text_field($_GET['message']).'</p>
+							<button class="notice-dismiss" type="button">
+								<span class="screen-reader-text"> Diese Meldung ausblenden</span>
+							</button>
+						</div>
+					';
+				} else if($_GET['message_type'] == 'error') {
+					echo '
+						<div id="message" class="error">
+							<p>'.sanitize_text_field($_GET['message']).'</p>
+						</div>
+					';
+				}
+			}
+		?>
 		<ul class="subsubsub">
 			<li class="all">
 				<a class="<?php echo $glossary_show == 'all' ? 'current ' : '';?>" href="<?php echo generate_url(array('glossary_show'=>'all')); ?>"><?php echo __('Alle'); ?>

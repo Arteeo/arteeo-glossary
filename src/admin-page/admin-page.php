@@ -31,18 +31,22 @@ function create_glossary_admin_page() {
 	global $glossary_version;
 	global $wpdb;
   global $glossary_table_name;
+
+  $handled = false;
   
   if (isset($_GET['action'])) {
     if ($_GET['action'] == 'add') {
-      glossary_entry_form(null);
+      glossary_entry_crud('add', null);
+      $handled = true;
     } else if ($_GET['action'] == 'edit'){
       if(is_numeric($_GET['id'])) {
-        glossary_entry_form($_GET['id']);
-      } //Error handling fuuck
-    } else {
-      create_glossary_admin_table();
+        glossary_entry_crud('edit', $_GET['id']);
+        $handled = true;
+      }
     }
-  } else {
-	  create_glossary_admin_table();
+  }
+
+  if (!$handled) {
+    create_glossary_admin_table();
   }
 }

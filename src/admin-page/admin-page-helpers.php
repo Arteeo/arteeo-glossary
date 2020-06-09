@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *                              The parameter which should be adjusted
  *                           $parameters[$key]
  *                              the value which should be set for the
- *                              parameter if set to null the parameter
- *                              will be removed
+ *                              parameter if set to string 'null' 
+ * 															the parameter will be removed
  * @return string the resulting url after adjusting the parameters
  */
 function generate_url($parameters){
@@ -27,11 +27,11 @@ function generate_url($parameters){
 
 	foreach($_GET as $key => $value) {
 		if (isset($parameters[$key])) {
-			if($parameters[$key] != null) {
+			if($parameters[$key] != 'null') {
 				$url = $url.'&'.$key.'='.$parameters[$key];
       }
       $parameters[$key] = null;
-		} else if ($key != 'page'){
+		} else if ($key != 'page' && $key != 'message' && $key != 'message_type'){
 			$url = $url.'&'.$key.'='.$value;
 		}
 	}
