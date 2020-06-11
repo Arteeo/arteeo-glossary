@@ -27,17 +27,29 @@ function create_glossary_admin_table(){
 
 	$entries;
 	$glossary_show;
-	if (isset($_GET['glossary_show']) && strlen($_GET['glossary_show']) == 1) {
+	if(isset($_GET['glossary_show'])) {
 		$glossary_show = sanitize_text_field($_GET['glossary_show']);
-		$entries = $wpdb->get_results( "SELECT id, letter, term, description FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
-	} else if (isset($_GET['glossary_show']) && $_GET['glossary_show'] == "hashtag") {
-		$glossary_show = '#';
-		$entries = $wpdb->get_results( "SELECT id, letter, term, description FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
+
+		if (strlen($glossary_show) == 1) {
+			$entries = $wpdb->get_results( "SELECT id, letter, term, description FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
+			if ($wpdb->num_rows < 1) {
+				redirectTo(generate_url(array('glossary_show' => 'all')));
+			}
+		} else if ($glossary_show == "hashtag") {
+			$glossary_show = '#';
+			$entries = $wpdb->get_results( "SELECT id, letter, term, description FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
+			if ($wpdb->num_rows < 1) {
+				redirectTo(generate_url(array('glossary_show' => 'all')));
+			}
+		} else if ($glossary_show == 'all') {
+			$entries = $wpdb->get_results( "SELECT id, letter, term, description FROM $glossary_table_name ORDER BY term $sorting");
+		} else {
+			redirectTo(generate_url(array('glossary_show' => 'all')));
+		}
 	} else {
-		$glossary_show = 'all';
-		$entries = $wpdb->get_results( "SELECT id, letter, term, description FROM $glossary_table_name ORDER BY term $sorting");
+		redirectTo(generate_url(array('glossary_show' => 'all')));
 	}
-	//echo '<pre>'; print_r($entries); echo '</pre>';
+
 	?>
 	<div class="wrap">
 		<h1 class="wp-heading-inline">Glossary</h1><span>v<?php echo $glossary_version; ?></span><a class="page-title-action aria-button-if-js" role="button" aria-expanded="false" href="<?php echo generate_url(array('action'=>'add')); ?>"><?php echo __('Eintrag hinzufügen'); ?></a>

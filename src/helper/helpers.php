@@ -44,3 +44,13 @@ function generate_url($parameters){
 
 	return $url;
 }
+
+/**
+ * Redirect to the page the url is refering to
+ *
+ * @param string $url the url to redirect to
+ */
+function redirectTo($url) {
+	echo '<meta http-equiv="refresh" content="0; URL='.$url.'">';
+	exit;
+}

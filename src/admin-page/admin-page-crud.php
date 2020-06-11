@@ -66,15 +66,15 @@ function glossary_entry_crud($action, $id) {
 				}
 
 				if ($result === false) {
-					echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'message_type' => 'error', 'message' => 'Datenbank fehler')).'">';
+					redirectTo(generate_url(array('action' => 'null', 'message_type' => 'error', 'message' => 'Datenbank fehler')));
 				} else {
 					if ($_POST['action'] == 'create_glossary_entry') {
-						echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'message_type' => 'success', 'message' => 'Eintrag wurde angelegt')).'">';
+						redirectTo(generate_url(array('action' => 'null', 'message_type' => 'success', 'message' => 'Eintrag wurde angelegt')));
 					} else if ($_POST['action'] == 'edit_glossary_entry') {
 						if ($result == 0) {
-							echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'success', 'message' => 'Keine Änderungen wurden vorgenommen.')).'">';
+							redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'success', 'message' => 'Keine Änderungen wurden vorgenommen.')));
 						} else {
-							echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null',  'message_type' => 'success', 'message' => 'Eintrag wurde angepasst')).'">';
+							redirectTo(generate_url(array('action' => 'null', 'id' => 'null',  'message_type' => 'success', 'message' => 'Eintrag wurde angepasst')));
 						}
 					}
 				}
@@ -109,7 +109,7 @@ function glossary_entry_crud($action, $id) {
 					return;
 				}
 			}
-			echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')).'">';
+			redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')));
 			exit;
 		} else if ($action == 'force-delete') {
 			if(is_numeric($id)) {
@@ -119,7 +119,7 @@ function glossary_entry_crud($action, $id) {
 					return;
 				}
 			}
-			echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')).'">';
+			redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')));
 			exit;
 		}
 	}
@@ -262,7 +262,7 @@ function glossary_entry_form_check_errors() {
 				return;
 			}
 		}
-		echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')).'">';
+		redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')));
 		exit;
 	}
 }
