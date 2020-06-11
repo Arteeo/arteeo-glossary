@@ -8,6 +8,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
+/**
+ * Setup the glossary database.
+ * 
+ * This function checks if the database exists
+ * if this is not the case it creates the 
+ * database and fills it with some sample data.
+ * 
+ */
+function prepare_glossary_table() {
+	global $wpdb;
+	global $glossary_table_name;
+	$exists = $wpdb->get_results( "SHOW TABLES LIKE '$glossary_table_name'");
+	
+	if($wpdb->num_rows == 0) {
+		create_glossary_table();
+		fill_glossary_table();
+	}
+}
+
 function create_glossary_table() {
 	global $wpdb;
 	global $glossary_version;

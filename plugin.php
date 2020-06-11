@@ -30,14 +30,14 @@ require_once plugin_dir_path( __FILE__ ) . 'src/helper/helpers.php';
  */
 require_once plugin_dir_path( __FILE__ ) . 'src/block.php';
 
-
-register_activation_hook( __FILE__, 'create_glossary_table' );
-register_activation_hook( __FILE__, 'fill_glossary_table' );
-register_uninstall_hook( __FILE__, 'drop_glossary_table' );
 /**
  * Create DB
  */
 require_once plugin_dir_path( __FILE__ ) . 'src/db/db.php';
+
+register_activation_hook( __FILE__, 'prepare_glossary_table' );
+register_uninstall_hook( __FILE__, 'drop_glossary_table' );
+
 
 /**
  * Admin Page
