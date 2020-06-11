@@ -19,7 +19,7 @@ function generate_letters($attributes, $letters, $currentLetter) {
 	foreach ($letters as $letterObj ){
 		if ($letterObj->letter != '#') {
 			if($letterObj->letter == $currentLetter) {
-				$result = $result . '<a class="active" style="color: '.$attributes['secondaryColor'].', borderColor: '.$attributes['secondaryColor'].'" href="'.generate_url(array('letter'=>$letterObj->letter)).'">'.$letterObj->letter.'</a>';
+				$result = $result . '<a class="active" style="color: '.$attributes['secondaryColor'].'; border-color: '.$attributes['secondaryColor'].';" href="'.generate_url(array('letter'=>$letterObj->letter)).'">'.$letterObj->letter.'</a>';
 			} else {
 				$result = $result . '<a href="'.generate_url(array('letter'=>$letterObj->letter)).'">'.$letterObj->letter.'</a>';
 			}
@@ -30,7 +30,7 @@ function generate_letters($attributes, $letters, $currentLetter) {
 
 	if ($hashtag) {
 		if('#' == $currentLetter) {
-			$result = $result . '<a class="active" style="color: '.$attributes['secondaryColor'].', borderColor: '.$attributes['secondaryColor'].'" href="'.generate_url(array('letter'=>'hashtag')).'">#</a>';
+			$result = $result . '<a class="active" style="color: '.$attributes['secondaryColor'].'; border-color: '.$attributes['secondaryColor'].';" href="'.generate_url(array('letter'=>'hashtag')).'">#</a>';
 		} else {
 			$result = $result . '<a href="'.generate_url(array('letter'=>'hashtag')).'">#</a>';
 		}
@@ -45,7 +45,7 @@ function generate_entries($attributes, $entries, $currentLetter) {
 		$result = $result . 
 			'<article class="entry">' .
 			'	<div class="name">' .
-			'		<h2 style="color='.$attributes['secondaryColor'].'">'.$entry->term.'</h2>' .
+			'		<h2 style="color: '.$attributes['secondaryColor'].';">'.$entry->term.'</h2>' .
 			' </div>' .
 			'	<div class="description">' .
 			'		<p>' .
@@ -99,13 +99,13 @@ function glossary_cgb_block_render($attributes) {
 		<div class="wp-block-cgb-block-glossary">
 			<div class="wrapper"> 
 				<section class="sidebar">
-					<div class="sidebar-header" style="backgroundColor='.$attributes['primaryColor'].'">
+					<div class="sidebar-header" style="background-color:'.$attributes['primaryColor'].';">
 					<div class="letter">
 					<h2>'.$currentLetter.'</h2>
 					</div>
 					</div>
 					<div class="sidebar-content">
-						<h3 style="color='.$attributes['secondaryColor'].'">Wählen Sie einen Buchstaben:</h3>
+						<h3 style="color:'.$attributes['secondaryColor'].';">Wählen Sie einen Buchstaben:</h3>
 						<div class="letters">
 							'.generate_letters($attributes, $letters, $currentLetter).'
 						</div>
