@@ -8,7 +8,9 @@
  * Version: 1.0.0
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
- *
+ * Text Domain: glossary
+ * Domain Path: /languages
+ * 
  * @package CGB
  */
 global $glossary_version;
@@ -21,6 +23,11 @@ $glossary_table_name = $wpdb->prefix . "glossary";
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+function load_glossary_textdomain() {
+	load_plugin_textdomain( 'glossary', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+add_action( 'plugins_loaded', 'load_glossary_textdomain' );
 
 // Include helpers
 require_once plugin_dir_path( __FILE__ ) . 'src/helper/helpers.php';

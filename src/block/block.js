@@ -34,7 +34,7 @@ registerBlockType( 'cgb/block-glossary', {
 	icon: 'book-alt', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'embed', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'glossary — A simple beautiful glossary', 'glossary' ),
+		__( 'glossary - A simple beautiful glossary', 'glossary' ),
 		__( 'glossary', 'glossary' ),
 		__( 'Glossary', 'glossary' )
 	],

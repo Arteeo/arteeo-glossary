@@ -74,7 +74,7 @@ function glossary_entry_crud($action, $id) {
 						if ($result == 0) {
 							redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'success', 'message' => __('No changes have occured.', 'glossary'))));
 						} else {
-							redirectTo(generate_url(array('action' => 'null', 'id' => 'null',  'message_type' => 'success', 'message' => __('Entry has been adjusted', 'glossary'))));
+							redirectTo(generate_url(array('action' => 'null', 'id' => 'null',  'message_type' => 'success', 'message' => __('Entry has been adjusted.', 'glossary'))));
 						}
 					}
 				}
@@ -278,7 +278,7 @@ function glossary_delete_form($id, $term) {
 	?>
 	<div class="wrap">
 		<h1 class="delete-entry"><?php _e('Delete glossary entry', 'glossary'); ?></h1>
-		<p><?php printf(__('Do you really want to delete glossary entry %s?', 'glossary'), $term); ?></p>
+		<p><?php printf(__('Do you really want to delete glossary entry "%s"?', 'glossary'), $term); ?></p>
 		<a id="entry_delete" class="button button-primary" href="<?php echo generate_url(array('action' => 'force-delete', 'id' => $id)); ?>"><?php _e('Delete', 'glossary') ?></a>
 	</div>
 	<?php
