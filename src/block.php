@@ -49,7 +49,7 @@ function generate_entries($attributes, $entries, $currentLetter) {
 			' </div>' .
 			'	<div class="description">' .
 			'		<p>' .
-			'			' . $entry->description .
+			'			' . nl2br($entry->description) .
 			'		</p>' .			
 			' </div>' .
 			'</article>';

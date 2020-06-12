@@ -24,7 +24,7 @@ function glossary_entry_crud($action, $id) {
 			$error = glossary_entry_form_check_errors();
 			if ($error == null) {
 				$term = sanitize_text_field( $_POST['term'] );
-				$description = sanitize_text_field( $_POST['description'] );
+				$description = sanitize_textarea_field( $_POST['description'] );
 				$letter = substr($term, 0, 1);
 				if (!ctype_alpha($letter)) {
 					$letter = '#';
@@ -145,7 +145,7 @@ function glossary_entry_form($entry, $errormessage) {
 				$term = sanitize_text_field( $_POST['term'] );
 			} 
 			if(isset($_POST['description'])) {
-				$description = sanitize_text_field( $_POST['description'] );
+				$description = sanitize_textarea_field( $_POST['description'] );
 			}	
 		} else if ($entry != null) {
 			$term = $entry->term;

@@ -147,7 +147,7 @@ function create_glossary_admin_table(){
 									</div>
 								</td>
 								<td class="description column-description" data-colname="Description">
-									'.$entry->description.'	
+									'.nl2br($entry->description).'	
 								</td>
 							</tr>	
 						';
