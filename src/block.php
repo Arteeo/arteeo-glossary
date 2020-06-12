@@ -105,7 +105,7 @@ function glossary_cgb_block_render($attributes) {
 					</div>
 					</div>
 					<div class="sidebar-content">
-						<h3 style="color:'.$attributes['secondaryColor'].';">Wählen Sie einen Buchstaben:</h3>
+						<h3 style="color:'.$attributes['secondaryColor'].';">'.__('Select a letter:', 'glossary').'</h3>
 						<div class="letters">
 							'.generate_letters($attributes, $letters, $currentLetter).'
 						</div>
@@ -168,8 +168,6 @@ function glossary_cgb_block_assets() { // phpcs:ignore
 		[
 			'pluginDirPath' => plugin_dir_path( __DIR__ ),
 			'pluginDirUrl'  => plugin_dir_url( __DIR__ ),
-			'entries' => $wpdb->get_results( "SELECT * FROM $glossary_table_name"),
-			'letters' => $wpdb->get_results( "SELECT letter FROM $glossary_table_name GROUP BY letter ORDER BY letter ASC"),
 			// Add more data here that you want to access from `cgbGlobal` object.
 		]
 	);

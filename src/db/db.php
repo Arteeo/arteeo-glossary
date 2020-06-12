@@ -53,68 +53,44 @@ function fill_glossary_table() {
 	global $wpdb;
 	global $glossary_table_name;
 	
-	$term = 'Mr. WordPress';
-	$description = 'Congratulations, you just completed the installation!';
+	$term = __('Dog', 'glossary');
+	$description = __('Congratulations, you just completed the installation!', 'glossary');
 	
 	$wpdb->insert( 
 		$glossary_table_name, 
 		array(
-			'letter' => 'M',
+			'letter' => strtoupper(substr($term, 0, 1)),
 			'term' => $term, 
 			'description' => $description, 
 		) 
 	);
 
-	$term = 'Auxiliary';
+	$term = __('Sheep', 'glossary');
 	$description = 'Lorem ipsum dolor sit amet consectetur adipiscing elit nisl ultrices, dapibus ut fermentum luctus tellus magnis fames nunc curae curabitur, velit cubilia cum scelerisque phasellus fusce leo eget. Dis quam fusce vivamus congue felis sociosqu taciti, eget libero dignissim condimentum purus a, sed metus semper auctor torquent imperdiet. Sociis suscipit sociosqu turpis eros feugiat aliquam commodo vel et, non dictum malesuada nam ut netus hendrerit varius, natoque tincidunt magna litora placerat eleifend vehicula tristique.';
 	
 	$wpdb->insert( 
 		$glossary_table_name, 
 		array(
-			'letter' => 'A',
+			'letter' => strtoupper(substr($term, 0, 1)),
 			'term' => $term, 
 			'description' => $description, 
 		) 
 	);
 
-	$term = 'All';
-	$description = 'Congratulations, you just completed the installation!';
+	$term = __('Serpent', 'glossary');;
+	$description = __('Congratulations, you just completed the installation!', 'glossary');
 	
 	$wpdb->insert( 
 		$glossary_table_name, 
 		array(
-			'letter' => 'A',
-			'term' => $term, 
-			'description' => $description, 
-		) 
-	);
-
-	$term = 'Crucial';
-	$description = 'Congratulations, you just completed the installation!';
-
-	$wpdb->insert( 
-		$glossary_table_name, 
-		array(
-			'letter' => 'C',
+			'letter' => strtoupper(substr($term, 0, 1)),
 			'term' => $term, 
 			'description' => $description, 
 		) 
 	);
 
 	$term = '.htaccess';
-	$description = 'Congratulations, you just completed the installation!';
-
-	$wpdb->insert(
-		$glossary_table_name, 
-		array(
-			'letter' => '#',
-			'term' => $term, 
-			'description' => $description, 
-		) 
-	);
-
-	$term = '.gitignore';
-	$description = 'Congratulations, you just completed the installation!';
+	$description = __('Congratulations, you just completed the installation!', 'glossary');
 
 	$wpdb->insert(
 		$glossary_table_name, 

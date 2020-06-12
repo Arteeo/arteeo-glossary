@@ -30,13 +30,13 @@ const { PanelBody, ColorPicker } = wp.components;
  */
 registerBlockType( 'cgb/block-glossary', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Glossary' ), // Block title.
+	title: __( 'Glossary', 'glossary' ), // Block title.
 	icon: 'book-alt', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'embed', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'glossary — A simple beautiful glossary' ),
-		__( 'glossary' ),
-		__( 'Glossary' )
+		__( 'glossary — A simple beautiful glossary', 'glossary' ),
+		__( 'glossary', 'glossary' ),
+		__( 'Glossary', 'glossary' )
 	],
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -64,7 +64,7 @@ registerBlockType( 'cgb/block-glossary', {
 				{
 					<InspectorControls>
 						<PanelBody
-							title={__('Primärfarbe')}
+							title={__( 'Primary color', 'glossary' )}
 							initialOpen={false}
 						>
 							<ColorPicker
@@ -74,7 +74,7 @@ registerBlockType( 'cgb/block-glossary', {
 							/>
 						</PanelBody>
 						<PanelBody
-							title={__('Akzentfarbe')}
+							title={__( 'Accent color', 'glossary' )}
 							initialOpen={false}
 						>
 							<ColorPicker
@@ -93,41 +93,41 @@ registerBlockType( 'cgb/block-glossary', {
 						</div>
 						</div>
 						<div class="sidebar-content">
-							<h3 style={{ color: props.attributes.secondaryColor}} >Wählen Sie einen Buchstaben:</h3>
+							<h3 style={{ color: props.attributes.secondaryColor}} >{__('Select a letter:', 'glossary')}</h3>
 							<div class="letters">
-								<span>A</span>
-								<span>B</span>
-								<span>C</span>
-								<span>D</span>
-								<span class="active" style={{ color: props.attributes.secondaryColor, borderColor: props.attributes.secondaryColor}}>E</span>
-								<span>F</span>
-								<span>G</span>
-								<span>H</span>
-								<span>I</span>
-								<span>J</span>
-								<span>K</span>
-								<span>L</span>
-								<span>M</span>
-								<span>N</span>
-								<span>O</span>
-								<span>P</span>
-								<span>Q</span>
-								<span>R</span>
-								<span>S</span>
-								<span>T</span>
-								<span>U</span>
-								<span>V</span>
-								<span>W</span>
-								<span>X</span>
-								<span>Y</span>
-								<span>Z</span>
+								<a>A</a>
+								<a>B</a>
+								<a>C</a>
+								<a>D</a>
+								<a class="active" style={{ color: props.attributes.secondaryColor, borderColor: props.attributes.secondaryColor}}>E</a>
+								<a>F</a>
+								<a>G</a>
+								<a>H</a>
+								<a>I</a>
+								<a>J</a>
+								<a>K</a>
+								<a>L</a>
+								<a>M</a>
+								<a>N</a>
+								<a>O</a>
+								<a>P</a>
+								<a>Q</a>
+								<a>R</a>
+								<a>S</a>
+								<a>T</a>
+								<a>U</a>
+								<a>V</a>
+								<a>W</a>
+								<a>X</a>
+								<a>Y</a>
+								<a>Z</a>
 							</div>
 						</div>
 					</section>
 					<main class="content">
 						<article class="entry">
 						<div class="name">
-							<h2 style={{ color: props.attributes.secondaryColor}} >Example 1</h2>
+							<h2 style={{ color: props.attributes.secondaryColor}} >{__('Example', 'glossary')} 1</h2>
 						</div>
 						<div class="description">
 							<p>
@@ -137,7 +137,7 @@ registerBlockType( 'cgb/block-glossary', {
 						</article>
 						<article class="entry">
 						<div class="name">
-							<h2 style={{ color: props.attributes.secondaryColor}}>Example 2</h2>
+							<h2 style={{ color: props.attributes.secondaryColor}}>{__('Example', 'glossary')} 2</h2>
 						</div>
 						<div class="description">
 							<p>
@@ -147,7 +147,7 @@ registerBlockType( 'cgb/block-glossary', {
 						</article>
 						<article class="entry">
 						<div class="name">
-							<h2 style={{ color: props.attributes.secondaryColor}}>Example 3</h2>
+							<h2 style={{ color: props.attributes.secondaryColor}}>{__('Example', 'glossary')} 3</h2>
 						</div>
 						<div class="description">
 							<p>

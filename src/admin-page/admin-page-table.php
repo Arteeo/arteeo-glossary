@@ -52,7 +52,7 @@ function create_glossary_admin_table(){
 
 	?>
 	<div class="wrap">
-		<h1 class="wp-heading-inline">Glossary</h1><span>v<?php echo $glossary_version; ?></span><a class="page-title-action aria-button-if-js" role="button" aria-expanded="false" href="<?php echo generate_url(array('action'=>'add')); ?>"><?php echo __('Eintrag hinzufügen'); ?></a>
+		<h1 class="wp-heading-inline"><?php _e('Glossary', 'glossary'); ?></h1><span>v<?php echo $glossary_version; ?></span><a class="page-title-action aria-button-if-js" role="button" aria-expanded="false" href="<?php echo generate_url(array('action'=>'add')); ?>"><?php _e('Add entry', 'glossary'); ?></a>
 		<hr class="wp-header-end">
 		<?php
 			if (isset($_GET['message']) && isset($_GET['message_type'])) {
@@ -61,7 +61,7 @@ function create_glossary_admin_table(){
 						<div id="message" class="updated notice is-dismissible">
 							<p>'.sanitize_text_field($_GET['message']).'</p>
 							<button class="notice-dismiss" type="button">
-								<span class="screen-reader-text"> Diese Meldung ausblenden</span>
+								<span class="screen-reader-text">'.__('Hide this message', 'glossary').'</span>
 							</button>
 						</div>
 					';
@@ -76,14 +76,13 @@ function create_glossary_admin_table(){
 		?>
 		<ul class="subsubsub">
 			<li class="all">
-				<a class="<?php echo $glossary_show == 'all' ? 'current ' : '';?>" href="<?php echo generate_url(array('glossary_show'=>'all')); ?>"><?php echo __('Alle'); ?>
+				<a class="<?php echo $glossary_show == 'all' ? 'current ' : '';?>" href="<?php echo generate_url(array('glossary_show'=>'all')); ?>"><?php _e('All', 'glossary'); ?>
 					<span class="count">(<?php echo $wpdb->get_results( "SELECT count(letter) AS count FROM $glossary_table_name")[0]->count;?>)</span>
 				</a>
 				|
 			</li>
 			<?php
 				$letters = $wpdb->get_results( "SELECT letter, count(letter) AS count FROM $glossary_table_name GROUP BY letter ORDER BY letter ASC");
-				//echo '<pre>'; print_r($letters); echo '</pre>';
 				$hashtag = 0;
 				foreach ($letters as $letter){
 					if ($letter->letter == '#') {
@@ -110,17 +109,17 @@ function create_glossary_admin_table(){
 				}
 			?>
 		</ul>
-		<h2 class="screen-reader-text">Glossar Einträge</h2>
+		<h2 class="screen-reader-text"><?php _e('Glossary entries', 'glossary'); ?></h2>
 		<table class="wp-list-table widefat fixed striped">
 			<thead>
 				<th id="term" class="manage-column column-term column-primary sorted <?php echo strtolower($sorting);?>" scope="col">
 					<a href="<?php echo generate_url(array('glossary_sort'=>'term', 'order'=>($sorting == 'DESC' ? 'asc' : 'desc'))) ?>">
-						<span>Begriff</span>
+						<span><?php _e('Term', 'glossary'); ?></span>
 						<span class="sorting-indicator"></span>
 					</a>
 				</th>
 				<th id="description" class="manage-column column-description" scope="col">
-					Beschreibung
+					<?php _e('Description', 'glossary'); ?>
 				</th>
 			</thead>
 			<tbody id="the-list">
@@ -128,25 +127,25 @@ function create_glossary_admin_table(){
 					foreach($entries as $entry) {
 						echo '
 							<tr id="entry-'.$entry->id.'">
-								<td class="term column-term has-row-actions column-primary" data-colname="Term">
+								<td class="term column-term has-row-actions column-primary" data-colname="'.__('Term', 'glossary').'">
 									<strong class="row-Term">
 										'.$entry->term.'
 									</stong>
 									<div class="row-actions">
 										<span class="edit">
-											<a href="'.generate_url(array('action'=>'edit', 'id'=>$entry->id)).'" aria-label="\''.$entry->term.'\' (Edit)">
-												Bearbeiten
+											<a href="'.generate_url(array('action'=>'edit', 'id'=>$entry->id)).'" aria-label="\''.$entry->term.'\' ('.__('Edit', 'glossary').')">
+												'.__('Edit', 'glossary').'
 											</a>
 											|
 										</span>
 										<span class="delete">
-											<a class="delete" href="'.generate_url(array('action'=>'delete', 'id'=>$entry->id)).'" aria-label="\''.$entry->term.'\' (Delete)">
-												Löschen
+											<a class="delete" href="'.generate_url(array('action'=>'delete', 'id'=>$entry->id)).'" aria-label="\''.$entry->term.'\' ('.__('Delete', 'glossary').')">
+												'.__('Delete', 'glossary').'
 											</a>
 										</span>
 									</div>
 								</td>
-								<td class="description column-description" data-colname="Description">
+								<td class="description column-description" data-colname="'.__('Description', 'glossary').'">
 									'.nl2br($entry->description).'	
 								</td>
 							</tr>	

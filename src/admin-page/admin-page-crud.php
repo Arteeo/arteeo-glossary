@@ -66,15 +66,15 @@ function glossary_entry_crud($action, $id) {
 				}
 
 				if ($result === false) {
-					redirectTo(generate_url(array('action' => 'null', 'message_type' => 'error', 'message' => 'Datenbank fehler')));
+					redirectTo(generate_url(array('action' => 'null', 'message_type' => 'error', 'message' => __('Database error.', 'glossary'))));
 				} else {
 					if ($_POST['action'] == 'create_glossary_entry') {
-						redirectTo(generate_url(array('action' => 'null', 'message_type' => 'success', 'message' => 'Eintrag wurde angelegt')));
+						redirectTo(generate_url(array('action' => 'null', 'message_type' => 'success', 'message' => __('Entry has been created.', 'glossary'))));
 					} else if ($_POST['action'] == 'edit_glossary_entry') {
 						if ($result == 0) {
-							redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'success', 'message' => 'Keine Änderungen wurden vorgenommen.')));
+							redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'success', 'message' => __('No changes have occured.', 'glossary'))));
 						} else {
-							redirectTo(generate_url(array('action' => 'null', 'id' => 'null',  'message_type' => 'success', 'message' => 'Eintrag wurde angepasst')));
+							redirectTo(generate_url(array('action' => 'null', 'id' => 'null',  'message_type' => 'success', 'message' => __('Entry has been adjusted', 'glossary'))));
 						}
 					}
 				}
@@ -96,10 +96,10 @@ function glossary_entry_crud($action, $id) {
 					if( $wpdb->num_rows == 1) {
 						glossary_entry_form($entries[0], null);
 					} else {
-						glossary_entry_form(null, "Eintrag nicht gefunden.");
+						glossary_entry_form(null, __('Entry could not be found.', 'glossary'));
 					}
 				} else {
-					glossary_entry_form(null, "Id nicht gültig.");
+					glossary_entry_form(null, __('Entry id not valid.', 'glossary'));
 				}
 		} else if ($action == 'delete') {
 			if(is_numeric($id)) {
@@ -109,7 +109,7 @@ function glossary_entry_crud($action, $id) {
 					return;
 				}
 			}
-			redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')));
+			redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => __('Entry id not valid.', 'glossary'))));
 			exit;
 		} else if ($action == 'force-delete') {
 			if(is_numeric($id)) {
@@ -119,7 +119,7 @@ function glossary_entry_crud($action, $id) {
 					return;
 				}
 			}
-			redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')));
+			redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => __('Entry id not valid.', 'glossary'))));
 			exit;
 		}
 	}
@@ -166,13 +166,13 @@ function glossary_entry_form($entry, $errormessage) {
 		<?php
 			if ($entry == null) {
 				echo '
-					<h1 class="add-entry">'.__('Glossar Eintrag hinzufügen').'</h1>
-					<p>Legen Sie einen neuen Eintrag für den Glossar an.</p>
+					<h1 class="add-entry">'.__('Add glossary entry', 'glossary').'</h1>
+					<p>'.__('Add a new entry to the glossary.', 'glossary').'</p>
 				';
 			} else {
 				echo '
-					<h1 class="edit-entry">'.__('Glossar Eintrag bearbeiten').'</h1>
-					<p>Bearbeiten Sie den Eintrag des Glossars.</p>
+					<h1 class="edit-entry">'.__('Edit glossary entry', 'glossary').'</h1>
+					<p>'.__('Adjust the entry from the glossary.', 'glossary').'</p>
 				';
 			}
 		?>
@@ -196,8 +196,8 @@ function glossary_entry_form($entry, $errormessage) {
 					<tr class="form-field form-required">
 						<th scope="row">
 							<label for="glossary_term">
-							Begriff
-							<span class="description">(erforderlich)</span>
+								<?php _e('Term', 'glossary') ?>
+							<span class="description">(<?php _e('required', 'glossary') ?>)</span>
 							</label>
 						</th>
 						<td>
@@ -207,8 +207,8 @@ function glossary_entry_form($entry, $errormessage) {
 					<tr class="form-field form-required">
 						<th scope="row">
 							<label for="glossary_description">
-							Beschreibung
-							<span class="description">(erforderlich)</span>
+								<?php _e('Description', 'glossary') ?>
+							<span class="description">(<?php _e('required', 'glossary') ?>)</span>
 							</label>
 						</th>
 						<td>
@@ -221,11 +221,11 @@ function glossary_entry_form($entry, $errormessage) {
 			<?php
 				if ($entry == null) {
 					echo '
-						<input id="entry_submit" class="button button-primary" type="submit" name="entry_form" value="Neuen Eintrag anlegen">
+						<input id="entry_submit" class="button button-primary" type="submit" name="entry_form" value="'.__('Create new entry', 'glossary').'">
 					';
 				} else {
 					echo '
-						<input id="entry_submit" class="button button-primary" type="submit" name="entry_form" value="Eintrag speichern">
+						<input id="entry_submit" class="button button-primary" type="submit" name="entry_form" value="'.__('Save entry', 'glossary').'">
 					';
 				}
 			?>
@@ -248,10 +248,10 @@ function glossary_entry_form_check_errors() {
 	global $glossary_table_name;
 
 	if (!isset($_POST['term']) || $_POST['term'] == '') {
-		return 'Feld "Begriff" muss ausgefüllt werden.';
+		return sprintf(__('Field "%s" has to be filled in.', 'glossary'), __('Term', 'glossary'));
 	}
 	if (!isset($_POST['description']) || $_POST['description'] == '') {
-		return 'Feld "Beschreibung" muss ausgefüllt werden.';
+		return sprintf(__('Field "%s" has to be filled in.', 'glossary'), __('Description', 'glossary'));
 	}
 
 	if (isset($_POST['id'])) {
@@ -262,7 +262,7 @@ function glossary_entry_form_check_errors() {
 				return;
 			}
 		}
-		redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Id nicht gültig.')));
+		redirectTo(generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => __('Entry id not valid.', 'glossary'))));
 		exit;
 	}
 }
@@ -277,9 +277,9 @@ function glossary_entry_form_check_errors() {
 function glossary_delete_form($id, $term) {
 	?>
 	<div class="wrap">
-		<h1 class="delete-entry"><?php echo __('Glossar Eintrag löschen'); ?></h1>
-		<p>Wollen Sie den Eintrag "<?php echo $term; ?>" wirklich löschen?</p>
-		<a id="entry_delete" class="button button-primary" href="<?php echo generate_url(array('action' => 'force-delete', 'id' => $id)); ?>">Löschen</a>
+		<h1 class="delete-entry"><?php _e('Delete glossary entry', 'glossary'); ?></h1>
+		<p><?php printf(__('Do you really want to delete glossary entry %s?', 'glossary'), $term); ?></p>
+		<a id="entry_delete" class="button button-primary" href="<?php echo generate_url(array('action' => 'force-delete', 'id' => $id)); ?>"><?php _e('Delete', 'glossary') ?></a>
 	</div>
 	<?php
 }
@@ -297,12 +297,12 @@ function glossary_delete_entry($id) {
 	// Default usage.
 	$result = $wpdb->delete( $glossary_table_name, array( 'id' => $id ));
 	if ($result === false) {
-		echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'message_type' => 'error', 'message' => 'Datenbank fehler')).'">';
+		echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'message_type' => 'error', 'message' => __('Database error.', 'glossary'))).'">';
 	} else {
 		if ($result == 0) {
-			echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => 'Eintrag nicht gefunden.')).'">';
+			echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null', 'message_type' => 'error', 'message' => __('Entry not found.', 'glossary'))).'">';
 		} else {
-			echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null',  'message_type' => 'success', 'message' => 'Eintrag wurde gelöscht.')).'">';
+			echo '<meta http-equiv="refresh" content="0; URL='.generate_url(array('action' => 'null', 'id' => 'null',  'message_type' => 'success', 'message' => __('Entry has been deleted.', 'glossary'))).'">';
 		}
 	}
 }
