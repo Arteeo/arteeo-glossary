@@ -5,7 +5,7 @@
  * Enqueue CSS/JS of all the blocks.
  *
  * @since   1.0.0
- * @package CGB
+ * @package glossary
  */
 
 // Exit if accessed directly.
@@ -96,7 +96,7 @@ function glossary_cgb_block_render($attributes) {
 	}
 
 	return '
-		<div class="wp-block-cgb-block-glossary">
+		<div class="wp-block-glossary-block-glossary">
 			<div class="wrapper"> 
 				<section class="sidebar">
 					<div class="sidebar-header" style="background-color:'.$attributes['primaryColor'].';">
@@ -168,6 +168,13 @@ function glossary_cgb_block_assets() { // phpcs:ignore
 		[
 			'pluginDirPath' => plugin_dir_path( __DIR__ ),
 			'pluginDirUrl'  => plugin_dir_url( __DIR__ ),
+			'__Glossary' => __('Glossary', 'glossary'),
+			'__glossary' => __('glossary', 'glossary'),
+			'__glossaryDescription' => __('glossary', 'glossary') . ' - ' . __('A simple beautiful glossary', 'glossary' ),
+			'__primaryColor' => __( 'Primary color', 'glossary' ),
+			'__accentColor' => __( 'Accent color', 'glossary' ),
+			'__selectLetter' => __('Select a letter:', 'glossary'),
+			'__example' => __('Example', 'glossary'),
 			// Add more data here that you want to access from `cgbGlobal` object.
 		]
 	);
@@ -183,7 +190,7 @@ function glossary_cgb_block_assets() { // phpcs:ignore
 	 * @since 1.16.0
 	 */
 	register_block_type(
-		'cgb/block-glossary', array(
+		'glossary/block-glossary', array(
 			// Enqueue blocks.style.build.css on both frontend & backend.
 			'style'         => 'glossary-cgb-style-css',
 			// Enqueue blocks.build.js in the editor only.

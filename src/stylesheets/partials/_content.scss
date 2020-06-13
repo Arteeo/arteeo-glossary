@@ -1,5 +1,5 @@
 // Extra small
-.wp-block-cgb-block-glossary {
+.wp-block-glossary-block-glossary {
     .content {
         padding-left: 5px;
         padding-right: 5px;
@@ -42,7 +42,7 @@
 
 // Large
 @media only screen and (min-width: $grid-lg) {
-    .wp-block-cgb-block-glossary {
+    .wp-block-glossary-block-glossary {
         .content {
             width: 0px;
             flex-grow: 1;

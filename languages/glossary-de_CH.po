@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Glossary\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-12 13:37+0000\n"
-"PO-Revision-Date: 2020-06-12 13:47+0000\n"
+"POT-Creation-Date: 2020-06-12 16:51+0000\n"
+"PO-Revision-Date: 2020-06-12 16:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: Deutsch (Schweiz)\n"
 "Language: de-CH\n"
@@ -14,92 +14,72 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.4.0; wp-5.4.2"
 
+#: src/block.php:108 src/block.php:176
+msgid "Select a letter:"
+msgstr "Wählen Sie einen Buchstaben aus:"
+
+#. Name of the plugin
+#: src/block.php:171 src/admin-page/admin-page.php:23 
+#: src/admin-page/admin-page.php:23 src/admin-page/admin-page-table.php:55
+msgid "Glossary"
+msgstr "Glossar"
+
+#: src/block.php:172 src/block.php:173
+msgid "glossary"
+msgstr "glossar"
+
 #. Description of the plugin
+#: src/block.php:173
 msgid "A simple beautiful glossary"
 msgstr "Ein einfaches schönes Glossar"
 
-#: src/admin-page/admin-page-crud.php:170
-msgid "Add a new entry to the glossary."
-msgstr "Füge einen neuen Eintrag zum Glossar hinzu."
+#: src/block.php:174
+msgid "Primary color"
+msgstr "Primärfarbe"
 
-#: src/admin-page/admin-page-table.php:55
-msgid "Add entry"
-msgstr "Eintrag hinzufügen"
+#: src/block.php:175
+msgid "Accent color"
+msgstr "Akzentfarbe"
 
-#: src/admin-page/admin-page-crud.php:169
-msgid "Add glossary entry"
-msgstr "Glossar Eintrag hinzufügen"
-
-#: src/admin-page/admin-page-crud.php:175
-msgid "Adjust the entry from the glossary."
-msgstr "Bearbeite den Eintrag im Glossar."
-
-#: src/admin-page/admin-page-table.php:79
-msgid "All"
-msgstr "Alle"
-
-#: src/db/db.php:57 src/db/db.php:81 src/db/db.php:93
-msgid "Congratulations, you just completed the installation!"
-msgstr "Glückwunsch, du hast die installation abgeschlossen!"
-
-#: src/admin-page/admin-page-crud.php:224
-msgid "Create new entry"
-msgstr "Neuen Eintrag anlegen"
-
-#: src/admin-page/admin-page-crud.php:69 src/admin-page/admin-page-crud.php:300
-msgid "Database error."
-msgstr "Datenbank Fehler."
-
-#: src/admin-page/admin-page-crud.php:282 
-#: src/admin-page/admin-page-table.php:142 
-#: src/admin-page/admin-page-table.php:143
-msgid "Delete"
-msgstr "Löschen"
-
-#: src/admin-page/admin-page-crud.php:280
-msgid "Delete glossary entry"
-msgstr "Glossar-Eintrag löschen"
-
-#: src/admin-page/admin-page-crud.php:210 
-#: src/admin-page/admin-page-crud.php:254 
-#: src/admin-page/admin-page-table.php:122 
-#: src/admin-page/admin-page-table.php:148
-msgid "Description"
-msgstr "Beschreibung"
-
-#: src/admin-page/admin-page-crud.php:281
-#, php-format
-msgid "Do you really want to delete glossary entry \"%s\"?"
-msgstr "Willst du den Glossar-Eintrag \"%s\" wirklich löschen?"
+#: src/block.php:177
+msgid "Example"
+msgstr "Beispiel"
 
 #: src/db/db.php:56
 msgid "Dog"
 msgstr "Hund"
 
-#: src/admin-page/admin-page-table.php:136 
-#: src/admin-page/admin-page-table.php:137
-msgid "Edit"
-msgstr "Bearbeiten"
+#: src/db/db.php:57 src/db/db.php:81 src/db/db.php:93
+msgid "Congratulations, you just completed the installation!"
+msgstr "Glückwunsch, du hast die installation abgeschlossen!"
 
-#: src/admin-page/admin-page-crud.php:174
-msgid "Edit glossary entry"
-msgstr "Glossar-Eintrag bearbeiten"
+#: src/db/db.php:68
+msgid "Sheep"
+msgstr "Schaf"
 
-#: src/admin-page/admin-page-crud.php:99
-msgid "Entry could not be found."
-msgstr "Eintrag konnte nicht gefunden werden."
+#: src/db/db.php:80
+msgid "Serpent"
+msgstr "Schlange"
 
-#: src/admin-page/admin-page-crud.php:77
-msgid "Entry has been adjusted."
-msgstr "Eintrag wurde angepasst."
+#: src/admin-page/admin-page-crud.php:69 src/admin-page/admin-page-crud.php:300
+msgid "Database error."
+msgstr "Datenbank Fehler."
 
 #: src/admin-page/admin-page-crud.php:72
 msgid "Entry has been created."
 msgstr "Eintrag wurde angelegt."
 
-#: src/admin-page/admin-page-crud.php:305
-msgid "Entry has been deleted."
-msgstr "Eintrag wurde gelöscht."
+#: src/admin-page/admin-page-crud.php:75
+msgid "No changes have occured."
+msgstr "Keine Änderungen wurden vorgenommen."
+
+#: src/admin-page/admin-page-crud.php:77
+msgid "Entry has been adjusted."
+msgstr "Eintrag wurde angepasst."
+
+#: src/admin-page/admin-page-crud.php:99
+msgid "Entry could not be found."
+msgstr "Eintrag konnte nicht gefunden werden."
 
 #: src/admin-page/admin-page-crud.php:102 
 #: src/admin-page/admin-page-crud.php:112 
@@ -108,61 +88,21 @@ msgstr "Eintrag wurde gelöscht."
 msgid "Entry id not valid."
 msgstr "Die ID des Eintrags ist nicht gültig."
 
-#: src/admin-page/admin-page-crud.php:303
-msgid "Entry not found."
-msgstr "Eintrag nicht gefunden."
+#: src/admin-page/admin-page-crud.php:169
+msgid "Add glossary entry"
+msgstr "Glossar Eintrag hinzufügen"
 
-#: src/admin-page/admin-page-crud.php:251 
-#: src/admin-page/admin-page-crud.php:254
-#, php-format
-msgid "Field \"%s\" has to be filled in."
-msgstr "Das Feld \"%s\" muss ausgefüllt sein."
+#: src/admin-page/admin-page-crud.php:170
+msgid "Add a new entry to the glossary."
+msgstr "Füge einen neuen Eintrag zum Glossar hinzu."
 
-#. Name of the plugin
-#: src/admin-page/admin-page-table.php:55
-msgid "Glossary"
-msgstr "Glossar"
+#: src/admin-page/admin-page-crud.php:174
+msgid "Edit glossary entry"
+msgstr "Glossar-Eintrag bearbeiten"
 
-#: src/admin-page/admin-page-table.php:112
-msgid "Glossary entries"
-msgstr "Glossar-Einträge"
-
-#: src/admin-page/admin-page-table.php:64
-msgid "Hide this message"
-msgstr "Diese Nachricht ausblenden"
-
-#. URI of the plugin
-msgid "https://example.com"
-msgstr "https://example.com"
-
-#. Author URI of the plugin
-msgid "https://github.com/Vec7or"
-msgstr "https://github.com/Vec7or"
-
-#: src/admin-page/admin-page-crud.php:75
-msgid "No changes have occured."
-msgstr "Keine Änderungen wurden vorgenommen."
-
-#: src/admin-page/admin-page-crud.php:200 
-#: src/admin-page/admin-page-crud.php:211
-msgid "required"
-msgstr "benötigt"
-
-#: src/admin-page/admin-page-crud.php:228
-msgid "Save entry"
-msgstr "Eintrag speichern"
-
-#: src/block.php:108
-msgid "Select a letter:"
-msgstr "Wählen Sie einen Buchstaben aus:"
-
-#: src/db/db.php:80
-msgid "Serpent"
-msgstr "Schlange"
-
-#: src/db/db.php:68
-msgid "Sheep"
-msgstr "Schaf"
+#: src/admin-page/admin-page-crud.php:175
+msgid "Adjust the entry from the glossary."
+msgstr "Bearbeite den Eintrag im Glossar."
 
 #: src/admin-page/admin-page-crud.php:199 
 #: src/admin-page/admin-page-crud.php:251 
@@ -171,6 +111,84 @@ msgstr "Schaf"
 msgid "Term"
 msgstr "Begriff"
 
+#: src/admin-page/admin-page-crud.php:200 
+#: src/admin-page/admin-page-crud.php:211
+msgid "required"
+msgstr "benötigt"
+
+#: src/admin-page/admin-page-crud.php:210 
+#: src/admin-page/admin-page-crud.php:254 
+#: src/admin-page/admin-page-table.php:122 
+#: src/admin-page/admin-page-table.php:148
+msgid "Description"
+msgstr "Beschreibung"
+
+#: src/admin-page/admin-page-crud.php:224
+msgid "Create new entry"
+msgstr "Neuen Eintrag anlegen"
+
+#: src/admin-page/admin-page-crud.php:228
+msgid "Save entry"
+msgstr "Eintrag speichern"
+
+#: src/admin-page/admin-page-crud.php:251 
+#: src/admin-page/admin-page-crud.php:254
+#, php-format
+msgid "Field \"%s\" has to be filled in."
+msgstr "Das Feld \"%s\" muss ausgefüllt sein."
+
+#: src/admin-page/admin-page-crud.php:280
+msgid "Delete glossary entry"
+msgstr "Glossar-Eintrag löschen"
+
+#: src/admin-page/admin-page-crud.php:281
+#, php-format
+msgid "Do you really want to delete glossary entry \"%s\"?"
+msgstr "Willst du den Glossar-Eintrag \"%s\" wirklich löschen?"
+
+#: src/admin-page/admin-page-crud.php:282 
+#: src/admin-page/admin-page-table.php:142 
+#: src/admin-page/admin-page-table.php:143
+msgid "Delete"
+msgstr "Löschen"
+
+#: src/admin-page/admin-page-crud.php:303
+msgid "Entry not found."
+msgstr "Eintrag nicht gefunden."
+
+#: src/admin-page/admin-page-crud.php:305
+msgid "Entry has been deleted."
+msgstr "Eintrag wurde gelöscht."
+
+#: src/admin-page/admin-page-table.php:55
+msgid "Add entry"
+msgstr "Eintrag hinzufügen"
+
+#: src/admin-page/admin-page-table.php:64
+msgid "Hide this message"
+msgstr "Diese Nachricht ausblenden"
+
+#: src/admin-page/admin-page-table.php:79
+msgid "All"
+msgstr "Alle"
+
+#: src/admin-page/admin-page-table.php:112
+msgid "Glossary entries"
+msgstr "Glossar-Einträge"
+
+#: src/admin-page/admin-page-table.php:136 
+#: src/admin-page/admin-page-table.php:137
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#. URI of the plugin
+msgid "https://example.com"
+msgstr "https://example.com"
+
 #. Author of the plugin
 msgid "vec7or"
 msgstr "vec7or"
+
+#. Author URI of the plugin
+msgid "https://github.com/Vec7or"
+msgstr "https://github.com/Vec7or"

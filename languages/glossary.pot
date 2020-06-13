@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Glossary\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-12 13:37+0000\n"
+"POT-Creation-Date: 2020-06-12 16:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,91 +15,71 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.4.0; wp-5.4.2"
 
+#: src/block.php:108 src/block.php:176
+msgid "Select a letter:"
+msgstr ""
+
+#. Name of the plugin
+#: src/block.php:171 src/admin-page/admin-page.php:23 
+#: src/admin-page/admin-page.php:23 src/admin-page/admin-page-table.php:55
+msgid "Glossary"
+msgstr ""
+
+#: src/block.php:172 src/block.php:173
+msgid "glossary"
+msgstr ""
+
 #. Description of the plugin
+#: src/block.php:173
 msgid "A simple beautiful glossary"
 msgstr ""
 
-#: src/admin-page/admin-page-crud.php:170
-msgid "Add a new entry to the glossary."
+#: src/block.php:174
+msgid "Primary color"
 msgstr ""
 
-#: src/admin-page/admin-page-table.php:55
-msgid "Add entry"
+#: src/block.php:175
+msgid "Accent color"
 msgstr ""
 
-#: src/admin-page/admin-page-crud.php:169
-msgid "Add glossary entry"
-msgstr ""
-
-#: src/admin-page/admin-page-crud.php:175
-msgid "Adjust the entry from the glossary."
-msgstr ""
-
-#: src/admin-page/admin-page-table.php:79
-msgid "All"
-msgstr ""
-
-#: src/db/db.php:57 src/db/db.php:81 src/db/db.php:93
-msgid "Congratulations, you just completed the installation!"
-msgstr ""
-
-#: src/admin-page/admin-page-crud.php:224
-msgid "Create new entry"
-msgstr ""
-
-#: src/admin-page/admin-page-crud.php:69 src/admin-page/admin-page-crud.php:300
-msgid "Database error."
-msgstr ""
-
-#: src/admin-page/admin-page-crud.php:282 
-#: src/admin-page/admin-page-table.php:142 
-#: src/admin-page/admin-page-table.php:143
-msgid "Delete"
-msgstr ""
-
-#: src/admin-page/admin-page-crud.php:280
-msgid "Delete glossary entry"
-msgstr ""
-
-#: src/admin-page/admin-page-crud.php:210 
-#: src/admin-page/admin-page-crud.php:254 
-#: src/admin-page/admin-page-table.php:122 
-#: src/admin-page/admin-page-table.php:148
-msgid "Description"
-msgstr ""
-
-#: src/admin-page/admin-page-crud.php:281
-#, php-format
-msgid "Do you really want to delete glossary entry \"%s\"?"
+#: src/block.php:177
+msgid "Example"
 msgstr ""
 
 #: src/db/db.php:56
 msgid "Dog"
 msgstr ""
 
-#: src/admin-page/admin-page-table.php:136 
-#: src/admin-page/admin-page-table.php:137
-msgid "Edit"
+#: src/db/db.php:57 src/db/db.php:81 src/db/db.php:93
+msgid "Congratulations, you just completed the installation!"
 msgstr ""
 
-#: src/admin-page/admin-page-crud.php:174
-msgid "Edit glossary entry"
+#: src/db/db.php:68
+msgid "Sheep"
 msgstr ""
 
-#: src/admin-page/admin-page-crud.php:99
-msgid "Entry could not be found."
+#: src/db/db.php:80
+msgid "Serpent"
 msgstr ""
 
-#: src/admin-page/admin-page-crud.php:77
-msgid "Entry has been adjusted."
+#: src/admin-page/admin-page-crud.php:69 src/admin-page/admin-page-crud.php:300
+msgid "Database error."
 msgstr ""
 
 #: src/admin-page/admin-page-crud.php:72
 msgid "Entry has been created."
 msgstr ""
 
-#: src/admin-page/admin-page-crud.php:305
-msgid "Entry has been deleted."
+#: src/admin-page/admin-page-crud.php:75
+msgid "No changes have occured."
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:77
+msgid "Entry has been adjusted."
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:99
+msgid "Entry could not be found."
 msgstr ""
 
 #: src/admin-page/admin-page-crud.php:102 
@@ -109,60 +89,20 @@ msgstr ""
 msgid "Entry id not valid."
 msgstr ""
 
-#: src/admin-page/admin-page-crud.php:303
-msgid "Entry not found."
+#: src/admin-page/admin-page-crud.php:169
+msgid "Add glossary entry"
 msgstr ""
 
-#: src/admin-page/admin-page-crud.php:251 
-#: src/admin-page/admin-page-crud.php:254
-#, php-format
-msgid "Field \"%s\" has to be filled in."
+#: src/admin-page/admin-page-crud.php:170
+msgid "Add a new entry to the glossary."
 msgstr ""
 
-#. Name of the plugin
-#: src/admin-page/admin-page-table.php:55
-msgid "Glossary"
+#: src/admin-page/admin-page-crud.php:174
+msgid "Edit glossary entry"
 msgstr ""
 
-#: src/admin-page/admin-page-table.php:112
-msgid "Glossary entries"
-msgstr ""
-
-#: src/admin-page/admin-page-table.php:64
-msgid "Hide this message"
-msgstr ""
-
-#. URI of the plugin
-msgid "https://example.com"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "https://github.com/Vec7or"
-msgstr ""
-
-#: src/admin-page/admin-page-crud.php:75
-msgid "No changes have occured."
-msgstr ""
-
-#: src/admin-page/admin-page-crud.php:200 
-#: src/admin-page/admin-page-crud.php:211
-msgid "required"
-msgstr ""
-
-#: src/admin-page/admin-page-crud.php:228
-msgid "Save entry"
-msgstr ""
-
-#: src/block.php:108
-msgid "Select a letter:"
-msgstr ""
-
-#: src/db/db.php:80
-msgid "Serpent"
-msgstr ""
-
-#: src/db/db.php:68
-msgid "Sheep"
+#: src/admin-page/admin-page-crud.php:175
+msgid "Adjust the entry from the glossary."
 msgstr ""
 
 #: src/admin-page/admin-page-crud.php:199 
@@ -172,6 +112,84 @@ msgstr ""
 msgid "Term"
 msgstr ""
 
+#: src/admin-page/admin-page-crud.php:200 
+#: src/admin-page/admin-page-crud.php:211
+msgid "required"
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:210 
+#: src/admin-page/admin-page-crud.php:254 
+#: src/admin-page/admin-page-table.php:122 
+#: src/admin-page/admin-page-table.php:148
+msgid "Description"
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:224
+msgid "Create new entry"
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:228
+msgid "Save entry"
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:251 
+#: src/admin-page/admin-page-crud.php:254
+#, php-format
+msgid "Field \"%s\" has to be filled in."
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:280
+msgid "Delete glossary entry"
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:281
+#, php-format
+msgid "Do you really want to delete glossary entry \"%s\"?"
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:282 
+#: src/admin-page/admin-page-table.php:142 
+#: src/admin-page/admin-page-table.php:143
+msgid "Delete"
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:303
+msgid "Entry not found."
+msgstr ""
+
+#: src/admin-page/admin-page-crud.php:305
+msgid "Entry has been deleted."
+msgstr ""
+
+#: src/admin-page/admin-page-table.php:55
+msgid "Add entry"
+msgstr ""
+
+#: src/admin-page/admin-page-table.php:64
+msgid "Hide this message"
+msgstr ""
+
+#: src/admin-page/admin-page-table.php:79
+msgid "All"
+msgstr ""
+
+#: src/admin-page/admin-page-table.php:112
+msgid "Glossary entries"
+msgstr ""
+
+#: src/admin-page/admin-page-table.php:136 
+#: src/admin-page/admin-page-table.php:137
+msgid "Edit"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://example.com"
+msgstr ""
+
 #. Author of the plugin
 msgid "vec7or"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://github.com/Vec7or"
 msgstr ""

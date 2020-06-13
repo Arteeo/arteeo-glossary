@@ -28,15 +28,15 @@ const { PanelBody, ColorPicker } = wp.components;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'cgb/block-glossary', {
+registerBlockType( 'glossary/block-glossary', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Glossary', 'glossary' ), // Block title.
+	title: cgbGlobal.__Glossary, // Block title.
 	icon: 'book-alt', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'embed', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'glossary - A simple beautiful glossary', 'glossary' ),
-		__( 'glossary', 'glossary' ),
-		__( 'Glossary', 'glossary' )
+		cgbGlobal.__glossaryDescription,
+		cgbGlobal.__glossary,
+		cgbGlobal.__Glossary,
 	],
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -50,6 +50,13 @@ registerBlockType( 'cgb/block-glossary', {
 	 * @returns {Mixed} JSX Component.
 	 */
 	edit: ( props ) => {
+		const activeLetter = (letter) => {
+			if(letter == cgbGlobal.__example.slice(0, 1).toUpperCase()) {
+				return true;
+			}			
+			return false;
+		}
+
 		const setPrimaryColor = ( color ) => {
 			props.setAttributes( { primaryColor: color === undefined ? '#0065AE' : color.hex } );
 		};
@@ -58,13 +65,23 @@ registerBlockType( 'cgb/block-glossary', {
 			props.setAttributes( { secondaryColor: color === undefined ? '#0065AE' : color.hex } );
 		};
 
-		// Creates a <div class='wp-block-cgb-block-glossary'></siv>.
+		const letters = [];
+
+		for (var i = 65; i <= 90; i++) {
+				if(activeLetter(String.fromCharCode(i))) {
+					letters.push(<a class="active" style={{ color: props.attributes.secondaryColor, borderColor: props.attributes.secondaryColor}}>{String.fromCharCode(i)}</a>);
+				} else {
+					letters.push(<a>{String.fromCharCode(i)}</a>)
+				}
+		}
+
+		// Creates a <div class='wp-block-glossary-block-glossary'></siv>.
 		return (
 			<div className={ props.className }>
 				{
 					<InspectorControls>
 						<PanelBody
-							title={__( 'Primary color', 'glossary' )}
+							title={cgbGlobal.__primaryColor}
 							initialOpen={false}
 						>
 							<ColorPicker
@@ -74,7 +91,7 @@ registerBlockType( 'cgb/block-glossary', {
 							/>
 						</PanelBody>
 						<PanelBody
-							title={__( 'Accent color', 'glossary' )}
+							title={cgbGlobal.__accentColor}
 							initialOpen={false}
 						>
 							<ColorPicker
@@ -89,45 +106,20 @@ registerBlockType( 'cgb/block-glossary', {
 					<section class="sidebar">
 						<div class="sidebar-header" style={{ backgroundColor: props.attributes.primaryColor}}>
 						<div class="letter">
-							<h2>E</h2>
+							<h2>{cgbGlobal.__example.slice(0, 1).toUpperCase()}</h2>
 						</div>
 						</div>
 						<div class="sidebar-content">
-							<h3 style={{ color: props.attributes.secondaryColor}} >{__('Select a letter:', 'glossary')}</h3>
+							<h3 style={{ color: props.attributes.secondaryColor}} >{cgbGlobal.__selectLetter}</h3>
 							<div class="letters">
-								<a>A</a>
-								<a>B</a>
-								<a>C</a>
-								<a>D</a>
-								<a class="active" style={{ color: props.attributes.secondaryColor, borderColor: props.attributes.secondaryColor}}>E</a>
-								<a>F</a>
-								<a>G</a>
-								<a>H</a>
-								<a>I</a>
-								<a>J</a>
-								<a>K</a>
-								<a>L</a>
-								<a>M</a>
-								<a>N</a>
-								<a>O</a>
-								<a>P</a>
-								<a>Q</a>
-								<a>R</a>
-								<a>S</a>
-								<a>T</a>
-								<a>U</a>
-								<a>V</a>
-								<a>W</a>
-								<a>X</a>
-								<a>Y</a>
-								<a>Z</a>
+								{letters}
 							</div>
 						</div>
 					</section>
 					<main class="content">
 						<article class="entry">
 						<div class="name">
-							<h2 style={{ color: props.attributes.secondaryColor}} >{__('Example', 'glossary')} 1</h2>
+							<h2 style={{ color: props.attributes.secondaryColor}} >{cgbGlobal.__example} 1</h2>
 						</div>
 						<div class="description">
 							<p>
@@ -137,7 +129,7 @@ registerBlockType( 'cgb/block-glossary', {
 						</article>
 						<article class="entry">
 						<div class="name">
-							<h2 style={{ color: props.attributes.secondaryColor}}>{__('Example', 'glossary')} 2</h2>
+							<h2 style={{ color: props.attributes.secondaryColor}}>{cgbGlobal.__example} 2</h2>
 						</div>
 						<div class="description">
 							<p>
@@ -147,7 +139,7 @@ registerBlockType( 'cgb/block-glossary', {
 						</article>
 						<article class="entry">
 						<div class="name">
-							<h2 style={{ color: props.attributes.secondaryColor}}>{__('Example', 'glossary')} 3</h2>
+							<h2 style={{ color: props.attributes.secondaryColor}}>{cgbGlobal.__example} 3</h2>
 						</div>
 						<div class="description">
 							<p>
