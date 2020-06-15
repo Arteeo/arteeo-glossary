@@ -96,7 +96,7 @@ function glossary_cgb_block_render($attributes) {
 	}
 
 	return '
-		<div class="wp-block-glossary-block-glossary">
+		<div class="wp-block-glossary-block-glossary" id="wp-block-glossary-block-glossary">
 			<div class="wrapper"> 
 				<section class="sidebar">
 					<div class="sidebar-header" style="background-color:'.$attributes['primaryColor'].';">
@@ -153,6 +153,15 @@ function glossary_cgb_block_assets() { // phpcs:ignore
 		true // Enqueue the script in the footer.
 	);
 
+	wp_register_script(
+		'resize-js', // Handle.
+		plugins_url( '/src/block/resize.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
+		null, // Dependencies, defined above.
+		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
+		true // Enqueue the script in the footer.
+	);
+
+
 	// Register block editor styles for backend.
 	wp_register_style(
 		'glossary-cgb-block-editor-css', // Handle.
@@ -193,6 +202,7 @@ function glossary_cgb_block_assets() { // phpcs:ignore
 		'glossary/block-glossary', array(
 			// Enqueue blocks.style.build.css on both frontend & backend.
 			'style'         => 'glossary-cgb-style-css',
+			'script'				=> 'resize-js',
 			// Enqueue blocks.build.js in the editor only.
 			'editor_script' => 'glossary-cgb-block-js',
 			// Enqueue blocks.editor.build.css in the editor only.

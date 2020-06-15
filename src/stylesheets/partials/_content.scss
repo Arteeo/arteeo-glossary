@@ -31,18 +31,22 @@
 }
 
 // Small
-@media only screen and (min-width: $grid-sm) {
+.wp-block-glossary-block-glossary {
+    &.sm {
 
+    }
 }
 
 // Medium
-@media only screen and (min-width: $grid-md) {
+.wp-block-glossary-block-glossary {
+    &.md {
 
+    }
 }
 
 // Large
-@media only screen and (min-width: $grid-lg) {
-    .wp-block-glossary-block-glossary {
+.wp-block-glossary-block-glossary {
+    &.lg {
         .content {
             width: 0px;
             flex-grow: 1;
@@ -51,6 +55,11 @@
 }
 
 // Xtra large
-@media only screen and (min-width: $grid-xl) {
-
+.wp-block-glossary-block-glossary {
+    &.xl {
+        .content {
+            width: 0px;
+            flex-grow: 1;
+        }
+    }
 }

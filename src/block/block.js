@@ -77,7 +77,7 @@ registerBlockType( 'glossary/block-glossary', {
 
 		// Creates a <div class='wp-block-glossary-block-glossary'></siv>.
 		return (
-			<div className={ props.className }>
+			<div className={ props.className } id={ props.className }>
 				{
 					<InspectorControls>
 						<PanelBody
