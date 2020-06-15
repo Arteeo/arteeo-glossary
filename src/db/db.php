@@ -21,6 +21,8 @@ function prepare_glossary_table() {
 	global $wpdb;
 	global $glossary_table_name;
 	$exists = $wpdb->get_results( "SHOW TABLES LIKE '$glossary_table_name'");
+	//In case a upgrade is necessary this is the place to check since after
+	//upgrade this function is called to.
 	
 	if($wpdb->num_rows == 0) {
 		create_glossary_table();
@@ -115,4 +117,11 @@ function drop_glossary_table() {
 	$glossary_table_name = '';
 
 	delete_option( "glossary_version", $glossary_version );
+}
+
+function check_for_glossary_table_update() {
+	global $glossary_version;
+	if ( get_site_option( 'glossary_version' ) != $glossary_version ) {
+			create_glossary_table();
+	}
 }

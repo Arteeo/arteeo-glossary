@@ -44,6 +44,7 @@ require_once plugin_dir_path( __FILE__ ) . 'src/db/db.php';
 
 register_activation_hook( __FILE__, 'prepare_glossary_table' );
 register_uninstall_hook( __FILE__, 'drop_glossary_table' );
+add_action( 'plugins_loaded', 'check_for_glossary_table_update' );
 
 
 /**
