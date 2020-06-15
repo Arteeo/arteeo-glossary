@@ -1,0 +1,194 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Glossary\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-12 16:50+0000\n"
+"PO-Revision-Date: 2020-06-14 12:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: French (France)\n"
+"Language: fr-FR\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.4.0; wp-5.4.2"
+
+#: src/block.php:108 src/block.php:176
+msgid "Select a letter:"
+msgstr "Sélectionnez une lettre :"
+
+#. Name of the plugin
+#: src/block.php:171 src/admin-page/admin-page.php:23 
+#: src/admin-page/admin-page.php:23 src/admin-page/admin-page-table.php:55
+msgid "Glossary"
+msgstr "Glossaire"
+
+#: src/block.php:172 src/block.php:173
+msgid "glossary"
+msgstr "glossaire"
+
+#. Description of the plugin
+#: src/block.php:173
+msgid "A simple beautiful glossary"
+msgstr "Un beau glossaire simple"
+
+#: src/block.php:174
+msgid "Primary color"
+msgstr "Couleur primaire"
+
+#: src/block.php:175
+msgid "Accent color"
+msgstr "Couleur d'accent"
+
+#: src/block.php:177
+msgid "Example"
+msgstr "Exemple"
+
+#: src/db/db.php:56
+msgid "Dog"
+msgstr "Chien"
+
+#: src/db/db.php:57 src/db/db.php:81 src/db/db.php:93
+msgid "Congratulations, you just completed the installation!"
+msgstr "Félicitations, vous venez de terminer l'installation !"
+
+#: src/db/db.php:68
+msgid "Sheep"
+msgstr "Moutons"
+
+#: src/db/db.php:80
+msgid "Serpent"
+msgstr "Serpent"
+
+#: src/admin-page/admin-page-crud.php:69 src/admin-page/admin-page-crud.php:300
+msgid "Database error."
+msgstr "Erreur de base de données."
+
+#: src/admin-page/admin-page-crud.php:72
+msgid "Entry has been created."
+msgstr "L'entrée a été créée."
+
+#: src/admin-page/admin-page-crud.php:75
+msgid "No changes have occured."
+msgstr "Aucun changement n'est intervenu."
+
+#: src/admin-page/admin-page-crud.php:77
+msgid "Entry has been adjusted."
+msgstr "L'entrée a été ajustée."
+
+#: src/admin-page/admin-page-crud.php:99
+msgid "Entry could not be found."
+msgstr "L'entrée n'a pas pu être trouvée."
+
+#: src/admin-page/admin-page-crud.php:102 
+#: src/admin-page/admin-page-crud.php:112 
+#: src/admin-page/admin-page-crud.php:122 
+#: src/admin-page/admin-page-crud.php:265
+msgid "Entry id not valid."
+msgstr "L'identifiant d'entrée n'est pas valable."
+
+#: src/admin-page/admin-page-crud.php:169
+msgid "Add glossary entry"
+msgstr "Ajouter une entrée de glossaire"
+
+#: src/admin-page/admin-page-crud.php:170
+msgid "Add a new entry to the glossary."
+msgstr "Ajouter une nouvelle entrée au glossaire."
+
+#: src/admin-page/admin-page-crud.php:174
+msgid "Edit glossary entry"
+msgstr "Modifier l'entrée du glossaire"
+
+#: src/admin-page/admin-page-crud.php:175
+msgid "Adjust the entry from the glossary."
+msgstr "Ajustez l'entrée du glossaire."
+
+#: src/admin-page/admin-page-crud.php:199 
+#: src/admin-page/admin-page-crud.php:251 
+#: src/admin-page/admin-page-table.php:117 
+#: src/admin-page/admin-page-table.php:130
+msgid "Term"
+msgstr "Terme"
+
+#: src/admin-page/admin-page-crud.php:200 
+#: src/admin-page/admin-page-crud.php:211
+msgid "required"
+msgstr "requis"
+
+#: src/admin-page/admin-page-crud.php:210 
+#: src/admin-page/admin-page-crud.php:254 
+#: src/admin-page/admin-page-table.php:122 
+#: src/admin-page/admin-page-table.php:148
+msgid "Description"
+msgstr "Description"
+
+#: src/admin-page/admin-page-crud.php:224
+msgid "Create new entry"
+msgstr "Créer une nouvelle entrée"
+
+#: src/admin-page/admin-page-crud.php:228
+msgid "Save entry"
+msgstr "Sauvegarder l'entrée"
+
+#: src/admin-page/admin-page-crud.php:251 
+#: src/admin-page/admin-page-crud.php:254
+#, php-format
+msgid "Field \"%s\" has to be filled in."
+msgstr "Le champ \"%s\" doit être rempli."
+
+#: src/admin-page/admin-page-crud.php:280
+msgid "Delete glossary entry"
+msgstr "Supprimer une entrée du glossaire"
+
+#: src/admin-page/admin-page-crud.php:281
+#, php-format
+msgid "Do you really want to delete glossary entry \"%s\"?"
+msgstr "Souhaitez-vous vraiment supprimer l'entrée de glossaire \"%s\" ?"
+
+#: src/admin-page/admin-page-crud.php:282 
+#: src/admin-page/admin-page-table.php:142 
+#: src/admin-page/admin-page-table.php:143
+msgid "Delete"
+msgstr "Supprimer"
+
+#: src/admin-page/admin-page-crud.php:303
+msgid "Entry not found."
+msgstr "Entrée non trouvée."
+
+#: src/admin-page/admin-page-crud.php:305
+msgid "Entry has been deleted."
+msgstr "L'entrée a été supprimée."
+
+#: src/admin-page/admin-page-table.php:55
+msgid "Add entry"
+msgstr "Ajouter une entrée"
+
+#: src/admin-page/admin-page-table.php:64
+msgid "Hide this message"
+msgstr "Cacher ce message"
+
+#: src/admin-page/admin-page-table.php:79
+msgid "All"
+msgstr "Tous"
+
+#: src/admin-page/admin-page-table.php:112
+msgid "Glossary entries"
+msgstr "Entrées du glossaire"
+
+#: src/admin-page/admin-page-table.php:136 
+#: src/admin-page/admin-page-table.php:137
+msgid "Edit"
+msgstr "Éditer"
+
+#. URI of the plugin
+msgid "https://example.com"
+msgstr "https://example.com"
+
+#. Author of the plugin
+msgid "vec7or"
+msgstr "vec7or"
+
+#. Author URI of the plugin
+msgid "https://github.com/Vec7or"
+msgstr "https://github.com/Vec7or"
