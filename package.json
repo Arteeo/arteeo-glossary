@@ -4,15 +4,13 @@
   "private": true,
   "scripts": {
     "start": "cgb-scripts start",
-    "build": "cgb-scripts build",
+    "build": "cgb-scripts build & npx webpack",
     "eject": "cgb-scripts eject"
   },
   "dependencies": {
-    "cgb-scripts": "1.23.0"
+    "cgb-scripts": "^1.23.0"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^6.0.2",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "copy-webpack-plugin": "^4.0.0"
   }
 }

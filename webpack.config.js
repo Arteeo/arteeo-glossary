@@ -8,13 +8,11 @@ module.exports = {
     filename: 'resize.js'
   },
   plugins: [
-    new CopyPlugin({
-      patterns: [
+    new CopyPlugin([
         { from: 'src/admin-page/', to: 'admin-page/' },
         { from: 'src/db/', to: 'db/' },
         { from: 'src/helper/', to: 'helper/' },
         { from: 'src/block.php', to: 'block.php' },
-      ],
-    }),
+    ]),
   ],
 };
