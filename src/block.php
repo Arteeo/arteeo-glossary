@@ -155,7 +155,7 @@ function glossary_cgb_block_assets() { // phpcs:ignore
 
 	wp_register_script(
 		'resize-js', // Handle.
-		plugins_url( '/src/block/resize.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
+		plugins_url( '/dist/resize.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		null, // Dependencies, defined above.
 		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
 		true // Enqueue the script in the footer.
@@ -165,7 +165,7 @@ function glossary_cgb_block_assets() { // phpcs:ignore
 	// Register block editor styles for backend.
 	wp_register_style(
 		'glossary-cgb-block-editor-css', // Handle.
-		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
+		plugins_url( '/dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
 		null // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
 	);
