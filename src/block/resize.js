@@ -2,16 +2,22 @@
  * Enable auto resizing inside container
  */
 let animationFrameID = null
-let containerWidth = null
+let containerWidth = [];
 
 function animationFrameLoop() {
-	const container = document.querySelector('#wp-block-glossary-block-glossary')
-  const newContainerWidth = container.offsetWidth
+  const containers = document.querySelectorAll('.wp-block-glossary-block-glossary');
+  
+  containers.forEach(
+    function(currentValue, currentIndex, listObj) { 
+      const newContainerWidth = currentValue.offsetWidth
 	
-  if (newContainerWidth !== containerWidth) {
-  	handleContainerWidthChanged(container, newContainerWidth)
-    containerWidth = newContainerWidth
-  }
+      if (newContainerWidth !== containerWidth[currentIndex]) {
+        handleContainerWidthChanged(currentValue, newContainerWidth);
+        containerWidth[currentIndex] = newContainerWidth;
+      }
+    },
+    ''
+  );
   
   animationFrameID = window.requestAnimationFrame(animationFrameLoop)
 }
