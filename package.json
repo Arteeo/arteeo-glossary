@@ -11,6 +11,7 @@
     "cgb-scripts": "^1.23.0"
   },
   "devDependencies": {
+    "babel-preset-env": "^1.7.0",
     "copy-webpack-plugin": "^4.0.0"
   }
 }
