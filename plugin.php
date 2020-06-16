@@ -30,17 +30,17 @@ function load_glossary_textdomain() {
 add_action( 'plugins_loaded', 'load_glossary_textdomain' );
 
 // Include helpers
-require_once plugin_dir_path( __FILE__ ) . 'dist/helper/helpers.php';
+require_once plugin_dir_path( __FILE__ ) . 'php/helper/helpers.php';
 
 /**
  * Block Initializer.
  */
-require_once plugin_dir_path( __FILE__ ) . 'dist/block.php';
+require_once plugin_dir_path( __FILE__ ) . 'php/block/block.php';
 
 /**
  * Create DB
  */
-require_once plugin_dir_path( __FILE__ ) . 'dist/db/db.php';
+require_once plugin_dir_path( __FILE__ ) . 'php/db/db.php';
 
 register_activation_hook( __FILE__, 'prepare_glossary_table' );
 register_uninstall_hook( __FILE__, 'drop_glossary_table' );
@@ -50,4 +50,4 @@ add_action( 'plugins_loaded', 'check_for_glossary_table_update' );
 /**
  * Admin Page
  */
-require_once plugin_dir_path( __FILE__ ) . 'dist/admin-page/admin-page.php';
+require_once plugin_dir_path( __FILE__ ) . 'php/admin-page/admin-page.php';

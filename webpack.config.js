@@ -6,7 +6,7 @@ module.exports = {
   entry: './src/block/resize.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'resize.js'
+    filename: 'js/resize.js'
   },
   module: {
 		rules: [
@@ -38,10 +38,14 @@ module.exports = {
 			sourceMap: false,
 		}),
     new CopyPlugin([
-        { from: 'src/admin-page/', to: 'admin-page/' },
-        { from: 'src/db/', to: 'db/' },
-        { from: 'src/helper/', to: 'helper/' },
-        { from: 'src/block.php', to: 'block.php' },
+        { from: 'src/admin-page/', to: 'php/admin-page/' },
+        { from: 'src/db/', to: 'php/db/' },
+        { from: 'src/helper/', to: 'php/helper/' },
+        { from: 'src/block.php', to: 'php/block/block.php' },
+        { from: 'plugin.php', to: 'plugin.php' },
+        { from: 'dist/blocks.build.js', to: 'js/block/'},
+        { from: 'dist/blocks.editor.build.css', to: 'css/block/'},
+        { from: 'dist/blocks.style.build.css', to: 'css/block/'},
     ]),
   ],
 };
