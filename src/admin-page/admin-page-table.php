@@ -17,6 +17,7 @@ function create_glossary_admin_table(){
 	global $glossary_version;
 	global $wpdb;
 	global $glossary_table_name;
+	global $glossary_plugin_dir;
 
 	$sorting = "ASC";
 	if (isset($_GET['glossary_sort']) && isset($_GET['order'])) {
@@ -31,18 +32,18 @@ function create_glossary_admin_table(){
 		$glossary_show = sanitize_text_field($_GET['glossary_show']);
 
 		if (strlen($glossary_show) == 1) {
-			$entries = $wpdb->get_results( "SELECT id, letter, term, description FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
+			$entries = $wpdb->get_results( "SELECT * FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
 			if ($wpdb->num_rows < 1) {
 				redirectTo(generate_url(array('glossary_show' => 'all')));
 			}
 		} else if ($glossary_show == "hashtag") {
 			$glossary_show = '#';
-			$entries = $wpdb->get_results( "SELECT id, letter, term, description FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
+			$entries = $wpdb->get_results( "SELECT * FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
 			if ($wpdb->num_rows < 1) {
 				redirectTo(generate_url(array('glossary_show' => 'all')));
 			}
 		} else if ($glossary_show == 'all') {
-			$entries = $wpdb->get_results( "SELECT id, letter, term, description FROM $glossary_table_name ORDER BY term $sorting");
+			$entries = $wpdb->get_results( "SELECT * FROM $glossary_table_name ORDER BY term $sorting");
 		} else {
 			redirectTo(generate_url(array('glossary_show' => 'all')));
 		}
@@ -50,6 +51,12 @@ function create_glossary_admin_table(){
 		redirectTo(generate_url(array('glossary_show' => 'all')));
 	}
 
+	$languages = get_available_languages( $glossary_plugin_dir.'languages' );
+
+	$prefix = 'glossary-';
+	for ($i = 0; $i < count($languages); $i++)  {
+		$languages[$i] = substr($languages[$i], strlen($prefix));
+	}
 	?>
 	<div class="wrap">
 		<h1 class="wp-heading-inline"><?php _e('Glossary', 'glossary'); ?></h1><span>v<?php echo $glossary_version; ?></span><a class="page-title-action aria-button-if-js" role="button" aria-expanded="false" href="<?php echo generate_url(array('action'=>'add')); ?>"><?php _e('Add entry', 'glossary'); ?></a>
@@ -121,6 +128,9 @@ function create_glossary_admin_table(){
 				<th id="description" class="manage-column column-description" scope="col">
 					<?php _e('Description', 'glossary'); ?>
 				</th>
+				<th id="locale" class="manage-column column-locale" scope="col">
+					<?php _e('Language', 'glossary'); ?>
+				</th>
 			</thead>
 			<tbody id="the-list">
 				<?php
@@ -147,6 +157,9 @@ function create_glossary_admin_table(){
 								</td>
 								<td class="description column-description" data-colname="'.__('Description', 'glossary').'">
 									'.nl2br($entry->description).'	
+								</td>
+								<td class="locale column-locale" data-colname="'.__('Language', 'glossary').'">
+									'.__($entry->locale, 'glossary').'	
 								</td>
 							</tr>	
 						';

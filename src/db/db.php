@@ -42,6 +42,7 @@ function create_glossary_table() {
 		letter char NOT NULL,
 		term tinytext NOT NULL,
 		description text NOT NULL,
+		locale text NOT NULL,
 		PRIMARY KEY  (id)
 	) $charset_collate;";
 
@@ -54,6 +55,8 @@ function create_glossary_table() {
 function fill_glossary_table() {
 	global $wpdb;
 	global $glossary_table_name;
+
+	$locale = get_locale();
 	
 	$term = __('Dog', 'glossary');
 	$description = __('Congratulations, you just completed the installation!', 'glossary');
@@ -64,6 +67,7 @@ function fill_glossary_table() {
 			'letter' => strtoupper(substr($term, 0, 1)),
 			'term' => $term, 
 			'description' => $description, 
+			'locale' => $locale,
 		) 
 	);
 
@@ -75,7 +79,8 @@ function fill_glossary_table() {
 		array(
 			'letter' => strtoupper(substr($term, 0, 1)),
 			'term' => $term, 
-			'description' => $description, 
+			'description' => $description,
+			'locale' => $locale,
 		) 
 	);
 
@@ -88,6 +93,7 @@ function fill_glossary_table() {
 			'letter' => strtoupper(substr($term, 0, 1)),
 			'term' => $term, 
 			'description' => $description, 
+			'locale' => $locale,
 		) 
 	);
 
@@ -100,6 +106,7 @@ function fill_glossary_table() {
 			'letter' => '#',
 			'term' => $term, 
 			'description' => $description, 
+			'locale' => $locale,
 		) 
 	);
 }

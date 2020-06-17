@@ -19,6 +19,9 @@ global $wpdb;
 global $glossary_table_name;
 $glossary_table_name = $wpdb->prefix . "glossary";
 
+global $glossary_plugin_dir;
+$glossary_plugin_dir = plugin_dir_path( __FILE__ );
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

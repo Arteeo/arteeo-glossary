@@ -43,6 +43,7 @@ module.exports = {
         { from: 'src/helper/', to: 'php/helper/' },
         { from: 'src/block.php', to: 'php/block/block.php' },
         { from: 'plugin.php', to: 'plugin.php' },
+        { from: 'readme.md', to: 'readme.md' },
         { from: 'dist/blocks.build.js', to: 'js/block/'},
         { from: 'dist/blocks.editor.build.css', to: 'css/block/'},
         { from: 'dist/blocks.style.build.css', to: 'css/block/'},

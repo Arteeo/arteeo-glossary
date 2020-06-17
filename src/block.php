@@ -62,37 +62,51 @@ function glossary_cgb_block_render($attributes) {
 	global $wpdb;
 	global $glossary_table_name;
 
+	$locale = get_locale();
+
 	$handled = false;
-	$letters = $wpdb->get_results( "SELECT letter FROM $glossary_table_name GROUP BY letter ORDER BY letter ASC");
+	$letters = $wpdb->get_results( "SELECT letter FROM $glossary_table_name WHERE locale = '$locale' GROUP BY letter ORDER BY letter ASC");
 	$currentLetter;
 	$entries;
-	if(isset($_GET['letter'])) {
-		if(strlen($_GET['letter']) == 1) {
-			$currentLetter = strtoupper(sanitize_text_field( $_GET['letter']));
-			$entries = $wpdb->get_results( "SELECT term, description FROM $glossary_table_name WHERE letter = '$currentLetter' ORDER BY term ASC");
-			if($wpdb->num_rows > 0) {
-				$handled = true;
-			}
-		} else if ($_GET['letter'] == 'hashtag') {
-			$currentLetter = '#';
-			$entries = $wpdb->get_results( "SELECT term, description FROM $glossary_table_name WHERE letter = '$currentLetter' ORDER BY term ASC");
-			if($wpdb->num_rows > 0) {
-				$handled = true;
+
+	if($wpdb->num_rows == 0) {
+		$currentLetter = '?';
+		$letters = [];
+		$letters[0] = new stdClass();
+		$letters[0]->letter = '?';
+		$entries = [];
+		$entries[0] = new stdClass();
+		$entries[0]->term = __('No entry', 'glossary');
+		$entries[0]->description = __('Unfortunately no entries in your language could be found in this glossary.', 'glossary');
+	} else {
+		if(isset($_GET['letter'])) {
+			if(strlen($_GET['letter']) == 1) {
+				$currentLetter = strtoupper(sanitize_text_field( $_GET['letter']));
+				$entries = $wpdb->get_results( "SELECT term, description FROM $glossary_table_name WHERE letter = '$currentLetter' AND locale = '$locale' ORDER BY term ASC");
+				if($wpdb->num_rows > 0) {
+					$handled = true;
+				}
+			} else if ($_GET['letter'] == 'hashtag') {
+				$currentLetter = '#';
+				$entries = $wpdb->get_results( "SELECT term, description FROM $glossary_table_name WHERE letter = '$currentLetter' AND locale = '$locale' ORDER BY term ASC");
+				if($wpdb->num_rows > 0) {
+					$handled = true;
+				}
 			}
 		}
-	}
-
-	if(!$handled) {
-		if(count($letters) > 1) {
-			if ($letters[0]->letter == '#') {
-				$currentLetter = $letters[1]->letter;
+	
+		if(!$handled) {
+			if(count($letters) > 1) {
+				if ($letters[0]->letter == '#') {
+					$currentLetter = $letters[1]->letter;
+				} else {
+					$currentLetter = $letters[0]->letter;
+				}
 			} else {
 				$currentLetter = $letters[0]->letter;
 			}
-		} else {
-			$currentLetter = $letters[0]->letter;
+			$entries = $wpdb->get_results( "SELECT term, description FROM $glossary_table_name WHERE letter = '$currentLetter' ORDER BY term ASC");
 		}
-		$entries = $wpdb->get_results( "SELECT term, description FROM $glossary_table_name WHERE letter = '$currentLetter' ORDER BY term ASC");
 	}
 
 	return '

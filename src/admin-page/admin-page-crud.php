@@ -20,11 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 function glossary_entry_crud($action, $id) {
 	global $wpdb;
 	global $glossary_table_name;
-	if (isset($_POST['action']) && isset($_POST['term']) && isset($_POST['description'])) {
+	if (isset($_POST['action']) && isset($_POST['term']) && isset($_POST['description']) && isset($_POST['locale'])) {
 			$error = glossary_entry_form_check_errors();
 			if ($error == null) {
 				$term = sanitize_text_field( $_POST['term'] );
 				$description = sanitize_textarea_field( $_POST['description'] );
+				$locale = sanitize_text_field( $_POST['locale'] );
+				if($locale == '') {
+					$locale = 'en_US';
+				}
 				$letter = substr($term, 0, 1);
 				if (!ctype_alpha($letter)) {
 					$letter = '#';
@@ -39,7 +43,8 @@ function glossary_entry_crud($action, $id) {
 						array( 
 							'letter' => $letter,
 							'term' => $term, 
-							'description' => $description 
+							'description' => $description,
+							'locale' => $locale,
 						), 
 						array( 
 							'%s',
@@ -53,7 +58,8 @@ function glossary_entry_crud($action, $id) {
 						array( 
 							'letter' => $letter,
 							'term' => $term,
-							'description' => $description
+							'description' => $description,
+							'locale' => $locale,
 						), 
 						array( 'id' => $_POST['id'] ), 
 						array( 
@@ -137,19 +143,32 @@ function glossary_entry_crud($action, $id) {
  * 								shown to the user.
  */
 function glossary_entry_form($entry, $errormessage) {
+		global $glossary_plugin_dir;
+
 		$term = '';
 		$description = '';
+		$locale = '';
 
-		if (isset($_POST['term']) || isset($_POST['description'])) {
+		$languages = get_available_languages( $glossary_plugin_dir.'languages' );
+		$prefix = 'glossary-';
+		for ($i = 0; $i < count($languages); $i++)  {
+			$languages[$i] = substr($languages[$i], strlen($prefix));
+		}
+
+		if (isset($_POST['term']) || isset($_POST['description']) || isset($_POST['locale'])) {
 			if(isset($_POST['term'])) {
 				$term = sanitize_text_field( $_POST['term'] );
 			} 
 			if(isset($_POST['description'])) {
 				$description = sanitize_textarea_field( $_POST['description'] );
 			}	
+			if(isset($_POST['locale'])) {
+				$locale = sanitize_text_field( $_POST['locale'] );
+			}
 		} else if ($entry != null) {
 			$term = $entry->term;
 			$description = $entry->description;
+			$locale = $entry->locale;
 		}
 	?>
 	<div class="wrap">
@@ -215,6 +234,17 @@ function glossary_entry_form($entry, $errormessage) {
 							<textarea id="glossary_description" name="description" aria-required="true" autocapitalize="none" autocorrect="on"><?php echo $description; ?></textarea>
 						</td>
 					</tr>
+					<tr class="form-field form-required">
+						<th scope="row">
+							<label for="glossary_locale">
+								<?php _e('Language', 'glossary') ?>
+							<span class="locale">(<?php _e('required', 'glossary') ?>)</span>
+							</label>
+						</th>
+						<td>
+							<?php wp_dropdown_languages( array( 'languages' => $languages, 'selected' => $locale, 'show_available_translations' => false)); ?>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 			<p class="submit">
@@ -246,12 +276,27 @@ function glossary_entry_form($entry, $errormessage) {
 function glossary_entry_form_check_errors() {
 	global $wpdb;
 	global $glossary_table_name;
+	global $glossary_plugin_dir;
+
+	$languages = get_available_languages( $glossary_plugin_dir.'languages' );
+	$prefix = 'glossary-';
+	for ($i = 0; $i < count($languages); $i++)  {
+		$languages[$i] = substr($languages[$i], strlen($prefix));
+	}
 
 	if (!isset($_POST['term']) || $_POST['term'] == '') {
 		return sprintf(__('Field "%s" has to be filled in.', 'glossary'), __('Term', 'glossary'));
 	}
 	if (!isset($_POST['description']) || $_POST['description'] == '') {
 		return sprintf(__('Field "%s" has to be filled in.', 'glossary'), __('Description', 'glossary'));
+	}
+
+	if (!isset($_POST['locale'])) {
+		return sprintf(__('Field "%s" has to be filled in.', 'glossary'), __('Language', 'glossary'));
+	}
+
+	if(array_search(sanitize_text_field( $_POST['locale'] ), $languages) === false && $_POST['locale'] != '') {
+		return sprintf(__('Selected language not supported.', 'glossary'));
 	}
 
 	if (isset($_POST['id'])) {
