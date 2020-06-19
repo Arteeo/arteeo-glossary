@@ -1,28 +1,35 @@
-# Glossary
-## A beautiful glossary for WordPress
+# WP Glossary
+A beautiful glossary for WordPress
 
-This project was bootstrapped with [Create Guten Block](https://github.com/ahmadawais/create-guten-block).
+## Users
+Todo: Insert screenshots etc. user documentation
 
-Below you will find some information on how to run scripts.
-
->You can find the most recent version of this guide [here](https://github.com/ahmadawais/create-guten-block).
-
-## 👉  `npm start`
+## Developers
+### Dependencies
+The following software has to be installed in order for you to be able to adjust and build this plugin (higher versions should also work):
+1. [npm v14.x](https://github.com/nodesource/distributions)
+2. [php 7.4](https://www.php.net/)
+3. [phpcs](https://github.com/squizlabs/PHP_CodeSniffer)
+4. [composer](https://getcomposer.org/)
+5. [vscode](https://code.visualstudio.com/) (optional)
+### Setup
+1. Install npm dependencies `npm i`
+2. Install composer dependencies `composer install`
+3. Configure `phpcs` for use with WordPress guidelines `phpcs --config-set installed_paths <path to repository>/vendor/wp-coding-standards/wpcs`
+4. Run `phpcs -i` which should return amongst other things `WordPress, WordPress-Extra, WordPress-Docs and WordPress-Core`
+5. Install the phpcs extension for vscode (optional)
+### Scripts
+#### 📝  `npm run start`
 - Use to compile and run the block in development mode.
-- Watches for any changes and reports back any errors in your code.
-
-## 👉  `npm run build`
-- Use to build production code for your block inside `dist` folder.
-- Runs once and reports back the gzip file sizes of the produced code.
-
-## 👉  `npm run eject`
+- Watches for any changes and reports back any errors in your js code.
+#### 📝  `npm run build`
+- Use to build the plugin in production mode
+- Output is glossary.zip inside the repository root.
+- Reports js errors if any. Otherwise shows total bytes processed.
+#### 📝  `npm run eject`
 - Use to eject your plugin out of `create-guten-block`.
 - Provides all the configurations so you can customize the project as you want.
 - It's a one-way street, `eject` and you have to maintain everything yourself.
 - You don't normally have to `eject` a project because by ejecting you lose the connection with `create-guten-block` and from there onwards you have to update and maintain all the dependencies on your own.
 
----
-
-###### Feel free to tweet and say 👋 at me [@MrAhmadAwais](https://twitter.com/mrahmadawais/)
-
-[![npm](https://img.shields.io/npm/v/create-guten-block.svg?style=flat-square)](https://www.npmjs.com/package/create-guten-block) [![npm](https://img.shields.io/npm/dt/create-guten-block.svg?style=flat-square&label=downloads)](https://www.npmjs.com/package/create-guten-block)  [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/ahmadawais/create-guten-block) [![Tweet for help](https://img.shields.io/twitter/follow/mrahmadawais.svg?style=social&label=Tweet%20@MrAhmadAwais)](https://twitter.com/mrahmadawais/) [![GitHub stars](https://img.shields.io/github/stars/ahmadawais/create-guten-block.svg?style=social&label=Stars)](https://github.com/ahmadawais/create-guten-block/stargazers) [![GitHub followers](https://img.shields.io/github/followers/ahmadawais.svg?style=social&label=Follow)](https://github.com/ahmadawais?tab=followers)
+> This project was bootstrapped with [Create Guten Block](https://github.com/ahmadawais/create-guten-block).
