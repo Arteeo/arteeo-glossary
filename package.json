@@ -11,8 +11,10 @@
     "cgb-scripts": "^1.23.0"
   },
   "devDependencies": {
+    "@wordpress/eslint-plugin": "^7.0.0",
     "archiver": "^4.0.1",
     "babel-preset-env": "^1.7.0",
-    "copy-webpack-plugin": "^4.0.0"
+    "copy-webpack-plugin": "^4.0.0",
+    "eslint": "^7.3.0"
   }
 }

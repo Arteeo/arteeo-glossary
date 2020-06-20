@@ -11,7 +11,7 @@
  * Text Domain: glossary
  * Domain Path: /languages
  *
- * @package CGB
+ * @package glossary
  */
 
 global $glossary_version;

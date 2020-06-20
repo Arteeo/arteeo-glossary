@@ -154,8 +154,9 @@ function glossary_cgb_block_render( $attributes ) {
 		);
 	} else {
 		if ( isset( $_GET['letter'] ) ) {
-			if ( 1 === strlen( $_GET['letter'] ) ) {
-				$current_letter = strtoupper( sanitize_text_field( $_GET['letter'] ) );
+			$get_letter = $_GET['letter'];
+			if ( 1 === strlen( $get_letter ) ) {
+				$current_letter = strtoupper( sanitize_text_field( $get_letter ) );
 
 				$entries = $wpdb->get_results(
 					$wpdb->prepare(
@@ -169,7 +170,7 @@ function glossary_cgb_block_render( $attributes ) {
 				if ( $wpdb->num_rows > 0 ) {
 					$handled = true;
 				}
-			} elseif ( 'hashtag' === $_GET['letter'] ) {
+			} elseif ( 'hashtag' === $get_letter ) {
 				$current_letter = '#';
 
 				$entries = $wpdb->get_results(
@@ -198,7 +199,7 @@ function glossary_cgb_block_render( $attributes ) {
 				$current_letter = $letters[0]->letter;
 			}
 			$entries = $wpdb->get_results(
-				"SELECT term, description FROM" .
+				'SELECT term, description FROM' .
 				" $glossary_table_name WHERE letter = '$current_letter'" .
 				' ORDER BY term ASC'
 			);

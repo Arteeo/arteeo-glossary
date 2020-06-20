@@ -18,6 +18,7 @@ The following software has to be installed in order for you to be able to adjust
 3. Configure `phpcs` for use with WordPress guidelines `phpcs --config-set installed_paths <path to repository>/vendor/wp-coding-standards/wpcs`
 4. Run `phpcs -i` which should return amongst other things `WordPress, WordPress-Extra, WordPress-Docs and WordPress-Core`
 5. Install the phpcs extension for vscode (optional)
+6. Install the eslint extension for vscode (optional)
 ### Scripts
 #### 📝  `npm run start`
 - Use to compile and run the block in development mode.

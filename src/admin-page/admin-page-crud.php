@@ -1,6 +1,8 @@
 <?php
 /**
  * Admin Page CRUD
+ *
+ * @package glossary
  */
 
 // Exit if accessed directly.
