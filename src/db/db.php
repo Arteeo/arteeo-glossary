@@ -132,3 +132,81 @@ function check_for_glossary_table_update() {
 			create_glossary_table();
 	}
 }
+
+function get_entry_by_id( $id ) {
+	global $wpdb;
+	global $glossary_table_name;
+
+	$entries = $wpdb->get_results(
+		$wpdb->prepare(
+			'SELECT * FROM ' . $glossary_table_name . ' WHERE' .
+			' id = %d',
+			$id
+		)
+	);
+	if ( 1 === $wpdb->num_rows ) {
+		return $entries[0];
+	}
+
+	return null;
+}
+
+function delete_entry_by_id( $id ) {
+	global $wpdb;
+	global $glossary_table_name;
+
+	$result = $wpdb->delete( $glossary_table_name, array( 'id' => $id ) );
+
+	if ( 1 === $result ) {
+		return true;
+	}
+
+	return false;
+}
+
+function update_entry( $entry ) {
+	global $wpdb;
+	global $glossary_table_name;
+	
+	$result = $wpdb->update(
+		$glossary_table_name,
+		array(
+			'letter'      => $entry->letter,
+			'term'        => $entry->term,
+			'description' => $entry->description,
+			'locale'      => $entry->locale,
+		),
+		array( 'id' => $entry->id ),
+		array(
+			'%s',
+			'%s',
+			'%s',
+		),
+		array( '%d' )
+	);
+
+	return $result;
+}
+
+function insert_entry( $entry ) {
+	global $wpdb;
+	global $glossary_table_name;
+
+	$result = $wpdb->insert(
+		$glossary_table_name,
+		array(
+			'letter'      => $entry->letter,
+			'term'        => $entry->term,
+			'description' => $entry->description,
+			'locale'      => $entry->locale,
+		),
+		array(
+			'%s',
+			'%s',
+			'%s',
+		)
+	);
+
+	return $result;
+}
+

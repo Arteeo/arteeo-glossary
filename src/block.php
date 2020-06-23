@@ -36,8 +36,8 @@ function generate_letters( $attributes, $letters, $current_letter ) {
 		if ( '#' !== $letter_obj->letter ) {
 			if ( $letter_obj->letter === $current_letter ) {
 				$result = $result . '<a class="active" style="color: ' .
-						$attributes['secondaryColor'] . '; border-color: ' .
-						$attributes['secondaryColor'] . ';" href="' .
+						$attributes['secondary_color'] . '; border-color: ' .
+						$attributes['secondary_color'] . ';" href="' .
 						generate_url( array( 'letter' => $letter_obj->letter ) ) . '">' .
 						$letter_obj->letter . '</a>';
 			} else {
@@ -53,8 +53,8 @@ function generate_letters( $attributes, $letters, $current_letter ) {
 	if ( $hashtag ) {
 		if ( '#' === $current_letter ) {
 			$result = $result . '<a class="active" style="color: ' .
-					$attributes['secondaryColor'] . '; border-color: ' .
-					$attributes['secondaryColor'] . ';" href="' .
+					$attributes['secondary_color'] . '; border-color: ' .
+					$attributes['secondary_color'] . ';" href="' .
 					generate_url( array( 'letter' => 'hashtag' ) ) . '">#</a>';
 		} else {
 			$result = $result . '<a href="' .
@@ -88,7 +88,7 @@ function generate_entries( $attributes, $entries ) {
 		$result = $result .
 			'<article class="entry">' .
 			'	<div class="name">' .
-			'		<h2 style="color: ' . $attributes['secondaryColor'] . ';">' .
+			'		<h2 style="color: ' . $attributes['secondary_color'] . ';">' .
 							$entry->term .
 			'   </h2>' .
 			' </div>' .
@@ -212,13 +212,13 @@ function glossary_cgb_block_render( $attributes ) {
 		'	<div class="wrapper">' .
 		'		<section class="sidebar">' .
 		'			<div class="sidebar-header" style="background-color:' .
-				$attributes['primaryColor'] . ';">' .
+				$attributes['primary_color'] . ';">' .
 		'				<div class="letter">' .
 		'					<h2>' . $current_letter . '</h2>' .
 		'				</div>' .
 		'			</div>' .
 		'			<div class="sidebar-content">' .
-		'				<h3 style="color:' . $attributes['secondaryColor'] . ';">' .
+		'				<h3 style="color:' . $attributes['secondary_color'] . ';">' .
 				__('Select a letter:', 'glossary') . '</h3>' .
 		'				<div class="letters">' .
 		'					' . generate_letters( $attributes, $letters, $current_letter ) .
@@ -249,40 +249,39 @@ function glossary_cgb_block_render( $attributes ) {
 function glossary_cgb_block_assets() { // phpcs:ignore
 	global $wpdb;
 	global $glossary_table_name;
+	global $glossary_plugin_dir;
+
 	// Register block styles for both frontend + backend.
 	wp_register_style(
 		'glossary-cgb-style-css', // Handle.
-		plugins_url(
-			'../css/block/blocks.style.build.css',
-			dirname( __FILE__ )
-		), // Block style CSS.
+		plugins_url( 'css/block/blocks.style.build.css', plugin_dir_path( __DIR__ ) ), // Block style CSS.
 		is_admin() ? array( 'wp-editor' ) : null, // Dependency to include the CSS after it.
-		filemtime( plugin_dir_path( __DIR__ ) . 'js/block/blocks.style.build.css' ) // Version: File modification time.
+		filemtime( $glossary_plugin_dir . '/css/block/blocks.style.build.css' ) // Version: File modification time.
 	);
 
 	// Register block editor script for backend.
 	wp_register_script(
 		'glossary-cgb-block-js', // Handle.
-		plugins_url( '../js/block/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
+		plugins_url( 'js/block/blocks.build.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
-		filemtime( plugin_dir_path( __DIR__ ) . 'js/block/blocks.build.js' ), // Version: filemtime — Gets file modification time.
+		filemtime( $glossary_plugin_dir . '/js/block/blocks.build.js' ), // Version: filemtime — Gets file modification time.
 		true // Enqueue the script in the footer.
 	);
 
 	wp_register_script(
 		'resize-js', // Handle.
-		plugins_url( '../js/resize.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
+		plugins_url( 'js/resize.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		null, // Dependencies, defined above.
-		filemtime( plugin_dir_path( __DIR__ ) . 'js/block/blocks.build.js' ), // Version: filemtime — Gets file modification time.
+		filemtime( $glossary_plugin_dir . '/js/resize.js' ), // Version: filemtime — Gets file modification time.
 		true // Enqueue the script in the footer.
 	);
 
 	// Register block editor styles for backend.
 	wp_register_style(
 		'glossary-cgb-block-editor-css', // Handle.
-		plugins_url( '../css/block/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
+		plugins_url( 'css/block/blocks.editor.build.css', plugin_dir_path( __DIR__ ) ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
-		filemtime( plugin_dir_path( __DIR__ ) . 'css/block/blocks.editor.build.css' ) // Version: File modification time.
+		filemtime( $glossary_plugin_dir . '/css/block/blocks.editor.build.css' ) // Version: File modification time.
 	);
 
 	// WP Localized globals. Use dynamic PHP stuff in JavaScript via `cgbGlobal` object.
@@ -290,8 +289,6 @@ function glossary_cgb_block_assets() { // phpcs:ignore
 		'glossary-cgb-block-js',
 		'cgbGlobal', // Array containing dynamic data for a JS Global.
 		array(
-			'pluginDirPath'         => plugin_dir_path( __DIR__ ),
-			'pluginDirUrl'          => plugin_dir_url( __DIR__ ),
 			'__Glossary'            => __( 'Glossary', 'glossary' ),
 			'__glossary'            => __( 'glossary', 'glossary' ),
 			'__glossaryDescription' => __( 'glossary', 'glossary' ) . ' - ' .

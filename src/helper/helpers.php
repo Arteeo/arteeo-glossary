@@ -50,7 +50,7 @@ function generate_url($parameters){
  *
  * @param string $url the url to redirect to
  */
-function redirectTo($url) {
+function redirect_to( $url ) {
 	echo '<meta http-equiv="refresh" content="0; URL='.$url.'">';
 	exit;
 }

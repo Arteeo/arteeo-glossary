@@ -36,21 +36,21 @@ function create_glossary_admin_table(){
 		if (strlen($glossary_show) == 1) {
 			$entries = $wpdb->get_results( "SELECT * FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
 			if ($wpdb->num_rows < 1) {
-				redirectTo(generate_url(array('glossary_show' => 'all')));
+				redirect_to(generate_url(array('glossary_show' => 'all')));
 			}
 		} else if ($glossary_show == "hashtag") {
 			$glossary_show = '#';
 			$entries = $wpdb->get_results( "SELECT * FROM $glossary_table_name WHERE letter = '$glossary_show' ORDER BY term $sorting");
 			if ($wpdb->num_rows < 1) {
-				redirectTo(generate_url(array('glossary_show' => 'all')));
+				redirect_to(generate_url(array('glossary_show' => 'all')));
 			}
 		} else if ($glossary_show == 'all') {
 			$entries = $wpdb->get_results( "SELECT * FROM $glossary_table_name ORDER BY term $sorting");
 		} else {
-			redirectTo(generate_url(array('glossary_show' => 'all')));
+			redirect_to(generate_url(array('glossary_show' => 'all')));
 		}
 	} else {
-		redirectTo(generate_url(array('glossary_show' => 'all')));
+		redirect_to(generate_url(array('glossary_show' => 'all')));
 	}
 
 	$languages = get_available_languages( $glossary_plugin_dir.'languages' );

@@ -64,23 +64,25 @@ function create_glossary_admin_page() {
 
 	$handled = false;
 
-	if (isset($_GET['action'])) {
-		if ($_GET['action'] == 'add') {
-			glossary_entry_crud('add', null);
-			$handled = true;
-		} else if ($_GET['action'] == 'edit'){
-			glossary_entry_crud('edit', $_GET['id']);
-			$handled = true;
-		} else if ($_GET['action'] == 'delete'){
-			glossary_entry_crud('delete', $_GET['id']);
-			$handled = true;
-		} else if ($_GET['action'] == 'force-delete'){
-			glossary_entry_crud('force-delete', $_GET['id']);
-			$handled = true;
+	if ( isset( $_GET['action'] ) ) {
+		$action = $_GET['action'];
+		$handled = true;
+
+		switch ( $action ) {
+			case 'add':
+				glossary_entry_crud( $action, null );
+				break;
+			case 'edit':
+			case 'delete':
+			case 'force-delete':
+				glossary_entry_crud( $action, $_GET['id'] );
+				break;
+			default:
+				$handled = false;
 		}
 	}
 
-	if (!$handled) {
+	if ( ! $handled ) {
 		create_glossary_admin_table();
 	}
 }
