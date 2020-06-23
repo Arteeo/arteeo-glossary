@@ -215,7 +215,7 @@ function glossary_write_to_db( $action, $entry ) {
 			}
 			break;
 		case 'edit':
-			$result = update_entry( $entry ); 
+			$result = update_entry( $entry );
 
 			if ( false === $result ) {
 				glossary_show_message_on_overview( 'error', __( 'Database error.', 'glossary' ) );

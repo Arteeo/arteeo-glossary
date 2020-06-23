@@ -161,7 +161,7 @@ function create_glossary_admin_table(){
 									'.nl2br($entry->description).'	
 								</td>
 								<td class="locale column-locale" data-colname="'.__('Language', 'glossary').'">
-									'.__($entry->locale, 'glossary').'	
+									' . esc_html( Locale::getDisplayName( $entry->locale, get_user_locale() ) ) . '
 								</td>
 							</tr>	
 						';
@@ -171,4 +171,11 @@ function create_glossary_admin_table(){
 		</table>
 	</div>
 	<?php
+}
+
+function glossary_dropdown_languages( $languages, $selected ) {
+	return '' .
+		'<select id="locale" name="locale">' .
+		'	<option value="" lang="en"></option>' .
+		'</select>';
 }
