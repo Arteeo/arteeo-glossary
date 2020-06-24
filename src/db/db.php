@@ -167,7 +167,7 @@ function delete_entry_by_id( $id ) {
 function update_entry( $entry ) {
 	global $wpdb;
 	global $glossary_table_name;
-	
+
 	$result = $wpdb->update(
 		$glossary_table_name,
 		array(
@@ -210,3 +210,63 @@ function insert_entry( $entry ) {
 	return $result;
 }
 
+function get_filtered_entries( $filters, $sorting ) {
+	global $wpdb;
+	global $glossary_table_name;
+
+	$entries = array();
+
+	if ( isset( $filters['locale'] ) && isset( $filters['letter'] ) ) {
+		$entries = $wpdb->get_results(
+			$wpdb->prepare(
+				'SELECT * FROM ' . $glossary_table_name . ' WHERE locale=%s AND letter=%s ORDER BY term ' . $sorting,
+				$filters['locale'],
+				$filters['letter']
+			)
+		);
+	} elseif ( isset( $filters['locale'] ) ) {
+		$entries = $wpdb->get_results(
+			$wpdb->prepare(
+				'SELECT * FROM ' . $glossary_table_name . ' WHERE locale=%s ORDER BY term ' . $sorting,
+				$filters['locale']
+			)
+		);
+	} elseif ( isset( $filters['letter'] ) ) {
+		$entries = $wpdb->get_results(
+			$wpdb->prepare(
+				'SELECT * FROM ' . $glossary_table_name . ' WHERE letter=%s ORDER BY term ' . $sorting,
+				$filters['letter']
+			)
+		);
+	} else {
+		$entries = $wpdb->get_results(
+			'SELECT * FROM ' . $glossary_table_name . ' ORDER BY term ' . $sorting
+		);
+	}
+
+	return $entries;
+}
+
+function get_filtered_letters( $filters ) {
+	global $wpdb;
+	global $glossary_table_name;
+
+	$letters = array();
+
+	if ( isset( $filters['locale'] ) ) {
+		$letters = $wpdb->get_results(
+			$wpdb->prepare(
+				'SELECT letter, count(letter) AS count FROM ' . $glossary_table_name .
+					' WHERE locale=%s GROUP BY letter ORDER BY letter ASC',
+				$filters['locale']
+			)
+		);
+	} else {
+		$letters = $wpdb->get_results(
+			'SELECT letter, count(letter) AS count FROM ' . $glossary_table_name .
+					' GROUP BY letter ORDER BY letter ASC'
+		);
+	}
+
+	return $letters;
+}

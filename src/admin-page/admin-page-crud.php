@@ -83,20 +83,10 @@ function glossary_show_message_on_overview( $type, $message ) {
  *
  * @param object $entry The entry which was submitted by the form.
  *
- * @global string $glossary_plugin_dir The directory of the plugin
- *
  * @return string the error message if an error was found else returns null
  */
 function glossary_entry_form_check_errors( $entry ) {
-	global $glossary_plugin_dir;
-
-	$languages      = get_available_languages( $glossary_plugin_dir . 'languages' );
-	$prefix         = 'glossary-';
-	$language_count = count( $languages );
-
-	for ( $i = 0; $i < $language_count; $i++ ) {
-		$languages[ $i ] = substr( $languages[ $i ], strlen( $prefix ) );
-	}
+	$languages = glossary_get_locales();
 
 	if ( '' === $entry->term ) {
 		/* translators: %s is replaced with the fieldname*/
@@ -107,7 +97,7 @@ function glossary_entry_form_check_errors( $entry ) {
 		return sprintf( __( 'Field "%s" has to be filled in.', 'glossary' ), __( 'Description', 'glossary' ) );
 	}
 
-	if ( false === array_search( $entry->locale, $languages, true ) && '' !== $entry->locale ) {
+	if ( false === array_search( $entry->locale, $languages, true ) ) {
 		return sprintf( __( 'Selected language not supported.', 'glossary' ) );
 	}
 
@@ -150,10 +140,6 @@ function glossary_entry_crud( $action, $id ) {
 
 		$error  = glossary_entry_form_check_errors( $entry );
 		$action = sanitize_text_field( $_POST['action'] );
-
-		if ( '' === $entry->locale ) {
-			$entry->locale = 'en_US';
-		}
 
 		$entry->letter = substr( $entry->term, 0, 1 );
 		if ( ! ctype_alpha( $entry->letter ) ) {
@@ -199,9 +185,6 @@ function glossary_entry_crud( $action, $id ) {
  *     @type string  description The description of the entry.
  *     @type string  locale      The locale of the entry.
  * }
- *
- * @global object $wpdb                The WordPress database instance.
- * @global string $glossary_table_name The name of the glossary database table.
  */
 function glossary_write_to_db( $action, $entry ) {
 	switch ( $action ) {
@@ -276,18 +259,10 @@ function glossary_action_switcher( $action, $id ) {
  * @param string $error_message the error to be shown to the user.
  */
 function glossary_entry_form( $action, $entry, $error_message ) {
-	global $glossary_plugin_dir;
-
-	$term           = '';
-	$description    = '';
-	$locale         = '';
-	$languages      = get_available_languages( $glossary_plugin_dir . 'languages' );
-	$prefix         = 'glossary-';
-	$language_count = count( $languages );
-
-	for ( $i = 0; $i < $language_count; $i++ ) {
-		$languages[ $i ] = substr( $languages[ $i ], strlen( $prefix ) );
-	}
+	$term        = '';
+	$description = '';
+	$locale      = '';
+	$languages   = glossary_get_locales();
 
 	if ( null !== $entry ) {
 		$term        = $entry->term;
@@ -367,13 +342,14 @@ function glossary_entry_form( $action, $entry, $error_message ) {
 						</th>
 						<td>
 							<?php
-							wp_dropdown_languages(
+							glossary_dropdown_languages( 'locale', $languages, $locale );
+							/*wp_dropdown_languages(
 								array(
 									'languages' => $languages,
 									'selected'  => $locale,
 									'show_available_translations' => false,
 								)
-							);
+							);*/
 							?>
 						</td>
 					</tr>

@@ -20,37 +20,56 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 															the parameter will be removed
  * @return string the resulting url after adjusting the parameters
  */
-function generate_url($parameters){
+function generate_url( $parameters ) {
 	global $glossary_page_id;
 
-  $url = '?page='.$glossary_page_id;
+	$url = '?page=' . $glossary_page_id;
 
-	foreach($_GET as $key => $value) {
-		if (isset($parameters[$key])) {
-			if($parameters[$key] != 'null') {
-				$url = $url.'&'.$key.'='.$parameters[$key];
-      }
-      $parameters[$key] = null;
-		} else if ($key != 'page' && $key != 'message' && $key != 'message_type'){
-			$url = $url.'&'.$key.'='.$value;
+	foreach ( $_GET as $key => $value ) {
+		if ( isset( $parameters[ $key ] ) ) {
+			if ( 'null' !== $parameters[ $key ] ) {
+				$url = $url . '&' . $key . '=' . $parameters[ $key ];
+			}
+			$parameters[ $key ] = null;
+		} elseif ( 'page' !== $key && 'message' !== $key && 'message_type' !== $key ) {
+			$url = $url . '&' . $key . '=' . $value;
 		}
 	}
 
-  foreach ($parameters as $key => $parameter) {
-    if ($parameter != null && $parameter != 'null') {
-      $url = $url.'&'.$key.'='.$parameter;
-    }
-  }
+	foreach ( $parameters as $key => $parameter ) {
+		if ( null !== $parameter && 'null' !== $parameter ) {
+			$url = $url . '&' . $key . '=' . $parameter;
+		}
+	}
 
-	return $url;
+	return esc_url( $url );
 }
 
 /**
- * Redirect to the page the url is refering to
+ * Redirect to
  *
- * @param string $url the url to redirect to
+ * Redirect to the page the url is refering to.
+ *
+ * @param string $url the url to redirect to.
  */
 function redirect_to( $url ) {
-	echo '<meta http-equiv="refresh" content="0; URL='.$url.'">';
+	echo '<meta http-equiv="refresh" content="0; URL=' . esc_url( $url ) . '">';
 	exit;
+}
+
+
+function glossary_get_locales() {
+	global $glossary_plugin_dir;
+
+	$languages      = get_available_languages( $glossary_plugin_dir . 'languages' );
+	$prefix         = 'glossary-';
+	$language_count = count( $languages );
+
+	for ( $i = 0; $i < $language_count; $i++ ) {
+		$languages[ $i ] = substr( $languages[ $i ], strlen( $prefix ) );
+	}
+
+	array_push( $languages, 'en_US' );
+
+	return $languages;
 }
