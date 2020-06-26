@@ -61,8 +61,8 @@ function create_glossary_admin_table() {
 			break;
 	}
 
-	$entries = get_filtered_entries( $filters, $sorting );
-	$letters = get_filtered_letters( $filters );
+	$entries      = get_filtered_entries( $filters, $sorting );
+	$letters      = get_filtered_letters( $filters );
 	$letter_count = 0;
 	foreach ( $letters as $letter ) {
 		$letter_count += $letter->count;
@@ -74,27 +74,34 @@ function create_glossary_admin_table() {
 
 	?>
 	<div class="wrap">
-		<h1 class="wp-heading-inline"><?php _e('Glossary', 'glossary'); ?></h1><span>v<?php echo $glossary_version; ?></span><a class="page-title-action aria-button-if-js" role="button" aria-expanded="false" href="<?php echo generate_url(array('action'=>'add')); ?>"><?php _e('Add entry', 'glossary'); ?></a>
+		<h1 class="wp-heading-inline"><?php esc_html_e( 'Glossary', 'glossary' ); ?></h1>
+		<span>v<?php echo esc_html( $glossary_version ); ?></span>
+		<a class="page-title-action aria-button-if-js" role="button" aria-expanded="false"
+				href="<?php echo esc_url( generate_url( array( 'action' => 'add' ) ) ); ?>">
+			<?php esc_html_e( 'Add entry', 'glossary' ); ?>
+		</a>
 		<hr class="wp-header-end">
 		<?php
-			if (isset($_GET['message']) && isset($_GET['message_type'])) {
-				if($_GET['message_type'] == 'success') {
-					echo '
-						<div id="message" class="updated notice is-dismissible">
-							<p>'.sanitize_text_field($_GET['message']).'</p>
-							<button class="notice-dismiss" type="button">
-								<span class="screen-reader-text">'.__('Hide this message', 'glossary').'</span>
-							</button>
-						</div>
-					';
-				} else if($_GET['message_type'] == 'error') {
-					echo '
-						<div id="message" class="error">
-							<p>'.sanitize_text_field($_GET['message']).'</p>
-						</div>
-					';
-				}
+		if ( isset( $_GET['message'] ) && isset( $_GET['message_type'] ) ) {
+			if ( 'success' === $_GET['message_type'] ) {
+				echo '
+					<div id="message" class="updated notice is-dismissible">
+						<p>' . esc_html( $_GET['message'] ) . '</p>
+						<button class="notice-dismiss" type="button">
+							<span class="screen-reader-text">' .
+								esc_html( __( 'Hide this message', 'glossary' ) ) .
+							'</span>
+						</button>
+					</div>
+				';
+			} elseif ( 'error' === $_GET['message_type'] ) {
+				echo '
+					<div id="message" class="error">
+						<p>' . esc_html( $_GET['message'] ) . '</p>
+					</div>
+				';
 			}
+		}
 		?>
 		<ul class="subsubsub">
 			<?php
@@ -102,32 +109,36 @@ function create_glossary_admin_table() {
 				echo '' .
 				'<li class="all">' .
 				'	<a class="' . ( ( 'all' === $glossary_show ) ? 'current ' : '' ) . '" ' .
-						'href="' . generate_url( array( 'glossary_show' => 'all' ) ) . '">' . __( 'All', 'glossary' ) .
-				'		<span class="count">(' . $letter_count . ')</span>' .
+						'href="' . esc_url( generate_url( array( 'glossary_show' => 'all' ) ) ) . '">' .
+						esc_html( __( 'All', 'glossary' ) ) .
+				'		<span class="count">(' . esc_html( $letter_count ) . ')</span>' .
 				'	</a>' .
 				'	|' .
 				'</li>';
 			}
 			$hashtag = 0;
-			foreach ($letters as $letter){
-				if ($letter->letter == '#') {
+			foreach ( $letters as $letter ) {
+				if ( '#' === $letter->letter ) {
 					$hashtag = $letter->count;
 				} else {
 					echo ' 
-						<li class="'.$letter->letter.'">
-							<a class="'.($glossary_show == $letter->letter ? 'current ' : '').'" href="'.generate_url(array('glossary_show'=>$letter->letter)).'">'.$letter->letter.'
-								<span class="count">('.$letter->count.')</span>
+						<li class="' . esc_html( $letter->letter ) . '">
+							<a class="' . ( ( $letter->letter === $glossary_show ) ? 'current ' : '' ) . '"
+									href="' . esc_url( generate_url( array( 'glossary_show' => $letter->letter ) ) ) .
+									'">' . esc_html( $letter->letter ) . '
+								<span class="count">(' . esc_html( $letter->count ) . ')</span>
 							</a>
 							|
 						</li>
 					';
 				}
 			}
-			if ($hashtag > 0) {
+			if ( 0 < $hashtag ) {
 				echo '
 					<li class="#">
-						<a class="'.($glossary_show == '#' ? 'current ' : '').'" href="'.generate_url(array('glossary_show'=>'hashtag')).'">#
-							<span class="count">('.$hashtag.')</span>
+						<a class="' . ( ( '#' === $glossary_show ) ? 'current ' : '' ) . '" 
+								href="' . esc_url( generate_url( array( 'glossary_show' => 'hashtag' ) ) ) . '">#
+							<span class="count">(' . esc_html( $hashtag ) . ')</span>
 						</a>
 					</li>
 				';
@@ -161,20 +172,32 @@ function create_glossary_admin_table() {
 				</form>
 			</div>
 		</div>
-		<h2 class="screen-reader-text"><?php _e('Glossary entries', 'glossary'); ?></h2>
+		<h2 class="screen-reader-text"><?php esc_html_e( 'Glossary entries', 'glossary' ); ?></h2>
 		<table class="wp-list-table widefat fixed striped">
 			<thead>
-				<th id="term" class="manage-column column-term column-primary sorted <?php echo strtolower($sorting);?>" scope="col">
-					<a href="<?php echo generate_url(array('glossary_sort'=>'term', 'order'=>($sorting == 'DESC' ? 'asc' : 'desc'))) ?>">
-						<span><?php _e('Term', 'glossary'); ?></span>
+				<th id="term" class="manage-column column-term column-primary sorted 
+						<?php echo esc_html( strtolower( $sorting ) ); ?>" scope="col">
+					<a href="
+							<?php
+							echo esc_url(
+								generate_url(
+									array(
+										'glossary_sort' => 'term',
+										'order'         => ( ( 'DESC' === $sorting ) ? 'asc' : 'desc' ),
+									)
+								)
+							);
+							?>
+						">
+						<span><?php esc_html_e( 'Term', 'glossary' ); ?></span>
 						<span class="sorting-indicator"></span>
 					</a>
 				</th>
 				<th id="description" class="manage-column column-description" scope="col">
-					<?php _e('Description', 'glossary'); ?>
+					<?php esc_html_e( 'Description', 'glossary' ); ?>
 				</th>
 				<th id="locale" class="manage-column column-locale" scope="col">
-					<?php _e('Language', 'glossary'); ?>
+					<?php esc_html_e( 'Language', 'glossary' ); ?>
 				</th>
 			</thead>
 			<tbody id="the-list">
@@ -182,15 +205,18 @@ function create_glossary_admin_table() {
 				if ( 0 === count( $entries ) ) {
 					echo '
 						<tr id="entry-?">
-							<td class="term column-term has-row-actions column-primary" data-colname="'.__('Term', 'glossary').'">
+							<td class="term column-term has-row-actions column-primary" 
+									data-colname="' . esc_html( __( 'Term', 'glossary' ) ) . '">
 								<strong class="row-Term">
 									?
 								</stong>
 							</td>
-							<td class="description column-description" data-colname="'.__('Description', 'glossary').'">
-								'. __( 'No entries found.' , 'glossary') . '	
+							<td class="description column-description" 
+									data-colname="' . esc_html( __( 'Description', 'glossary' ) ) . '">
+								' . esc_html( __( 'No entries found.', 'glossary' ) ) . '	
 							</td>
-							<td class="locale column-locale" data-colname="'.__('Language', 'glossary').'">
+							<td class="locale column-locale" 
+									data-colname="' . esc_html( __( 'Language', 'glossary' ) ) . '">
 								-
 							</td>
 						</tr>	
@@ -199,29 +225,52 @@ function create_glossary_admin_table() {
 
 				foreach ( $entries as $entry ) {
 					echo '
-						<tr id="entry-'.$entry->id.'">
-							<td class="term column-term has-row-actions column-primary" data-colname="'.__('Term', 'glossary').'">
+						<tr id="entry-' . esc_html( $entry->id ) . '">
+							<td class="term column-term has-row-actions column-primary" 
+									data-colname="' . esc_html( __( 'Term', 'glossary' ) ) . '">
 								<strong class="row-Term">
-									'.$entry->term.'
+									' . esc_html( $entry->term ) . '
 								</stong>
 								<div class="row-actions">
 									<span class="edit">
-										<a href="'.generate_url(array('action'=>'edit', 'id'=>$entry->id)).'" aria-label="\''.$entry->term.'\' ('.__('Edit', 'glossary').')">
-											'.__('Edit', 'glossary').'
+										<a href="' .
+												esc_url(
+													generate_url(
+														array(
+															'action' => 'edit',
+															'id'     => $entry->id,
+														)
+													)
+												)
+												. '" aria-label="\'' . esc_html( $entry->term ) . '\' 
+												(' . esc_html( __( 'Edit', 'glossary' ) ) . ')">
+											' . esc_html( __( 'Edit', 'glossary' ) ) . '
 										</a>
 										|
 									</span>
 									<span class="delete">
-										<a class="delete" href="'.generate_url(array('action'=>'delete', 'id'=>$entry->id)).'" aria-label="\''.$entry->term.'\' ('.__('Delete', 'glossary').')">
-											'.__('Delete', 'glossary').'
+										<a class="delete" href="' .
+												esc_url(
+													generate_url(
+														array(
+															'action' => 'delete',
+															'id'     => $entry->id,
+														)
+													)
+												) .
+												'" aria-label="\'' . esc_html( $entry->term ) . '\' 
+												(' . esc_html( __( 'Delete', 'glossary' ) ) . ')">
+											' . esc_html( __( 'Delete', 'glossary' ) ) . '
 										</a>
 									</span>
 								</div>
 							</td>
-							<td class="description column-description" data-colname="'.__('Description', 'glossary').'">
-								'.nl2br($entry->description).'	
+							<td class="description column-description" 
+									data-colname="' . esc_html( __( 'Description', 'glossary' ) ) . '">
+								' . nl2br( esc_html( $entry->description ) ) . '	
 							</td>
-							<td class="locale column-locale" data-colname="'.__('Language', 'glossary').'">
+							<td class="locale column-locale" 
+									data-colname="' . esc_html( __( 'Language', 'glossary' ) ) . '">
 								' . esc_html( Locale::getDisplayName( $entry->locale, get_user_locale() ) ) . '
 							</td>
 						</tr>	
@@ -234,6 +283,17 @@ function create_glossary_admin_table() {
 	<?php
 }
 
+
+/**
+ * Render a language dropdown
+ *
+ * Generates a dropdown based on the input parameters.
+ *
+ * @param string $name        The name and id of the geneareted select element.
+ * @param array  $languages   An array of the language locales which should be geneared.
+ * @param string $selected    The locale which should be selected.
+ * @param bool   $include_all Boolean to signal if an 'all' option should be included. Default set to false.
+ */
 function glossary_dropdown_languages( $name, $languages, $selected, $include_all = false ) {
 	echo '<select id="' . esc_html( $name ) . '" name="' . esc_html( $name ) . '">';
 

@@ -343,13 +343,6 @@ function glossary_entry_form( $action, $entry, $error_message ) {
 						<td>
 							<?php
 							glossary_dropdown_languages( 'locale', $languages, $locale );
-							/*wp_dropdown_languages(
-								array(
-									'languages' => $languages,
-									'selected'  => $locale,
-									'show_available_translations' => false,
-								)
-							);*/
 							?>
 						</td>
 					</tr>
