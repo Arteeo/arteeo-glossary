@@ -4,9 +4,10 @@
  *
  * Enqueue CSS/JS of all the blocks.
  *
- * @since   1.0.0
- * @package glossary
+ * @package arteeo\glossary
  */
+
+namespace arteeo\glossary;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -147,10 +148,10 @@ function glossary_cgb_block_render( $attributes ) {
 		$letters[0]->letter      = '?';
 		$entries                 = array();
 		$entries[0]              = new stdClass();
-		$entries[0]->term        = __( 'No entry', 'glossary' );
+		$entries[0]->term        = __( 'No entry', 'arteeo-glossary' );
 		$entries[0]->description = __(
 			'Unfortunately no entries in your language could be found in this glossary.',
-			'glossary'
+			'arteeo-glossary'
 		);
 	} else {
 		if ( isset( $_GET['letter'] ) ) {
@@ -219,7 +220,7 @@ function glossary_cgb_block_render( $attributes ) {
 		'			</div>' .
 		'			<div class="sidebar-content">' .
 		'				<h3 style="color:' . $attributes['secondary_color'] . ';">' .
-				__('Select a letter:', 'glossary') . '</h3>' .
+				__('Select a letter:', 'arteeo-glossary') . '</h3>' .
 		'				<div class="letters">' .
 		'					' . generate_letters( $attributes, $letters, $current_letter ) .
 		'				</div>' .
@@ -289,17 +290,17 @@ function glossary_cgb_block_assets() { // phpcs:ignore
 		'glossary-cgb-block-js',
 		'cgbGlobal', // Array containing dynamic data for a JS Global.
 		array(
-			'__Glossary'            => __( 'Glossary', 'glossary' ),
-			'__glossary'            => __( 'glossary', 'glossary' ),
-			'__glossaryDescription' => __( 'glossary', 'glossary' ) . ' - ' .
+			'__Glossary'            => __( 'Glossary', 'arteeo-glossary' ),
+			'__glossary'            => __( 'glossary', 'arteeo-glossary' ),
+			'__glossaryDescription' => __( 'glossary', 'arteeo-glossary' ) . ' - ' .
 																	__(
 																		'A simple beautiful glossary',
-																		'glossary'
+																		'arteeo-glossary'
 																	),
-			'__primaryColor'        => __( 'Primary color', 'glossary' ),
-			'__accentColor'         => __( 'Accent color', 'glossary' ),
-			'__selectLetter'        => __( 'Select a letter:', 'glossary' ),
-			'__example'             => __( 'Example', 'glossary' ),
+			'__primaryColor'        => __( 'Primary color', 'arteeo-glossary' ),
+			'__accentColor'         => __( 'Accent color', 'arteeo-glossary' ),
+			'__selectLetter'        => __( 'Select a letter:', 'arteeo-glossary' ),
+			'__example'             => __( 'Example', 'arteeo-glossary' ),
 			// Add more data here that you want to access from `cgbGlobal` object.
 		)
 	);
@@ -336,10 +337,10 @@ function glossary_cgb_block_assets() { // phpcs:ignore
 					'default' => '#82878c',
 				),
 			),
-			'render_callback' => 'glossary_cgb_block_render',
+			'render_callback' => 'arteeo\glossary\glossary_cgb_block_render',
 		)
 	);
 }
 
 // Hook: Block assets.
-add_action( 'init', 'glossary_cgb_block_assets' );
+add_action( 'init', 'arteeo\glossary\glossary_cgb_block_assets' );

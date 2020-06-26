@@ -2,8 +2,10 @@
 /**
  * Admin Page CRUD
  *
- * @package glossary
+ * @package arteeo\glossary
  */
+
+namespace arteeo\glossary;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,12 +23,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function glossary_get_entry_or_redirect( $id ) {
 	if ( ! is_numeric( $id ) ) {
-		glossary_show_message_on_overview( 'error', __( 'Entry id not valid.', 'glossary' ) );
+		glossary_show_message_on_overview( 'error', __( 'Entry id not valid.', 'arteeo-glossary' ) );
 	}
 
 	$entry = get_entry_by_id( $id );
 	if ( null === $entry ) {
-		glossary_show_message_on_overview( 'error', __( 'Entry could not be found.', 'glossary' ) );
+		glossary_show_message_on_overview( 'error', __( 'Entry could not be found.', 'arteeo-glossary' ) );
 	}
 
 	return $entry;
@@ -46,9 +48,9 @@ function glossary_delete_entry_and_redirect( $id ) {
 	$result = delete_entry_by_id( $id );
 
 	if ( false === $result ) {
-		glossary_show_message_on_overview( 'error', __( 'Database error.', 'glossary' ) );
+		glossary_show_message_on_overview( 'error', __( 'Database error.', 'arteeo-glossary' ) );
 	} else {
-		glossary_show_message_on_overview( 'success', __( 'Entry has been deleted.', 'glossary' ) );
+		glossary_show_message_on_overview( 'success', __( 'Entry has been deleted.', 'arteeo-glossary' ) );
 	}
 }
 
@@ -90,15 +92,18 @@ function glossary_entry_form_check_errors( $entry ) {
 
 	if ( '' === $entry->term ) {
 		/* translators: %s is replaced with the fieldname*/
-		return sprintf( __( 'Field "%s" has to be filled in.', 'glossary' ), __( 'Term', 'glossary' ) );
+		return sprintf( __( 'Field "%s" has to be filled in.', 'arteeo-glossary' ), __( 'Term', 'arteeo-glossary' ) );
 	}
 	if ( '' === $entry->description ) {
-		/* translators: %s is replaced with the fieldname*/
-		return sprintf( __( 'Field "%s" has to be filled in.', 'glossary' ), __( 'Description', 'glossary' ) );
+		return sprintf(
+			/* translators: %s is replaced with the fieldname*/
+			__( 'Field "%s" has to be filled in.', 'arteeo-glossary' ),
+			__( 'Description', 'arteeo-glossary' )
+		);
 	}
 
 	if ( false === array_search( $entry->locale, $languages, true ) ) {
-		return sprintf( __( 'Selected language not supported.', 'glossary' ) );
+		return sprintf( __( 'Selected language not supported.', 'arteeo-glossary' ) );
 	}
 
 	if ( null !== $entry->id ) {
@@ -129,7 +134,7 @@ function glossary_entry_crud( $action, $id ) {
 		}
 
 		if ( false === $nonce ) {
-			glossary_show_message_on_overview( 'error', __( 'Form has expired.', 'glossary' ) );
+			glossary_show_message_on_overview( 'error', __( 'Form has expired.', 'arteeo-glossary' ) );
 		}
 
 		$entry              = new stdClass();
@@ -192,26 +197,26 @@ function glossary_write_to_db( $action, $entry ) {
 			$result = insert_entry( $entry );
 
 			if ( false === $result ) {
-				glossary_show_message_on_overview( 'error', __( 'Database error.', 'glossary' ) );
+				glossary_show_message_on_overview( 'error', __( 'Database error.', 'arteeo-glossary' ) );
 			} else {
-				glossary_show_message_on_overview( 'success', __( 'Entry has been created.', 'glossary' ) );
+				glossary_show_message_on_overview( 'success', __( 'Entry has been created.', 'arteeo-glossary' ) );
 			}
 			break;
 		case 'edit':
 			$result = update_entry( $entry );
 
 			if ( false === $result ) {
-				glossary_show_message_on_overview( 'error', __( 'Database error.', 'glossary' ) );
+				glossary_show_message_on_overview( 'error', __( 'Database error.', 'arteeo-glossary' ) );
 			} else {
 				if ( 0 === $result ) {
 					glossary_show_message_on_overview(
 						'success',
-						__( 'No changes have occured.', 'glossary' ),
+						__( 'No changes have occured.', 'arteeo-glossary' ),
 					);
 				} else {
 					glossary_show_message_on_overview(
 						'success',
-						__( 'Entry has been adjusted.', 'glossary' )
+						__( 'Entry has been adjusted.', 'arteeo-glossary' )
 					);
 				}
 			}
@@ -282,13 +287,13 @@ function glossary_entry_form( $action, $entry, $error_message ) {
 
 		if ( 'add' === $action ) {
 			echo '
-				<h1 class="add-entry">' . esc_html( __( 'Add glossary entry', 'glossary' ) ) . '</h1>
-				<p>' . esc_html( __( 'Add a new entry to the glossary.', 'glossary' ) ) . '</p>
+				<h1 class="add-entry">' . esc_html( __( 'Add glossary entry', 'arteeo-glossary' ) ) . '</h1>
+				<p>' . esc_html( __( 'Add a new entry to the glossary.', 'arteeo-glossary' ) ) . '</p>
 			';
 		} else {
 			echo '
-				<h1 class="edit-entry">' . esc_html( __( 'Edit glossary entry', 'glossary' ) ) . '</h1>
-				<p>' . esc_html( __( 'Adjust the entry from the glossary.', 'glossary' ) ) . '</p>
+				<h1 class="edit-entry">' . esc_html( __( 'Edit glossary entry', 'arteeo-glossary' ) ) . '</h1>
+				<p>' . esc_html( __( 'Adjust the entry from the glossary.', 'arteeo-glossary' ) ) . '</p>
 			';
 		}
 		?>
@@ -310,8 +315,8 @@ function glossary_entry_form( $action, $entry, $error_message ) {
 					<tr class="form-field form-required">
 						<th scope="row">
 							<label for="glossary_term">
-								<?php esc_html_e( 'Term', 'glossary' ); ?>
-							<span class="description">(<?php esc_html_e( 'required', 'glossary' ); ?>)</span>
+								<?php esc_html_e( 'Term', 'arteeo-glossary' ); ?>
+							<span class="description">(<?php esc_html_e( 'required', 'arteeo-glossary' ); ?>)</span>
 							</label>
 						</th>
 						<td>
@@ -323,8 +328,8 @@ function glossary_entry_form( $action, $entry, $error_message ) {
 					<tr class="form-field form-required">
 						<th scope="row">
 							<label for="glossary_description">
-								<?php esc_html_e( 'Description', 'glossary' ); ?>
-							<span class="description">(<?php esc_html_e( 'required', 'glossary' ); ?>)</span>
+								<?php esc_html_e( 'Description', 'arteeo-glossary' ); ?>
+							<span class="description">(<?php esc_html_e( 'required', 'arteeo-glossary' ); ?>)</span>
 							</label>
 						</th>
 						<td>
@@ -336,8 +341,8 @@ function glossary_entry_form( $action, $entry, $error_message ) {
 					<tr class="form-field form-required">
 						<th scope="row">
 							<label for="glossary_locale">
-								<?php esc_html_e( 'Language', 'glossary' ); ?>
-							<span class="locale">(<?php esc_html_e( 'required', 'glossary' ); ?>)</span>
+								<?php esc_html_e( 'Language', 'arteeo-glossary' ); ?>
+							<span class="locale">(<?php esc_html_e( 'required', 'arteeo-glossary' ); ?>)</span>
 							</label>
 						</th>
 						<td>
@@ -353,12 +358,12 @@ function glossary_entry_form( $action, $entry, $error_message ) {
 			if ( 'add' === $action ) {
 				echo '
 					<input id="entry_submit" class="button button-primary" type="submit" name="entry_form" 
-						value="' . esc_html( __( 'Create new entry', 'glossary' ) ) . '">
+						value="' . esc_html( __( 'Create new entry', 'arteeo-glossary' ) ) . '">
 				';
 			} else {
 				echo '
 					<input id="entry_submit" class="button button-primary" type="submit" name="entry_form" 
-						value="' . esc_html( __( 'Save entry', 'glossary' ) ) . '">
+						value="' . esc_html( __( 'Save entry', 'arteeo-glossary' ) ) . '">
 				';
 			}
 			?>
@@ -379,11 +384,11 @@ function glossary_entry_form( $action, $entry, $error_message ) {
 function glossary_delete_form( $id, $term ) {
 	?>
 	<div class="wrap">
-		<h1 class="delete-entry"><?php esc_html_e( 'Delete glossary entry', 'glossary' ); ?></h1>
+		<h1 class="delete-entry"><?php esc_html_e( 'Delete glossary entry', 'arteeo-glossary' ); ?></h1>
 		<p>
 		<?php
 		/* translators: %s is replaced with the term of the entry */
-		echo esc_html( sprintf( __( 'Do you really want to delete glossary entry "%s"?', 'glossary' ), $term ) );
+		echo esc_html( sprintf( __( 'Do you really want to delete glossary entry "%s"?', 'arteeo-glossary' ), $term ) );
 		?>
 		</p>
 		<a id="entry_delete" class="button button-primary"
@@ -399,7 +404,7 @@ function glossary_delete_form( $id, $term ) {
 				);
 				?>
 		">
-			<?php esc_html_e( 'Delete', 'glossary' ); ?>
+			<?php esc_html_e( 'Delete', 'arteeo-glossary' ); ?>
 		</a>
 	</div>
 	<?php

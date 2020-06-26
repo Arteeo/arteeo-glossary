@@ -13,7 +13,13 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 const { InspectorControls } = wp.blockEditor;
-const { PanelBody, ColorPicker } = wp.components;
+const { PanelBody, ColorPicker, Spinner } = wp.components;
+
+const { apiFetch } = wp;
+const {
+	registerStore,
+	withSelect,
+} = wp.data;
 
 /**
  * Register: aa Gutenberg Block.
