@@ -12,6 +12,7 @@ namespace arteeo\glossary;
 require 'admin-page/admin-page.php';
 require 'helper/helpers.php';
 require 'block/block.php';
+require 'models/class-glossary-entry.php';
 
 /**
  * Glossary plugin controller
@@ -21,6 +22,9 @@ require 'block/block.php';
  * @var Glossary_Db $db hello.
  */
 class Glossary {
+
+	const VERSION = '1.0.0';
+
 	/**
 	 * Db instance for the glossary.
 	 *
@@ -44,5 +48,7 @@ class Glossary {
 		$this->db = $db;
 		$this->admin_page = new Admin_Page();
 		$this->admin_page->init();
+		$this->block = new Glossary_Block();
+		$this->block->init();
 	}
 }

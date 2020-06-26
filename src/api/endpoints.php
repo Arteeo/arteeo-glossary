@@ -17,7 +17,7 @@ namespace arteeo\glossary;
  * @param WP_REST_Request $request The WordPress rest request object.
  */
 function endpoint_get_entry( WP_REST_Request $request ) {
-	$entry = get_entry_by_id( $request['id'] );
+	$entry = get_entry_by_id( intval( $request['id'] ) );
 
 	if ( is_null( $entry ) ) {
 		return new WP_Error( 'no_entry', 'Invalid author', array( 'status' => 404 ) );

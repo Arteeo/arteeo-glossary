@@ -59,7 +59,6 @@ class Admin_Page {
 	 * @since 1.0.0
 	 *
 	 * @global string $glossary_page_id    The slug of the glossary admin page.
-	 * @global string $glossary_version    The current version of the glossary plugin.
 	 * @global object $wpdb                The WordPress database instance.
 	 * @global string $glossary_table_name The name of the glossary database table.
 	 */

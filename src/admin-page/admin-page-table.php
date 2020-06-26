@@ -12,20 +12,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once __DIR__ . '/../class-glossary.php';
+
 class Admin_Page_Table {
 
-	public function __construct( ) {}
+	public function __construct() {}
 
 	/**
 	 * Show overview screen
 	 *
 	 * Show current entries of the glossary with several filter options.
-	 *
-	 * @global string $glossary_version    The current version of the glossary plugin.
 	 */
 	public function render() {
-		global $glossary_version;
-
 		$sorting = 'ASC';
 		if ( isset( $_GET['glossary_sort'] ) && isset( $_GET['order'] ) ) {
 			if ( 'term' === $_GET['glossary_sort'] && 'desc' === $_GET['order'] ) {
@@ -75,7 +73,7 @@ class Admin_Page_Table {
 		?>
 		<div class="wrap">
 			<h1 class="wp-heading-inline"><?php esc_html_e( 'Glossary', 'arteeo-glossary' ); ?></h1>
-			<span>v<?php echo esc_html( $glossary_version ); ?></span>
+			<span>v<?php echo esc_html( Glossary::VERSION ); ?></span>
 			<a class="page-title-action aria-button-if-js" role="button" aria-expanded="false"
 					href="<?php echo esc_url( generate_url( array( 'action' => 'add' ) ) ); ?>">
 				<?php esc_html_e( 'Add entry', 'arteeo-glossary' ); ?>

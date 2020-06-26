@@ -39,6 +39,7 @@ module.exports = {
 		}),
     new CopyPlugin([
 		{ from: 'src/admin-page/', to: 'php/admin-page/' },
+		{ from: 'src/models/', to: 'php/models/' },
 		{ from: 'src/db/', to: 'php/db/' },
 		{ from: 'src/api/', to: 'php/api/' },
         { from: 'src/helper/', to: 'php/helper/' },

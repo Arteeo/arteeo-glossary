@@ -10,6 +10,7 @@
  * License URI: https://opensource.org/licenses/MIT
  * Text Domain: arteeo-glossary
  * Domain Path: /languages
+ * Requires PHP: 7.4
  *
  * @package arteeo\glossary
  */
@@ -21,8 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require 'php/class-glossary.php';
-require 'php/db/class-glossary-db.php';
+require_once 'php/class-glossary.php';
+require_once 'php/db/class-glossary-db.php';
 
 function arteeo_glossary_activate() {
 	do_action( 'arteeo_glossary_activate' );
@@ -35,15 +36,14 @@ function arteeo_glossary_uninstall() {
 register_uninstall_hook( __FILE__, 'arteeo\glossary\arteeo_glossary_uninstall' );
 
 
-// Constants.
-define( 'ARTEEO_GLOSSARY_ROOT', __FILE__ );
-define( 'ARTEEO_GLOSSARY_PREFIX', 'arteeo_glossary' );
+// Globals.
+global $arteo_glossary_root;
+$arteo_glossary_root = __DIR__;
 
 /**
  * The loader for the plugin
  */
 class Main {
-
 	private Glossary $glossary;
 	private Glossary_Db $db;
 
@@ -66,7 +66,7 @@ class Main {
 		/**
 		 * Load Text Domain
 		 */
-		load_plugin_textdomain( 'arteeo-glossary', false, ARTEEO_GLOSSARY_ROOT . '\languages' );
+		load_plugin_textdomain( 'arteeo-glossary', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 		/**
 		 * Actions and Hooks
@@ -92,18 +92,10 @@ class Main {
 		 * Include api
 		 */
 		// require_once 'php/api/register.php';
-
-		/**
-		 * Include gutenberg block
-		 */
-		// require_once 'php/block/block.php';
-
 		$this->glossary = new Glossary( $this->db );
 	}
 }
 
-global $glossary_version;
-$glossary_version = '1.0';
 global $wpdb;
 global $glossary_table_name;
 $glossary_table_name = $wpdb->prefix . 'arteeo_glossary';

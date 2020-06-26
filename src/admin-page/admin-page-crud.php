@@ -26,6 +26,8 @@ function glossary_get_entry_or_redirect( $id ) {
 		glossary_show_message_on_overview( 'error', __( 'Entry id not valid.', 'arteeo-glossary' ) );
 	}
 
+	$id = intval( $id );
+
 	$entry = get_entry_by_id( $id );
 	if ( null === $entry ) {
 		glossary_show_message_on_overview( 'error', __( 'Entry could not be found.', 'arteeo-glossary' ) );
@@ -137,7 +139,7 @@ function glossary_entry_crud( $action, $id ) {
 			glossary_show_message_on_overview( 'error', __( 'Form has expired.', 'arteeo-glossary' ) );
 		}
 
-		$entry              = new stdClass();
+		$entry              = new Glossary_Entry();
 		$entry->id          = null;
 		$entry->term        = sanitize_text_field( $_POST['term'] );
 		$entry->description = sanitize_textarea_field( $_POST['description'] );
@@ -154,7 +156,7 @@ function glossary_entry_crud( $action, $id ) {
 		}
 
 		if ( isset( $_POST['id'] ) && 'edit' === $action ) {
-			$entry->id = glossary_get_entry_or_redirect( $_POST['id'] )->id;
+			$entry->id = intval( glossary_get_entry_or_redirect( $_POST['id'] )->id );
 		}
 
 		if ( null === $error ) {
