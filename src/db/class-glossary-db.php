@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/../class-glossary.php';
+require_once __DIR__ . '/../models/class-glossary-entry.php';
 
 class Glossary_Db {
 	private string $table_name;
@@ -165,7 +166,16 @@ function get_entry_by_id( int $id ) {
 		)
 	);
 	if ( 1 === $wpdb->num_rows ) {
-		return $entries[0];
+		$entry = $entries[0];
+
+		$result              = new Glossary_Entry();
+		$result->id          = $entry->id;
+		$result->letter      = $entry->letter;
+		$result->term        = $entry->term;
+		$result->description = $entry->description;
+		$result->locale      = $entry->locale;
+
+		return $result;
 	}
 
 	return null;
@@ -221,6 +231,7 @@ function insert_entry( $entry ) {
 			'locale'      => $entry->locale,
 		),
 		array(
+			'%s',
 			'%s',
 			'%s',
 			'%s',

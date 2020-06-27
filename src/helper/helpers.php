@@ -12,16 +12,81 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+class Helpers {
+	/**
+	 * Render a language dropdown
+	 *
+	 * Generates a dropdown based on the input parameters.
+	 *
+	 * @since 1.0.0
+	 * @param string $name        The name and id of the geneareted select element.
+	 * @param array  $languages   An array of the language locales which should be geneared.
+	 * @param string $selected    The locale which should be selected.
+	 * @param bool   $include_all Boolean to signal if an 'all' option should be included. Default set to false.
+	 */
+	public static function render_dropdown_languages( $name, $languages, $selected, $include_all = false ) {
+		echo '<select id="' . esc_html( $name ) . '" name="' . esc_html( $name ) . '">';
+
+		if ( $include_all ) {
+			echo '' .
+			'	<option value=""' . ( ( '' === $selected ) ? 'selected >' : '>' ) .
+					esc_html( __( 'All', 'arteeo-glossary' ) ) .
+			'	</option>';
+		}
+
+		$sorted_languages = array();
+
+		$language_count = count( $languages );
+		for ( $i = 0; $i < $language_count; $i++ ) {
+			$sorted_languages[ $languages[ $i ] ] = \Locale::getDisplayName( $languages[ $i ], get_user_locale() );
+		}
+
+		asort( $sorted_languages );
+
+		foreach ( $sorted_languages as $locale => $language ) {
+			echo '' .
+				'	<option value="' . esc_html( $locale ) . '" ' .
+						( ( $locale === $selected ) ? 'selected >' : '>' ) .
+					esc_html( $language ) .
+				'	</option>';
+		}
+		echo '</select>';
+	}
+
+	/**
+	 * Get all supported locales.
+	 *
+	 * Returns all locales for which a translation exists
+	 *
+	 * @since 1.0.0
+	 * @return array Array with the supported locales as values.
+	 */
+	public static function get_locales() {
+		$languages      = get_available_languages( __DIR__ . '/../../languages' );
+		$prefix         = 'arteeo-glossary-';
+		$language_count = count( $languages );
+
+		for ( $i = 0; $i < $language_count; $i++ ) {
+			$languages[ $i ] = substr( $languages[ $i ], strlen( $prefix ) );
+		}
+		array_push( $languages, 'en_US' );
+		return $languages;
+	}
+}
+
 /**
- * Take current url and convert it by changing the provided get parameter
+ * Generate url with get parameters.
  *
- * @param string $parameters array of values
- *                           $key
- *                              The parameter which should be adjusted
- *                           $parameters[$key]
- *                              the value which should be set for the
- *                              parameter if set to string 'null' 
- * 															the parameter will be removed
+ * Take current url and adust it by changing the provided get parameters.
+ * Usage: generate_url( array( 'action' => 'edit' ) )
+ *
+ * @param array $parameters {
+ *     Array with the get-parameters which should be changed as keys and the desired values as values.
+ *
+ *     $parameters['action'] => 'edit' If defined sets the get-parameter 'action' to 'edit'.
+ *     $paremeters['action'] => 'null' If set to 'null' the parameter will be removed from the url.
+ * }
+ *
  * @return string the resulting url after adjusting the parameters
  */
 function generate_url( $parameters ) {
@@ -98,11 +163,20 @@ function glossary_dropdown_languages( $name, $languages, $selected, $include_all
 		'	</option>';
 	}
 
-	foreach ( $languages as $language ) {
+	$sorted_languages = array();
+
+	$language_count = count( $languages );
+	for ( $i = 0; $i < $language_count; $i++ ) {
+		$sorted_languages[ $languages[ $i ] ] = \Locale::getDisplayName( $languages[ $i ], get_user_locale() );
+	}
+
+	asort( $sorted_languages );
+
+	foreach ( $sorted_languages as $locale => $language ) {
 		echo '' .
-			'	<option value="' . esc_html( $language ) . '" ' .
-					( ( $language === $selected ) ? 'selected >' : '>' ) .
-				esc_html( \Locale::getDisplayName( $language, get_user_locale() ) ) .
+			'	<option value="' . esc_html( $locale ) . '" ' .
+					( ( $locale === $selected ) ? 'selected >' : '>' ) .
+				esc_html( $language ) .
 			'	</option>';
 	}
 	echo '</select>';
