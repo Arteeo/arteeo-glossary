@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/../models/class-glossary-entry.php';
-require_once __DIR__ . '/../helper/helpers.php';
+require_once __DIR__ . '/../helper/class-helpers.php';
 
 /**
  * Handles the admin page entry form
@@ -27,7 +27,7 @@ class Admin_Page_Entry_Form {
 	const EDIT = 'edit';
 
 	/**
-	 * The action to be performed with this form can be 'Add' or 'Edit'.
+	 * The action to be performed with this form can be 'add' or 'edit'.
 	 *
 	 * @since 1.0.0
 	 * @var string

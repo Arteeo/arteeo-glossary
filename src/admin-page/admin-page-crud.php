@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once 'class-admin-page-entry-form.php';
+require_once 'class-admin-page-delete-form.php';
 require_once __DIR__ . '/../models/class-glossary-entry.php';
 
 /**
@@ -245,7 +246,8 @@ function glossary_action_switcher( $action, $id ) {
 			break;
 		case 'delete':
 			$entry = glossary_get_entry_or_redirect( $id );
-			glossary_delete_form( $id, $entry->term );
+			$form  = new Admin_Page_Delete_Form( $id, $entry->term );
+			$form->render();
 			break;
 		case 'force-delete':
 			$entry = glossary_get_entry_or_redirect( $id );
