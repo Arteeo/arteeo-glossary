@@ -160,10 +160,10 @@ class Glossary_Block {
 		if ( 0 === $wpdb->num_rows ) {
 			$current_letter          = '?';
 			$letters                 = array();
-			$letters[0]              = new Glossary_Entry();
+			$letters[0]              = new Entry();
 			$letters[0]->letter      = '?';
 			$entries                 = array();
-			$entries[0]              = new Glossary_Entry();
+			$entries[0]              = new Entry();
 			$entries[0]->term        = __( 'No entry', 'arteeo-glossary' );
 			$entries[0]->description = __(
 				'Unfortunately no entries in your language could be found in this glossary.',

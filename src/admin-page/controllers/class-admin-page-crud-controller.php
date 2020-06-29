@@ -15,7 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/../class-admin-page.php';
 require_once __DIR__ . '/../views/class-admin-page-entry-form.php';
 require_once __DIR__ . '/../views/class-admin-page-delete-form.php';
-require_once __DIR__ . '/../../models/class-glossary-entry.php';
+require_once __DIR__ . '/../../models/class-entry.php';
+require_once __DIR__ . '/../../models/class-message.php';
 require_once __DIR__ . '/../../helper/class-helpers.php';
 
 /**
@@ -35,9 +36,9 @@ class Admin_Page_CRUD_Controller {
 	private Glossary_DB $db;
 
 	/**
-	 * The Constructor of the entry
+	 * The Constructor of the controller
 	 *
-	 * Links the database with the entry.
+	 * Links the controller to the database.
 	 *
 	 * @since 1.0.0
 	 * @param Glossary_DB $db @see $db class variable.
@@ -59,10 +60,12 @@ class Admin_Page_CRUD_Controller {
 			$nonce  = wp_verify_nonce( $_POST['_wpnonce'], $action );
 
 			if ( false === $nonce ) {
-				Admin_Page::redirect_and_show_message( 'error', __( 'Form has expired.', 'arteeo-glossary' ) );
+				Admin_Page::redirect_and_show_message(
+					new Message( Message::ERROR, __( 'Form has expired.', 'arteeo-glossary' ) )
+				);
 			}
 
-			$entry              = new Glossary_Entry( $this->db );
+			$entry              = new Entry( $this->db );
 			$entry->id          = null;
 			$entry->term        = sanitize_text_field( $_POST['term'] );
 			$entry->description = sanitize_textarea_field( $_POST['description'] );
@@ -107,7 +110,7 @@ class Admin_Page_CRUD_Controller {
 	private function action_switcher( string $action, ?int $id = null ) {
 		switch ( $action ) {
 			case Admin_Page::ADD:
-				$form = new Admin_Page_Entry_Form( $action, new Glossary_Entry( $this->db ) );
+				$form = new Admin_Page_Entry_Form( $action, new Entry( $this->db ) );
 				$form->render();
 				break;
 			case Admin_Page::EDIT:
@@ -129,7 +132,7 @@ class Admin_Page_CRUD_Controller {
 				break;
 			case Admin_Page::FORCE_DELETE:
 				$entry = $this->get_entry_or_redirect( $id );
-				$this->delete_entry_and_redirect( $id );
+				$this->delete_entry_and_redirect( $entry );
 				break;
 		}
 	}
@@ -139,29 +142,28 @@ class Admin_Page_CRUD_Controller {
 	 *
 	 * Saves the entry. After processing the function redirects to the admin page.
 	 *
-	 * @param Glossary_Entry $entry the entry to be saved.
+	 * @param Entry $entry the entry to be saved.
 	 * @param bool           $new if it is a new entry to be saved. Default false.
 	 */
-	private function save_entry_and_redirect( Glossary_Entry $entry, bool $new = false ) {
+	private function save_entry_and_redirect( Entry $entry, bool $new = false ) {
 		$db_result = $entry->save();
 
 		if ( false === $db_result ) {
-			Admin_Page::redirect_and_show_message( 'error', __( 'Database error.', 'arteeo-glossary' ) );
+			Admin_Page::redirect_and_show_message(
+				new Message( Message::ERROR, __( 'Database error.', 'arteeo-glossary' ) )
+			);
 		} elseif ( 0 === $db_result ) {
-				Admin_Page::redirect_and_show_message(
-					'success',
-					__( 'No changes have occured.', 'arteeo-glossary' ),
-				);
+			Admin_Page::redirect_and_show_message(
+				new Message( Message::SUCCESS, __( 'No changes have occured.', 'arteeo-glossary' ) )
+			);
 		} else {
 			if ( ! $new ) {
 				Admin_Page::redirect_and_show_message(
-					'success',
-					__( 'Entry has been adjusted.', 'arteeo-glossary' )
+					new Message( Message::SUCCESS, __( 'Entry has been adjusted.', 'arteeo-glossary' ) )
 				);
 			} else {
 				Admin_Page::redirect_and_show_message(
-					'success',
-					__( 'Entry has been created.', 'arteeo-glossary' )
+					new Message( Message::SUCCESS, __( 'Entry has been created.', 'arteeo-glossary' ) )
 				);
 			}
 		}
@@ -172,15 +174,19 @@ class Admin_Page_CRUD_Controller {
 	 *
 	 * Deletes the entry. After processing the function redirects to the admin page.
 	 *
-	 * @param Glossary_Entry $entry the id of the entry to be deleted.
+	 * @param Entry $entry the id of the entry to be deleted.
 	 */
-	private function delete_entry_and_redirect( $entry ) {
+	private function delete_entry_and_redirect( Entry $entry ) {
 		$result = $entry->delete();
 
 		if ( false === $result ) {
-			Admin_Page::redirect_and_show_message( 'error', __( 'Database error.', 'arteeo-glossary' ) );
+			Admin_Page::redirect_and_show_message(
+				new Message( Message::ERROR, __( 'Database error.', 'arteeo-glossary' ) )
+			);
 		} else {
-			Admin_Page::redirect_and_show_message( 'success', __( 'Entry has been deleted.', 'arteeo-glossary' ) );
+			Admin_Page::redirect_and_show_message(
+				new Message( Message::SUCCESS, __( 'Entry has been deleted.', 'arteeo-glossary' ) )
+			);
 		}
 	}
 
@@ -227,18 +233,22 @@ class Admin_Page_CRUD_Controller {
 	 *
 	 * @param mixed $id the id of the entry which should be found.
 	 *
-	 * @return Glossary_Entry the entry object if one was found.
+	 * @return Entry the entry object if one was found.
 	 */
 	private function get_entry_or_redirect( $id ) {
 		if ( ! is_numeric( $id ) ) {
-			Admin_Page::redirect_and_show_message( 'error', __( 'Entry id not valid.', 'arteeo-glossary' ) );
+			Admin_Page::redirect_and_show_message(
+				new Message( Message::ERROR, __( 'Entry id not valid.', 'arteeo-glossary' ) )
+			);
 		}
 
 		$id = intval( $id );
 
 		$entry = $this->db->get_entry_by_id( $id );
 		if ( null === $entry ) {
-			Admin_Page::redirect_and_show_message( 'error', __( 'Entry could not be found.', 'arteeo-glossary' ) );
+			Admin_Page::redirect_and_show_message(
+				new Message( Message::ERROR, __( 'Entry could not be found.', 'arteeo-glossary' ) )
+			);
 		}
 
 		return $entry;

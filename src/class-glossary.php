@@ -10,9 +10,8 @@
 namespace arteeo\glossary;
 
 require_once 'admin-page/class-admin-page.php';
-require_once 'helper/helpers.php';
 require_once 'block/block.php';
-require_once 'models/class-glossary-entry.php';
+require_once 'models/class-entry.php';
 
 /**
  * Glossary plugin controller

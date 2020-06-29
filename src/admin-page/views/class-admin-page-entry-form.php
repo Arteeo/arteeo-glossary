@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once __DIR__ . '/../../models/class-glossary-entry.php';
+require_once __DIR__ . '/../../models/class-entry.php';
 require_once __DIR__ . '/../../helper/class-helpers.php';
 
 /**
@@ -38,9 +38,9 @@ class Admin_Page_Entry_Form {
 	 * The entry to adjust with this form.
 	 *
 	 * @since 1.0.0
-	 * @var Glossary_Entry
+	 * @var Entry
 	 */
-	private Glossary_Entry $entry;
+	private Entry $entry;
 
 	/**
 	 * The error message to be shown to the user. Default is null.
@@ -56,11 +56,11 @@ class Admin_Page_Entry_Form {
 	 * Constructs the form which can then later be rendered.
 	 *
 	 * @since 1.0.0
-	 * @param string          $action        @see $action class variable.
-	 * @param ?Glossary_Entry $entry         The entry to change. @see Glossary_Entry.
-	 * @param ?string         $error_message @see $error_message class variable.
+	 * @param string  $action        @see $action class variable.
+	 * @param ?Entry  $entry         The entry to change. @see Entry.
+	 * @param ?string $error_message @see $error_message class variable.
 	 */
-	public function __construct( string $action, ?Glossary_Entry $entry, ?string $error_message = null ) {
+	public function __construct( string $action, ?Entry $entry, ?string $error_message = null ) {
 		$this->action        = $action;
 		$this->entry         = $entry;
 		$this->error_message = $error_message;

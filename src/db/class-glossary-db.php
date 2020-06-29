@@ -13,7 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/../class-glossary.php';
-require_once __DIR__ . '/../models/class-glossary-entry.php';
+require_once __DIR__ . '/../models/class-entry.php';
+require_once __DIR__ . '/../models/class-entries.php';
+require_once __DIR__ . '/../models/class-letters.php';
 
 class Glossary_DB {
 	private string $table_name;
@@ -154,7 +156,7 @@ class Glossary_DB {
 		}
 	}
 
-	public function insert_entry( Glossary_Entry $entry ) {
+	public function insert_entry(  $entry ) {
 		global $wpdb;
 
 		$result = $wpdb->insert(
@@ -175,7 +177,7 @@ class Glossary_DB {
 		return $result;
 	}
 
-	public function update_entry( Glossary_Entry $entry ) {
+	public function update_entry( Entry $entry ) {
 		global $wpdb;
 
 		$result = $wpdb->update(
@@ -198,7 +200,7 @@ class Glossary_DB {
 		return $result;
 	}
 
-	public function delete_entry( Glossary_Entry $entry ) {
+	public function delete_entry( Entry $entry ) {
 		global $wpdb;
 		$result = $wpdb->delete( $this->table_name, array( 'id' => $entry->id ) );
 		
@@ -207,116 +209,92 @@ class Glossary_DB {
 
 	public function get_entry_by_id( int $id ) {
 		global $wpdb;
-		global $glossary_table_name;
-	
+
 		$entries = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT * FROM ' . $glossary_table_name . ' WHERE' .
+				'SELECT * FROM ' . $this->table_name . ' WHERE' .
 				' id = %d',
 				$id
 			)
 		);
+
 		if ( 1 === $wpdb->num_rows ) {
-			$entry = $entries[0];
-	
-			$result              = new Glossary_Entry( $this );
-			$result->id          = $entry->id;
-			$result->letter      = $entry->letter;
-			$result->term        = $entry->term;
-			$result->description = $entry->description;
-			$result->locale      = $entry->locale;
-	
+			$result = Entry::from_object( $entries[0], $this );
+
 			return $result;
 		}
-	
+
 		return null;
 	}
-}
 
-function get_entry_by_id( int $id ) {
-	global $wpdb;
-	global $glossary_table_name;
+	public function get_filtered_entries( Filter $filter ) : Entries {
+		global $wpdb;
 
-	$entries = $wpdb->get_results(
-		$wpdb->prepare(
-			'SELECT * FROM ' . $glossary_table_name . ' WHERE' .
-			' id = %d',
-			$id
-		)
-	);
-	if ( 1 === $wpdb->num_rows ) {
-		$entry = $entries[0];
+		$entries = array();
 
-		$result              = new Glossary_Entry( $this );
-		$result->id          = $entry->id;
-		$result->letter      = $entry->letter;
-		$result->term        = $entry->term;
-		$result->description = $entry->description;
-		$result->locale      = $entry->locale;
+		if ( isset( $filter->locale ) && isset( $filter->letter ) ) {
+			$entries = $wpdb->get_results(
+				$wpdb->prepare(
+					'SELECT * FROM ' . $this->table_name .
+						' WHERE locale=%s AND letter=%s ORDER BY term ' . $filter->sorting,
+					$filter->locale,
+					$filter->letter
+				)
+			);
+		} elseif ( isset( $filter->locale ) ) {
+			$entries = $wpdb->get_results(
+				$wpdb->prepare(
+					'SELECT * FROM ' . $this->table_name . ' WHERE locale=%s ORDER BY term ' . $filter->sorting,
+					$filter->locale
+				)
+			);
+		} elseif ( isset( $filters['letter'] ) ) {
+			$entries = $wpdb->get_results(
+				$wpdb->prepare(
+					'SELECT * FROM ' . $this->table_name . ' WHERE letter=%s ORDER BY term ' . $filter->sorting,
+					$filters['letter']
+				)
+			);
+		} else {
+			$entries = $wpdb->get_results(
+				'SELECT * FROM ' . $this->table_name . ' ORDER BY term ' . $filter->sorting
+			);
+		}
+
+		$result = new Entries();
+
+		foreach ( $entries as $key => $entry ) {
+			$result->add( Entry::from_object( $entry, $this ) );
+		}
 
 		return $result;
 	}
 
-	return null;
-}
+	public function get_filtered_letters( Filter $filter ) : Letters {
+		global $wpdb;
 
-function get_filtered_entries( $filters, $sorting ) {
-	global $wpdb;
-	global $glossary_table_name;
+		$letters = array();
 
-	$entries = array();
+		if ( isset( $filter->locale ) ) {
+			$letters = $wpdb->get_results(
+				$wpdb->prepare(
+					'SELECT letter, count(letter) AS count FROM ' . $this->table_name .
+						' WHERE locale=%s GROUP BY letter ORDER BY letter ASC',
+					$filter->locale
+				)
+			);
+		} else {
+			$letters = $wpdb->get_results(
+				'SELECT letter, count(letter) AS count FROM ' . $this->table_name .
+						' GROUP BY letter ORDER BY letter ASC'
+			);
+		}
 
-	if ( isset( $filters['locale'] ) && isset( $filters['letter'] ) ) {
-		$entries = $wpdb->get_results(
-			$wpdb->prepare(
-				'SELECT * FROM ' . $glossary_table_name . ' WHERE locale=%s AND letter=%s ORDER BY term ' . $sorting,
-				$filters['locale'],
-				$filters['letter']
-			)
-		);
-	} elseif ( isset( $filters['locale'] ) ) {
-		$entries = $wpdb->get_results(
-			$wpdb->prepare(
-				'SELECT * FROM ' . $glossary_table_name . ' WHERE locale=%s ORDER BY term ' . $sorting,
-				$filters['locale']
-			)
-		);
-	} elseif ( isset( $filters['letter'] ) ) {
-		$entries = $wpdb->get_results(
-			$wpdb->prepare(
-				'SELECT * FROM ' . $glossary_table_name . ' WHERE letter=%s ORDER BY term ' . $sorting,
-				$filters['letter']
-			)
-		);
-	} else {
-		$entries = $wpdb->get_results(
-			'SELECT * FROM ' . $glossary_table_name . ' ORDER BY term ' . $sorting
-		);
+		$result = new Letters();
+		foreach ( $letters as $key => $letter ) {
+			$result->add( Letter::from_object( $letter ) );
+		}
+
+		return $result;
 	}
-
-	return $entries;
-}
-
-function get_filtered_letters( $filters ) {
-	global $wpdb;
-	global $glossary_table_name;
-
-	$letters = array();
-
-	if ( isset( $filters['locale'] ) ) {
-		$letters = $wpdb->get_results(
-			$wpdb->prepare(
-				'SELECT letter, count(letter) AS count FROM ' . $glossary_table_name .
-					' WHERE locale=%s GROUP BY letter ORDER BY letter ASC',
-				$filters['locale']
-			)
-		);
-	} else {
-		$letters = $wpdb->get_results(
-			'SELECT letter, count(letter) AS count FROM ' . $glossary_table_name .
-					' GROUP BY letter ORDER BY letter ASC'
-		);
-	}
-
-	return $letters;
 }

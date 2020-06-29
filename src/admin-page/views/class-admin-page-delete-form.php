@@ -51,17 +51,12 @@ class Admin_Page_Delete_Form {
 	 * Constructs the form which can then later be rendered.
 	 *
 	 * @since 1.0.0
-	 * @param ?int   $id           @see $id class variable.
 	 * @param string $term         @see $term class variable.
 	 * @param string $deletion_url @see $deletion_url class variable.
 	 */
 	public function __construct( string $term, string $deletion_url ) {
 		$this->term         = $term;
 		$this->deletion_url = $deletion_url;
-
-		// ToDo: Check for errors:
-		// Add and id? Edit and no id? Action not known?
-		// I think class should be called correctly.
 	}
 
 

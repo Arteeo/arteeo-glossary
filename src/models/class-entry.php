@@ -9,7 +9,7 @@ namespace arteeo\glossary;
 
 require_once __DIR__ . '/../db/class-glossary-db.php';
 
-class Glossary_Entry{
+class Entry{
 	private Glossary_DB $db;
 
 	public ?int $id            = null;
@@ -48,5 +48,20 @@ class Glossary_Entry{
 		} else {
 			return $this->db->delete_entry( $this );
 		}
+	}
+
+	public static function from_object( $object, Glossary_DB $db ) : Entry {
+		if ( isset( $object->id, $object->letter, $object->term, $object->description, $object->locale ) ) {
+			$entry              = new Entry( $db );
+			$entry->id          = $object->id;
+			$entry->letter      = $object->letter;
+			$entry->term        = $object->term;
+			$entry->description = $object->description;
+			$entry->locale      = $object->locale;
+
+			return $entry;
+		}
+
+		throw new \InvalidArgumentException( 'The given object is no entry.' );
 	}
 }
