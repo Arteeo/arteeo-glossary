@@ -12,23 +12,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require 'admin-page-table.php';
-require 'admin-page-crud.php';
+require_once __DIR__ . '/views/admin-page-table.php';
+require_once __DIR__ . '/controllers/class-admin-page-crud-controller.php';
+require_once __DIR__ . '/../helper/class-helpers.php';
 
 global $glossary_page_id;
 $glossary_page_id = 'glossary_admin_page';
 
 class Admin_Page {
+	const ADD          = 'add';
+	const EDIT         = 'edit';
+	const DELETE       = 'delete';
+	const FORCE_DELETE = 'force-delete';
+
 	private string $page_id;
 	private Admin_Page_Table $table;
-	private Admin_Page_Crud $crud;
+	private Admin_Page_CRUD_Controller $crud;
+	private Glossary_DB $db;
 
-	public function __construct() {
+	public function __construct( Glossary_DB $db ) {
 		global $glossary_page_id;
 
+		$this->db      = $db;
 		$this->page_id = $glossary_page_id;
 		$this->table   = new Admin_Page_Table();
-		//$this->crud  = new Admin_Page_Crud();
+		$this->crud    = new Admin_Page_CRUD_Controller( $this->db );
 	}
 
 	public function init() {
@@ -44,7 +52,7 @@ class Admin_Page {
 			__( 'Glossary', 'arteeo-glossary' ),
 			'manage_options',
 			$this->page_id,
-			array( $this, 'render' ),
+			array( $this, 'run' ),
 			'dashicons-book-alt',
 			null,
 		);
@@ -62,29 +70,43 @@ class Admin_Page {
 	 * @global object $wpdb                The WordPress database instance.
 	 * @global string $glossary_table_name The name of the glossary database table.
 	 */
-	public function render() {
-		$handled = false;
+	public function run() {
+		$action = null;
 
 		if ( isset( $_GET['action'] ) ) {
-			$action = $_GET['action'];
-			$handled = true;
-
-			switch ( $action ) {
-				case 'add':
-					glossary_entry_crud( $action, null );
-					break;
-				case 'edit':
-				case 'delete':
-				case 'force-delete':
-					glossary_entry_crud( $action, $_GET['id'] );
-					break;
-				default:
-					$handled = false;
-			}
+			$action = sanitize_text_field( $_GET['action'] );
 		}
 
-		if ( ! $handled ) {
-			$this->table->render();
+		switch ( $action ) {
+			case self::ADD:
+			case self::EDIT:
+			case self::DELETE:
+			case self::FORCE_DELETE:
+				$this->crud->run( $action );
+				break;
+			default:
+				$this->table->render();
 		}
+	}
+
+	/**
+	 * Show message on admin-page
+	 *
+	 * Redirects to the admin-page and shows the provided message.
+	 *
+	 * @param string $type the type of the message to be shown.
+	 * @param string $message the message to be shown.
+	 */
+	public static function redirect_and_show_message( string $type, string $message ) {
+		Helpers::redirect_to(
+			Helpers::generate_url(
+				array(
+					'action'       => 'null',
+					'id'           => 'null',
+					'message_type' => $type,
+					'message'      => $message,
+				)
+			)
+		);
 	}
 }

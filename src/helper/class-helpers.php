@@ -128,4 +128,16 @@ class Helpers {
 
 		return esc_url( $url );
 	}
+
+	/**
+	 * Redirect to
+	 *
+	 * Redirect to the page the url is refering to.
+	 *
+	 * @param string $url the url to redirect to.
+	 */
+	public static function redirect_to( $url ) {
+		echo '<meta http-equiv="refresh" content="0; URL=' . esc_url( $url ) . '">';
+		exit;
+	}
 }

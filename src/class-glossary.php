@@ -26,9 +26,9 @@ class Glossary {
 	/**
 	 * Db instance for the glossary.
 	 *
-	 * @var Glossary_Db
+	 * @var Glossary_DB
 	 */
-	private Glossary_Db $db;
+	private Glossary_DB $db;
 
 	/**
 	 * Backend instance for the glossary.
@@ -42,11 +42,11 @@ class Glossary {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Glossary_Db $db The db from which to get the entries.
+	 * @param Glossary_DB $db The db from which to get the entries.
 	 */
-	public function __construct( Glossary_Db $db) {
+	public function __construct( Glossary_DB $db ) {
 		$this->db         = $db;
-		$this->admin_page = new Admin_Page();
+		$this->admin_page = new Admin_Page( $this->db );
 		$this->block      = new Glossary_Block();
 
 		$this->admin_page->init();

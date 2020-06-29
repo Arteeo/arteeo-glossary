@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once __DIR__ . '/../class-glossary.php';
+require_once __DIR__ . '/../../class-glossary.php';
 
 class Admin_Page_Table {
 

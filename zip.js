@@ -13,7 +13,7 @@ fs.unlink('dist/blocks.style.build.css', (err) => {
 });
 
 // create a file to stream archive data to.
-var output = fs.createWriteStream(__dirname + '/glossary.zip');
+var output = fs.createWriteStream(__dirname + '/arteeo-glossary.zip');
 var archive = archiver('zip', {
   zlib: { level: 9 } // Sets the compression level.
 });

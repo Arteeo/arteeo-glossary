@@ -12,8 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once __DIR__ . '/../models/class-glossary-entry.php';
-require_once __DIR__ . '/../helper/class-helpers.php';
+require_once __DIR__ . '/../../models/class-glossary-entry.php';
+require_once __DIR__ . '/../../helper/class-helpers.php';
 
 /**
  * Handles the admin page entry form

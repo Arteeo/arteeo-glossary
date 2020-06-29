@@ -25,11 +25,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once 'php/class-glossary.php';
 require_once 'php/db/class-glossary-db.php';
 
+/**
+ * Trigger activation
+ *
+ * On plugin activation this function is called which does then trigger a custom action so that the plugin can be
+ * prepared for activation.
+ *
+ * @since 1.0.0
+ */
 function arteeo_glossary_activate() {
 	do_action( 'arteeo_glossary_activate' );
 }
 register_activation_hook( __FILE__, 'arteeo\glossary\arteeo_glossary_activate' );
 
+/**
+ * Trigger uninstall
+ *
+ * On plugin deinstallation this function is called which does then trigger a custom action so that the plugin can be
+ * correctly removed.
+ *
+ * @since 1.0.0
+ */
 function arteeo_glossary_uninstall() {
 	do_action( 'arteeo_glossary_uninstall' );
 }
@@ -42,10 +58,23 @@ $arteo_glossary_root = __DIR__;
 
 /**
  * The loader for the plugin
+ *
+ * @since 1.0.0
  */
 class Main {
+	/**
+	 * The glossary.
+	 *
+	 * @var Glossary
+	 */
 	private Glossary $glossary;
-	private Glossary_Db $db;
+
+	/**
+	 * Db instance for the glossary.
+	 *
+	 * @var Glossary_DB
+	 */
+	private Glossary_DB $db;
 
 	/**
 	 * Constructor.
@@ -54,7 +83,7 @@ class Main {
 	 */
 	public function __construct() {
 		// Db has to be initialized here since it is used within hooks.
-		$this->db = new Glossary_Db();
+		$this->db = new Glossary_DB();
 	}
 
 	/**
@@ -83,15 +112,6 @@ class Main {
 	 * @since 1.0.0
 	 */
 	public function includes() {
-		/**
-		 * Include helpers
-		 */
-		// require_once 'php/helper/helpers.php';
-
-		/**
-		 * Include api
-		 */
-		// require_once 'php/api/register.php';
 		$this->glossary = new Glossary( $this->db );
 	}
 }

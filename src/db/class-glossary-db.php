@@ -15,8 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/../class-glossary.php';
 require_once __DIR__ . '/../models/class-glossary-entry.php';
 
-class Glossary_Db {
+class Glossary_DB {
 	private string $table_name;
+	private object $wpdb;
 
 
 	/**
@@ -152,6 +153,84 @@ class Glossary_Db {
 			self::create_glossary_table();
 		}
 	}
+
+	public function insert_entry( Glossary_Entry $entry ) {
+		global $wpdb;
+
+		$result = $wpdb->insert(
+			$this->table_name,
+			array(
+				'letter'      => $entry->letter,
+				'term'        => $entry->term,
+				'description' => $entry->description,
+				'locale'      => $entry->locale,
+			),
+			array(
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+			)
+		);
+		return $result;
+	}
+
+	public function update_entry( Glossary_Entry $entry ) {
+		global $wpdb;
+
+		$result = $wpdb->update(
+			$this->table_name,
+			array(
+				'letter'      => $entry->letter,
+				'term'        => $entry->term,
+				'description' => $entry->description,
+				'locale'      => $entry->locale,
+			),
+			array( 'id' => $entry->id ),
+			array(
+				'%s',
+				'%s',
+				'%s',
+			),
+			array( '%d' )
+		);
+
+		return $result;
+	}
+
+	public function delete_entry( Glossary_Entry $entry ) {
+		global $wpdb;
+		$result = $wpdb->delete( $this->table_name, array( 'id' => $entry->id ) );
+		
+		return $result;
+	}
+
+	public function get_entry_by_id( int $id ) {
+		global $wpdb;
+		global $glossary_table_name;
+	
+		$entries = $wpdb->get_results(
+			$wpdb->prepare(
+				'SELECT * FROM ' . $glossary_table_name . ' WHERE' .
+				' id = %d',
+				$id
+			)
+		);
+		if ( 1 === $wpdb->num_rows ) {
+			$entry = $entries[0];
+	
+			$result              = new Glossary_Entry( $this );
+			$result->id          = $entry->id;
+			$result->letter      = $entry->letter;
+			$result->term        = $entry->term;
+			$result->description = $entry->description;
+			$result->locale      = $entry->locale;
+	
+			return $result;
+		}
+	
+		return null;
+	}
 }
 
 function get_entry_by_id( int $id ) {
@@ -168,7 +247,7 @@ function get_entry_by_id( int $id ) {
 	if ( 1 === $wpdb->num_rows ) {
 		$entry = $entries[0];
 
-		$result              = new Glossary_Entry();
+		$result              = new Glossary_Entry( $this );
 		$result->id          = $entry->id;
 		$result->letter      = $entry->letter;
 		$result->term        = $entry->term;
@@ -179,66 +258,6 @@ function get_entry_by_id( int $id ) {
 	}
 
 	return null;
-}
-
-function delete_entry_by_id( $id ) {
-	global $wpdb;
-	global $glossary_table_name;
-
-	$result = $wpdb->delete( $glossary_table_name, array( 'id' => $id ) );
-
-	if ( 1 === $result ) {
-		return true;
-	}
-
-	return false;
-}
-
-function update_entry( $entry ) {
-	global $wpdb;
-	global $glossary_table_name;
-
-	$result = $wpdb->update(
-		$glossary_table_name,
-		array(
-			'letter'      => $entry->letter,
-			'term'        => $entry->term,
-			'description' => $entry->description,
-			'locale'      => $entry->locale,
-		),
-		array( 'id' => $entry->id ),
-		array(
-			'%s',
-			'%s',
-			'%s',
-		),
-		array( '%d' )
-	);
-
-	return $result;
-}
-
-function insert_entry( $entry ) {
-	global $wpdb;
-	global $glossary_table_name;
-
-	$result = $wpdb->insert(
-		$glossary_table_name,
-		array(
-			'letter'      => $entry->letter,
-			'term'        => $entry->term,
-			'description' => $entry->description,
-			'locale'      => $entry->locale,
-		),
-		array(
-			'%s',
-			'%s',
-			'%s',
-			'%s',
-		)
-	);
-
-	return $result;
 }
 
 function get_filtered_entries( $filters, $sorting ) {
