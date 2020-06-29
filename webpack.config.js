@@ -3,7 +3,7 @@ const webpack = require( 'webpack' );
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './src/block/resize.js',
+  entry: './src/js/block/resize.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/resize.js'
@@ -38,13 +38,7 @@ module.exports = {
 			sourceMap: false,
 		}),
     new CopyPlugin([
-		{ from: 'src/admin-page/', to: 'php/admin-page/' },
-		{ from: 'src/models/', to: 'php/models/' },
-		{ from: 'src/db/', to: 'php/db/' },
-		{ from: 'src/api/', to: 'php/api/' },
-        { from: 'src/helper/', to: 'php/helper/' },
-		{ from: 'src/block.php', to: 'php/block/block.php' },
-		{ from: 'src/class-glossary.php', to: 'php/class-glossary.php' },
+		{ from: 'src/php', to: 'php/' },
         { from: 'plugin.php', to: 'plugin.php' },
         { from: 'readme.md', to: 'readme.md' },
         { from: 'dist/blocks.build.js', to: 'js/block/'},

@@ -45,11 +45,9 @@ class Glossary_DB {
 	 * sample data.
 	 *
 	 * @global object $wpdb                The WordPress database instance.
-	 * @global string $glossary_table_name The name of the glossary database table.
 	 */
 	public function prepare_glossary_table() {
 		global $wpdb;
-		global $glossary_table_name;
 
 		if ( $this->table_name !== $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $this->table_name ) ) ) {
 			self::create_glossary_table();
@@ -146,7 +144,6 @@ class Glossary_DB {
 	public function drop_glossary_table() {
 		global $wpdb;
 		$wpdb->query( 'DROP TABLE IF EXISTS ' . $this->table_name );
-		$glossary_table_name = '';
 		delete_option( 'glossary_version' );
 	}
 
@@ -248,11 +245,11 @@ class Glossary_DB {
 					$filter->locale
 				)
 			);
-		} elseif ( isset( $filters['letter'] ) ) {
+		} elseif ( isset( $filter->letter ) ) {
 			$entries = $wpdb->get_results(
 				$wpdb->prepare(
 					'SELECT * FROM ' . $this->table_name . ' WHERE letter=%s ORDER BY term ' . $filter->sorting,
-					$filters['letter']
+					$filter->letter
 				)
 			);
 		} else {

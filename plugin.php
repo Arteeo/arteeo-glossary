@@ -51,11 +51,6 @@ function arteeo_glossary_uninstall() {
 }
 register_uninstall_hook( __FILE__, 'arteeo\glossary\arteeo_glossary_uninstall' );
 
-
-// Globals.
-global $arteo_glossary_root;
-$arteo_glossary_root = __DIR__;
-
 /**
  * The loader for the plugin
  *
@@ -115,13 +110,6 @@ class Main {
 		$this->glossary = new Glossary( $this->db );
 	}
 }
-
-global $wpdb;
-global $glossary_table_name;
-$glossary_table_name = $wpdb->prefix . 'arteeo_glossary';
-
-global $glossary_plugin_dir;
-$glossary_plugin_dir = plugin_dir_path( __FILE__ );
 
 $main = new Main();
 $main->run();

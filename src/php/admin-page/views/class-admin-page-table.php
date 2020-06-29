@@ -20,7 +20,6 @@ require_once __DIR__ . '/../../models/class-filter.php';
 require_once __DIR__ . '/../../helper/class-helpers.php';
 
 class Admin_Page_Table {
-
 	private Entries $entries;
 	private Letters $letters;
 	private ?Message $message;
@@ -85,7 +84,7 @@ class Admin_Page_Table {
 		if ( 0 < $this->letters->count() ) {
 			echo '' .
 				'		<li class="all">' .
-				'			<a class="' . ( ( 'all' === $this->filter->letter ) ? 'current ' : '' ) . '" ' .
+				'			<a class="' . ( ( null === $this->filter->letter ) ? 'current ' : '' ) . '" ' .
 								'href="' . esc_url( Helpers::generate_url( array( 'glossary_show' => 'all' ) ) ) . '">' .
 								esc_html( __( 'All', 'arteeo-glossary' ) ) .
 				'				<span class="count">(' . esc_html( $this->letters->count() ) . ')</span>' .

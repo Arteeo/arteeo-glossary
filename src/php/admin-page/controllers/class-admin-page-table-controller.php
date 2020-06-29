@@ -62,7 +62,6 @@ class Admin_Page_Table_Controller {
 		}
 
 		$entries;
-		$filter->letter = '';
 		if ( isset( $_GET['glossary_show'] ) ) {
 			$filter->letter = sanitize_text_field( $_GET['glossary_show'] );
 		}
@@ -72,17 +71,20 @@ class Admin_Page_Table_Controller {
 				$filter->letter = '#';
 				break;
 			case 'all':
+				$filter->letter = null;
+				break;
 			case ( ( 1 === strlen( $filter->letter) )  && ( ctype_alpha(  $filter->letter ) ) ):
+				$filter->letter = strtoupper( $filter->letter );
 				break;
 			default:
-				redirect_to( generate_url( array( 'glossary_show' => 'all' ) ) );
+				Helpers::redirect_to( Helpers::generate_url( array( 'glossary_show' => 'all' ) ) );
 				break;
 		}
 
 		$entries = $this->db->get_filtered_entries( $filter );
 		$letters = $this->db->get_filtered_letters( $filter );
 
-		if ( 0 === $entries->count() && 'all' !== $filter->letter ) {
+		if ( 0 === $entries->count() && null !== $filter->letter ) {
 			Helpers::redirect_to( Helpers::generate_url( array( 'glossary_show' => 'all' ) ) );
 		}
 

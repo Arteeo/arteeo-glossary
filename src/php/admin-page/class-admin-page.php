@@ -69,7 +69,6 @@ class Admin_Page {
 	 *
 	 * @global string $glossary_page_id    The slug of the glossary admin page.
 	 * @global object $wpdb                The WordPress database instance.
-	 * @global string $glossary_table_name The name of the glossary database table.
 	 */
 	public function run() {
 		$action = null;

@@ -264,16 +264,12 @@ class Glossary_Block {
 	 * @since 1.0.0
 	 */
 	private function register() {
-		global $wpdb;
-		global $glossary_table_name;
-		global $glossary_plugin_dir;
-
 		// Register block styles for both frontend + backend.
 		wp_register_style(
 			'glossary-cgb-style-css', // Handle.
 			plugins_url( 'css/block/blocks.style.build.css', plugin_dir_path( __DIR__ ) ), // Block style CSS.
 			is_admin() ? array( 'wp-editor' ) : null, // Dependency to include the CSS after it.
-			filemtime( $glossary_plugin_dir . '/css/block/blocks.style.build.css' ) // Version: File modification time.
+			filemtime( __DIR__ . '/../../css/block/blocks.style.build.css' ) // Version: File modification time.
 		);
 
 		// Register block editor script for backend.
@@ -281,7 +277,7 @@ class Glossary_Block {
 			'glossary-cgb-block-js', // Handle.
 			plugins_url( 'js/block/blocks.build.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
-			filemtime( $glossary_plugin_dir . '/js/block/blocks.build.js' ), // Version: filemtime — Gets file modification time.
+			filemtime( __DIR__ . '/../../js/block/blocks.build.js' ), // Version: filemtime — Gets file modification time.
 			true // Enqueue the script in the footer.
 		);
 
@@ -289,7 +285,7 @@ class Glossary_Block {
 			'resize-js', // Handle.
 			plugins_url( 'js/resize.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 			null, // Dependencies, defined above.
-			filemtime( $glossary_plugin_dir . '/js/resize.js' ), // Version: filemtime — Gets file modification time.
+			filemtime( __DIR__ . '/../../js/resize.js' ), // Version: filemtime — Gets file modification time.
 			true // Enqueue the script in the footer.
 		);
 
@@ -298,7 +294,7 @@ class Glossary_Block {
 			'glossary-cgb-block-editor-css', // Handle.
 			plugins_url( 'css/block/blocks.editor.build.css', plugin_dir_path( __DIR__ ) ), // Block editor CSS.
 			array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
-			filemtime( $glossary_plugin_dir . '/css/block/blocks.editor.build.css' ) // Version: File modification time.
+			filemtime( __DIR__ . '/../../css/block/blocks.editor.build.css' ) // Version: File modification time.
 		);
 
 		// WP Localized globals. Use dynamic PHP stuff in JavaScript via `cgbGlobal` object.
