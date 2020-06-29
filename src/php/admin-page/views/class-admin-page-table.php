@@ -85,37 +85,24 @@ class Admin_Page_Table {
 			echo '' .
 				'		<li class="all">' .
 				'			<a class="' . ( ( null === $this->filter->letter ) ? 'current ' : '' ) . '" ' .
-								'href="' . esc_url( Helpers::generate_url( array( 'glossary_show' => 'all' ) ) ) . '">' .
+								'href="' . esc_url( Admin_Page_Table_Controller::get_letter_sort_url( null ) ) . '">' .
 								esc_html( __( 'All', 'arteeo-glossary' ) ) .
 				'				<span class="count">(' . esc_html( $this->letters->count() ) . ')</span>' .
 				'			</a>' .
 				'			|' .
 				'		</li>';
 		}
-		$hashtag = 0;
-		foreach ( $this->letters as $letter ) {
-			if ( '#' === $letter->letter ) {
-				$hashtag = $letter->count;
-			} else {
-				echo '' .
-				'		<li class="' . esc_html( $letter->letter ) . '">' .
-				'			<a class="' . ( ( $letter->letter === $this->filter->letter ) ? 'current ' : '' ) . '" ' .
-				'					href="' . esc_url( Helpers::generate_url( array( 'glossary_show' => $letter->letter ) ) ) .
-									'">' . esc_html( $letter->letter ) .
-				'				<span class="count">(' . esc_html( $letter->count ) . ')</span>' .
-				'			</a>' .
-				'			|' .
-				'		</li>';
-			}
-		}
-		if ( 0 < $hashtag ) {
+
+		foreach ( $this->letters as $key => $letter ) {
 			echo '' .
-				'		<li class="#">' .
-				'			<a class="' . ( ( '#' === $this->filter->letter ) ? 'current ' : '' ) . '" ' .
-				'				href="' . esc_url( Helpers::generate_url( array( 'glossary_show' => 'hashtag' ) ) ) . '">' .
-				'				#<span class="count">(' . esc_html( $hashtag ) . ')</span>' .
-				'			</a>' .
-				'		</li>';
+			'		<li class="' . esc_html( $letter->letter ) . '">' .
+			'			<a class="' . ( ( $letter->letter === $this->filter->letter ) ? 'current ' : '' ) . '" ' .
+			'					href="' . esc_url( Admin_Page_Table_Controller::get_letter_sort_url( $letter ) ) .
+								'">' . esc_html( $letter->letter ) .
+			'				<span class="count">(' . esc_html( $letter->count ) . ')</span>' .
+			'			</a>' .
+			'			' . ( ( $this->letters->is_last( $key ) ) ? '' : '|' ) .
+			'		</li>';
 		}
 		echo '	</ul>';
 	}
@@ -155,11 +142,9 @@ class Admin_Page_Table {
 								esc_html( strtolower( $this->filter->sorting ) ) . '" scope="col">' .
 			'				<a href="' .
 									esc_url(
-										Helpers::generate_url(
-											array(
-												'glossary_sort' => 'term',
-												'order'         => ( ( 'DESC' === $this->filter->sorting ) ? 'asc' : 'desc' ),
-											)
+										Admin_Page_Table_Controller::generate_sort_url(
+											'term',
+											( ( 'DESC' === $this->filter->sorting ) ? 'asc' : 'desc' ),
 										)
 									) .
 			'					">' .
@@ -213,29 +198,19 @@ class Admin_Page_Table {
 				'					<div class="row-actions">' .
 				'						<span class="edit">' .
 				'							<a href="' .
-												esc_url(
-													Helpers::generate_url(
-														array(
-															'action' => 'edit',
-															'id'     => $entry->id,
-														)
-													)
-												) .
-												'" aria-label="\'' . esc_html( $entry->term ) . '\' ' .
-													'(' . esc_html( __( 'Edit', 'arteeo-glossary' ) ) . ')">' .
-				'								' . esc_html( __( 'Edit', 'arteeo-glossary' ) ) .
+													esc_url(
+														Admin_Page_Table_Controller::get_entry_edit_url( $entry )
+													) .
+													'" aria-label="\'' . esc_html( $entry->term ) . '\' ' .
+														'(' . esc_html( __( 'Edit', 'arteeo-glossary' ) ) . ')">' .
+					'								' . esc_html( __( 'Edit', 'arteeo-glossary' ) ) .
 				'							</a>' .
 				'							|' .
 				'						</span>' .
 				'						<span class="delete">' .
 				'							<a class="delete" href="' .
 													esc_url(
-														Helpers::generate_url(
-															array(
-																'action' => 'delete',
-																'id'     => $entry->id,
-															)
-														)
+														Admin_Page_Table_Controller::get_entry_delete_url( $entry )
 													) .
 													'" aria-label="\'' . esc_html( $entry->term ) . '\' ' .
 													'(' . esc_html( __( 'Delete', 'arteeo-glossary' ) ) . ')">' .
@@ -250,7 +225,7 @@ class Admin_Page_Table {
 				'				</td>' .
 				'				<td class="locale column-locale" ' .
 										'data-colname="' . esc_html( __( 'Language', 'arteeo-glossary' ) ) . '">' .
-				'					' . esc_html( \Locale::getDisplayName( $entry->locale, get_user_locale() ) ) .
+				'					' . esc_html( Admin_Page_Table_Controller::get_readable_locale( $entry->locale ) ) .
 				'				</td>' .
 				'			</tr>';
 		}

@@ -25,4 +25,12 @@ class Letters implements \IteratorAggregate {
 	public function getIterator() {
 		return new \ArrayIterator( $this->letters );
 	}
+
+	public function unset( int $key ) {
+		unset( $this->letters[ $key ] );
+	}
+
+	public function is_last( int $key ) {
+		return ( array_key_last( $this->letters ) === $key );
+	}
 }
