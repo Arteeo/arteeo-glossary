@@ -119,15 +119,15 @@ class Admin_Page_Entry_Form {
 		switch ( $this->action ) {
 			case self::ADD:
 				echo '' .
-					'	<h1 class="add-entry">' . esc_html( __( 'Add glossary entry', 'arteeo-glossary' ) ) . '</h1>' .
-					'	<p>' . esc_html( __( 'Add a new entry to the glossary.', 'arteeo-glossary' ) ) . '</p>';
+					'	<h1 class="add-entry">' . esc_html__( 'Add glossary entry', 'arteeo-glossary' ) . '</h1>' .
+					'	<p>' . esc_html__( 'Add a new entry to the glossary.', 'arteeo-glossary' ) . '</p>';
 				break;
 			case self::EDIT:
 				echo '' .
 					'	<h1 class="edit-entry">' .
-							esc_html( __( 'Edit glossary entry', 'arteeo-glossary' ) ) .
+							esc_html__( 'Edit glossary entry', 'arteeo-glossary' ) .
 					'	</h1>' .
-					'	<p>' . esc_html( __( 'Adjust the entry from the glossary.', 'arteeo-glossary' ) ) . '</p>';
+					'	<p>' . esc_html__( 'Adjust the entry from the glossary.', 'arteeo-glossary' ) . '</p>';
 				break;
 		}
 	}
@@ -148,9 +148,9 @@ class Admin_Page_Entry_Form {
 			'				<tr class="form-field form-required">' .
 			'					<th scope="row">' .
 			'						<label for="glossary_term">' .
-			'							' . esc_html( __( 'Term', 'arteeo-glossary' ) ) .
+			'							' . esc_html__( 'Term', 'arteeo-glossary' ) .
 			'							<span class="description">' .
-			'								(' . esc_html( __( 'required', 'arteeo-glossary' ) ) . ')' .
+			'								(' . esc_html__( 'required', 'arteeo-glossary' ) . ')' .
 			'							</span>' .
 			'						</label>' .
 			'					</th>' .
@@ -163,9 +163,9 @@ class Admin_Page_Entry_Form {
 			'				<tr class="form-field form-required">' .
 			'					<th scope="row">' .
 			'						<label for="glossary_description">' .
-			'							' . esc_html( __( 'Description', 'arteeo-glossary' ) ) .
+			'							' . esc_html__( 'Description', 'arteeo-glossary' ) .
 			'							<span class="description">' .
-			'								(' . esc_html( __( 'required', 'arteeo-glossary' ) ) . ')' .
+			'								(' . esc_html__( 'required', 'arteeo-glossary' ) . ')' .
 			'							</span>' .
 			'						</label>' .
 			'					</th>' .
@@ -179,9 +179,9 @@ class Admin_Page_Entry_Form {
 			'				<tr class="form-field form-required">' .
 			'					<th scope="row">' .
 			'						<label for="glossary_locale">' .
-			'							' . esc_html( __( 'Language', 'arteeo-glossary' ) ) .
+			'							' . esc_html__( 'Language', 'arteeo-glossary' ) .
 			'							<span class="locale">' .
-			'								(' . esc_html( __( 'required', 'arteeo-glossary' ) ) . ')' .
+			'								(' . esc_html__( 'required', 'arteeo-glossary' ) . ')' .
 			'							</span>' .
 			'						</label>' .
 			'					</th>' .
@@ -225,12 +225,12 @@ class Admin_Page_Entry_Form {
 			case self::ADD:
 				echo '' .
 					'		<input id="entry_submit" class="button button-primary" type="submit" name="entry_form" ' .
-							'value="' . esc_html( __( 'Create new entry', 'arteeo-glossary' ) ) . '">';
+							'value="' . esc_html__( 'Create new entry', 'arteeo-glossary' ) . '">';
 				break;
 			case self::EDIT:
 				echo '' .
 					'		<input id="entry_submit" class="button button-primary" type="submit" name="entry_form" ' .
-							'value="' . esc_html( __( 'Save entry', 'arteeo-glossary' ) ) . '">';
+							'value="' . esc_html__( 'Save entry', 'arteeo-glossary' ) . '">';
 				break;
 		}
 		echo '		</p>';

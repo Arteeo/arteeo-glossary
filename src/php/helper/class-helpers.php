@@ -37,7 +37,7 @@ class Helpers {
 		if ( $include_all ) {
 			echo '' .
 			'	<option value=""' . ( ( '' === $selected ) ? 'selected >' : '>' ) .
-					esc_html( __( 'All', 'arteeo-glossary' ) ) .
+					esc_html__( 'All', 'arteeo-glossary' ) .
 			'	</option>';
 		}
 

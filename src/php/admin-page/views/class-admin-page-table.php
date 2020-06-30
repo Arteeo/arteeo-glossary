@@ -105,11 +105,11 @@ class Admin_Page_Table {
 	 */
 	private function render_header() {
 		echo '' .
-			'	<h1 class="wp-heading-inline">' . esc_html( __( 'Glossary', 'arteeo-glossary' ) ) . '</h1>' .
+			'	<h1 class="wp-heading-inline">' . esc_html__( 'Glossary', 'arteeo-glossary' ) . '</h1>' .
 			'	<span>v' . esc_html( Glossary::VERSION ) . '</span>' .
 			'	<a class="page-title-action aria-button-if-js" role="button" aria-expanded="false" ' .
 						'href="' . esc_url( Helpers::generate_url( array( 'action' => 'add' ) ) ) . '"> ' .
-			'		' . esc_html( __( 'Add entry', 'arteeo-glossary' ) ) .
+			'		' . esc_html__( 'Add entry', 'arteeo-glossary' ) .
 			'	</a>' .
 			'	<hr class="wp-header-end">';
 	}
@@ -129,7 +129,7 @@ class Admin_Page_Table {
 					'		<p>' . esc_html( $this->message->content ) . '</p>' .
 					'		<button class="notice-dismiss" type="button">' .
 					'			<span class="screen-reader-text">' .
-					'				' . esc_html( __( 'Hide this message', 'arteeo-glossary' ) ) .
+					'				' . esc_html__( 'Hide this message', 'arteeo-glossary' ) .
 					'			</span>' .
 					'		</button>' .
 					'	</div>';
@@ -156,7 +156,7 @@ class Admin_Page_Table {
 				'		<li class="all">' .
 				'			<a class="' . ( ( null === $this->filter->letter ) ? 'current ' : '' ) . '" ' .
 								'href="' . esc_url( self::generate_letter_sort_url( null ) ) . '">' .
-								esc_html( __( 'All', 'arteeo-glossary' ) ) .
+								esc_html__( 'All', 'arteeo-glossary' ) .
 				'				<span class="count">(' . esc_html( $this->letters->count() ) . ')</span>' .
 				'			</a>' .
 				'			|' .
@@ -191,7 +191,7 @@ class Admin_Page_Table {
 			'		<div class="alignleft actions">' .
 			'			<form method="get">' .
 			'				<label class="screen-reader-text" for="language_filter">' .
-			'					' . esc_html( __( 'Filter by language', 'arteeo-glossary' ) ) .
+			'					' . esc_html__( 'Filter by language', 'arteeo-glossary' ) .
 			'				</label>';
 		foreach ( self::get_hidden_parameters() as $name => $value ) {
 			echo '' .
@@ -202,7 +202,7 @@ class Admin_Page_Table {
 		Helpers::render_dropdown_languages( 'language_filter', $languages, $this->filter->locale, true );
 		echo '' .
 			'				<input id="post-query-submit" class="button" type="submit" ' .
-								'value="' . esc_html( __( 'Filter by language', 'arteeo-glossary' ) ) . '">' .
+								'value="' . esc_html__( 'Filter by language', 'arteeo-glossary' ) . '">' .
 			'			</form>' .
 			'		</div>' .
 			'	</div>';
@@ -217,7 +217,7 @@ class Admin_Page_Table {
 	 */
 	private function render_table() {
 		echo '' .
-			'	<h2 class="screen-reader-text">' . esc_html( __( 'Glossary entries', 'arteeo-glossary' ) ) . '</h2>' .
+			'	<h2 class="screen-reader-text">' . esc_html__( 'Glossary entries', 'arteeo-glossary' ) . '</h2>' .
 			'	<table class="wp-list-table widefat fixed striped">' .
 			'		<thead>' .
 			'			<th id="term" class="manage-column column-term column-primary sorted ' .
@@ -230,15 +230,15 @@ class Admin_Page_Table {
 										)
 									) .
 			'					">' .
-			'					<span>' . esc_html( __( 'Term', 'arteeo-glossary' ) ) . '</span>' .
+			'					<span>' . esc_html__( 'Term', 'arteeo-glossary' ) . '</span>' .
 			'					<span class="sorting-indicator"></span>' .
 			'				</a>' .
 			'			</th>' .
 			'			<th id="description" class="manage-column column-description" scope="col">' .
-			'				' . esc_html( __( 'Description', 'arteeo-glossary' ) ) .
+			'				' . esc_html__( 'Description', 'arteeo-glossary' ) .
 			'			</th>' .
 			'			<th id="locale" class="manage-column column-locale" scope="col">' .
-			'				' . esc_html( __( 'Language', 'arteeo-glossary' ) ) .
+			'				' . esc_html__( 'Language', 'arteeo-glossary' ) .
 			'			</th>' .
 			'		</thead>' .
 			'		<tbody id="the-list">';
@@ -260,17 +260,17 @@ class Admin_Page_Table {
 			echo '' .
 				'			<tr id="entry-?">' .
 				'				<td class="term column-term has-row-actions column-primary" ' .
-									'data-colname="' . esc_html( __( 'Term', 'arteeo-glossary' ) ) . '">' .
+									'data-colname="' . esc_html__( 'Term', 'arteeo-glossary' ) . '">' .
 				'				<strong class="row-Term">' .
 				'					?' .
 				'				</stong>' .
 				'			</td>' .
 				'			<td class="description column-description" ' .
-									'data-colname="' . esc_html( __( 'Description', 'arteeo-glossary' ) ) . '">' .
-				'				' . esc_html( __( 'No entries found.', 'arteeo-glossary' ) ) .
+									'data-colname="' . esc_html__( 'Description', 'arteeo-glossary' ) . '">' .
+				'				' . esc_html__( 'No entries found.', 'arteeo-glossary' ) .
 				'			</td>' .
 				'			<td class="locale column-locale" ' .
-									'data-colname="' . esc_html( __( 'Language', 'arteeo-glossary' ) ) . '">' .
+									'data-colname="' . esc_html__( 'Language', 'arteeo-glossary' ) . '">' .
 				'				-' .
 				'			</td>' .
 				'		</tr>';
@@ -280,7 +280,7 @@ class Admin_Page_Table {
 			echo '' .
 				'			<tr id="entry-' . esc_html( $entry->id ) . '">' .
 				'				<td class="term column-term has-row-actions column-primary" ' .
-										'data-colname="' . esc_html( __( 'Term', 'arteeo-glossary' ) ) . '">' .
+										'data-colname="' . esc_html__( 'Term', 'arteeo-glossary' ) . '">' .
 				'					<strong class="row-Term">' .
 				'						' . esc_html( $entry->term ) .
 				'					</stong>' .
@@ -289,8 +289,8 @@ class Admin_Page_Table {
 				'							<a href="' .
 													esc_url( self::generate_entry_edit_url( $entry ) ) .
 													'" aria-label="\'' . esc_html( $entry->term ) . '\' ' .
-														'(' . esc_html( __( 'Edit', 'arteeo-glossary' ) ) . ')">' .
-					'								' . esc_html( __( 'Edit', 'arteeo-glossary' ) ) .
+														'(' . esc_html__( 'Edit', 'arteeo-glossary' ) . ')">' .
+					'								' . esc_html__( 'Edit', 'arteeo-glossary' ) .
 				'							</a>' .
 				'							|' .
 				'						</span>' .
@@ -298,18 +298,18 @@ class Admin_Page_Table {
 				'							<a class="delete" href="' .
 													esc_url( self::generate_entry_delete_url( $entry ) ) .
 													'" aria-label="\'' . esc_html( $entry->term ) . '\' ' .
-													'(' . esc_html( __( 'Delete', 'arteeo-glossary' ) ) . ')">' .
-				'								' . esc_html( __( 'Delete', 'arteeo-glossary' ) ) .
+													'(' . esc_html__( 'Delete', 'arteeo-glossary' ) . ')">' .
+				'								' . esc_html__( 'Delete', 'arteeo-glossary' ) .
 				'							</a>' .
 				'						</span>' .
 				'					</div>' .
 				'				</td>' .
 				'				<td class="description column-description" ' .
-										'data-colname="' . esc_html( __( 'Description', 'arteeo-glossary' ) ) . '">' .
+										'data-colname="' . esc_html__( 'Description', 'arteeo-glossary' ) . '">' .
 				'				' . nl2br( esc_html( $entry->description ) ) .
 				'				</td>' .
 				'				<td class="locale column-locale" ' .
-										'data-colname="' . esc_html( __( 'Language', 'arteeo-glossary' ) ) . '">' .
+										'data-colname="' . esc_html__( 'Language', 'arteeo-glossary' ) . '">' .
 				'					' . esc_html( Helpers::get_readable_locale( $entry->locale ) ) .
 				'				</td>' .
 				'			</tr>';

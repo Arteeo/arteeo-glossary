@@ -70,7 +70,7 @@ class Admin_Page_Delete_Form {
 	public function render() {
 		echo '' .
 		'<div class="wrap">' .
-		'	<h1 class="delete-entry">' . esc_html( __( 'Delete glossary entry', 'arteeo-glossary' ) ) . '</h1>' .
+		'	<h1 class="delete-entry">' . esc_html__( 'Delete glossary entry', 'arteeo-glossary' ) . '</h1>' .
 		'	<p>' .
 		'		' .
 		esc_html(
@@ -79,7 +79,7 @@ class Admin_Page_Delete_Form {
 		) .
 		'	</p>' .
 		'	<a id="entry_delete" class="button button-primary" href="' . esc_url( $this->deletion_url ) . '">' .
-		'		' . esc_html( __( 'Delete', 'arteeo-glossary' ) ) .
+		'		' . esc_html__( 'Delete', 'arteeo-glossary' ) .
 		'	</a>' .
 		'</div>';
 	}
