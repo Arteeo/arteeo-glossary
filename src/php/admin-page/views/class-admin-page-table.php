@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Page table
+ * Admin Page Table
  *
  * @package arteeo\glossary
  */
@@ -13,18 +13,65 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/../../class-glossary.php';
+require_once __DIR__ . '/../../helper/class-helpers.php';
+
 require_once __DIR__ . '/../../models/class-message.php';
 require_once __DIR__ . '/../../models/class-entries.php';
 require_once __DIR__ . '/../../models/class-letters.php';
 require_once __DIR__ . '/../../models/class-filter.php';
-require_once __DIR__ . '/../../helper/class-helpers.php';
 
+
+/**
+ * Handles the admin page table
+ *
+ * Contains the rendering of the overview table.
+ *
+ * @since 1.0.0
+ */
 class Admin_Page_Table {
+	/**
+	 * The entries to be rendered.
+	 *
+	 * @since 1.0.0
+	 * @var Entries
+	 */
 	private Entries $entries;
+
+	/**
+	 * The letters to be rendered.
+	 *
+	 * @since 1.0.0
+	 * @var Letters
+	 */
 	private Letters $letters;
+
+	/**
+	 * The message to be shown. If set to null no message will be shown.
+	 *
+	 * @since 1.0.0
+	 * @var ?Message
+	 */
 	private ?Message $message;
+
+	/**
+	 * Defines the filters which are currently active on the table.
+	 *
+	 * @since 1.0.0
+	 * @var Filter
+	 */
 	private Filter $filter;
 
+	/**
+	 * The Constructor of the table
+	 *
+	 * Constructs the table which can then later be rendered.
+	 *
+	 * @since 1.0.0
+	 * @param Entries  $entries @see $entries class variable.
+	 * @param Letters  $letters @see $letters class variable.
+	 * @param ?Message $message @see $message class variable.
+	 * @param Filter   $filter  @see $filter class variable.
+	 */
 	public function __construct( Entries $entries, Letters $letters, ?Message $message, Filter $filter ) {
 		$this->entries = $entries;
 		$this->letters = $letters;
@@ -33,31 +80,47 @@ class Admin_Page_Table {
 	}
 
 	/**
-	 * Show overview screen
+	 * Render the table
 	 *
-	 * Show current entries of the glossary with several filter options.
+	 * Renders the table based on the parameters defined in the constructor.
+	 *
+	 * @since 1.0.0
 	 */
 	public function render() {
 		echo '<div class="wrap">';
 		$this->render_header();
 		$this->render_message();
 		$this->render_letters();
-		$this->render_language_filter();
+		$this->render_language_filter_form();
 		$this->render_table();
 		echo '</div>';
 	}
 
+	/**
+	 * Render the header
+	 *
+	 * Renders the header of the table.
+	 *
+	 * @since 1.0.0
+	 */
 	private function render_header() {
 		echo '' .
 			'	<h1 class="wp-heading-inline">' . esc_html( __( 'Glossary', 'arteeo-glossary' ) ) . '</h1>' .
 			'	<span>v' . esc_html( Glossary::VERSION ) . '</span>' .
 			'	<a class="page-title-action aria-button-if-js" role="button" aria-expanded="false" ' .
-					'href="' . esc_url( Helpers::generate_url( array( 'action' => 'add' ) ) ) .'"> ' .
+						'href="' . esc_url( Helpers::generate_url( array( 'action' => 'add' ) ) ) . '"> ' .
 			'		' . esc_html( __( 'Add entry', 'arteeo-glossary' ) ) .
 			'	</a>' .
 			'	<hr class="wp-header-end">';
 	}
 
+	/**
+	 * Render the message
+	 *
+	 * Renders the error or success message if one is defined.
+	 *
+	 * @since 1.0.0
+	 */
 	private function render_message() {
 		if ( null !== $this->message ) {
 			if ( Message::SUCCESS === $this->message->type ) {
@@ -79,13 +142,20 @@ class Admin_Page_Table {
 		}
 	}
 
+	/**
+	 * Render the letters
+	 *
+	 * Renders the letters which are available for selecting.
+	 *
+	 * @since 1.0.0
+	 */
 	private function render_letters() {
 		echo '	<ul class="subsubsub">';
 		if ( 0 < $this->letters->count() ) {
 			echo '' .
 				'		<li class="all">' .
 				'			<a class="' . ( ( null === $this->filter->letter ) ? 'current ' : '' ) . '" ' .
-								'href="' . esc_url( Admin_Page_Table_Controller::get_letter_sort_url( null ) ) . '">' .
+								'href="' . esc_url( self::generate_letter_sort_url( null ) ) . '">' .
 								esc_html( __( 'All', 'arteeo-glossary' ) ) .
 				'				<span class="count">(' . esc_html( $this->letters->count() ) . ')</span>' .
 				'			</a>' .
@@ -97,7 +167,7 @@ class Admin_Page_Table {
 			echo '' .
 			'		<li class="' . esc_html( $letter->letter ) . '">' .
 			'			<a class="' . ( ( $letter->letter === $this->filter->letter ) ? 'current ' : '' ) . '" ' .
-			'					href="' . esc_url( Admin_Page_Table_Controller::get_letter_sort_url( $letter ) ) .
+			'					href="' . esc_url( self::generate_letter_sort_url( $letter ) ) .
 								'">' . esc_html( $letter->letter ) .
 			'				<span class="count">(' . esc_html( $letter->count ) . ')</span>' .
 			'			</a>' .
@@ -107,7 +177,15 @@ class Admin_Page_Table {
 		echo '	</ul>';
 	}
 
-	private function render_language_filter() {
+	/**
+	 * Render language picker
+	 *
+	 * Renders the form for the language picker component. To not lose any get-parameters this function puts all get-
+	 * parameters defined into hidden fields.
+	 *
+	 * @since 1.0.0
+	 */
+	private function render_language_filter_form() {
 		echo '' .
 			'	<div class="tablenav top">' .
 			'		<div class="alignleft actions">' .
@@ -115,10 +193,7 @@ class Admin_Page_Table {
 			'				<label class="screen-reader-text" for="language_filter">' .
 			'					' . esc_html( __( 'Filter by language', 'arteeo-glossary' ) ) .
 			'				</label>';
-		foreach ( $_GET as $name => $value ) {
-			if ( 'language_filter' === $name ) {
-				continue;
-			}
+		foreach ( self::get_hidden_parameters() as $name => $value ) {
 			echo '' .
 				'<input type="hidden" name="' . esc_html( $name ) . '" value="' . esc_html( $value ) . '">';
 		}
@@ -133,6 +208,13 @@ class Admin_Page_Table {
 			'	</div>';
 	}
 
+	/**
+	 * Render the table
+	 *
+	 * Renders the main table.
+	 *
+	 * @since 1.0.0
+	 */
 	private function render_table() {
 		echo '' .
 			'	<h2 class="screen-reader-text">' . esc_html( __( 'Glossary entries', 'arteeo-glossary' ) ) . '</h2>' .
@@ -142,7 +224,7 @@ class Admin_Page_Table {
 								esc_html( strtolower( $this->filter->sorting ) ) . '" scope="col">' .
 			'				<a href="' .
 									esc_url(
-										Admin_Page_Table_Controller::generate_sort_url(
+										self::generate_sort_url(
 											'term',
 											( ( 'DESC' === $this->filter->sorting ) ? 'asc' : 'desc' ),
 										)
@@ -166,6 +248,13 @@ class Admin_Page_Table {
 			'	</table>';
 	}
 
+	/**
+	 * Render the entries
+	 *
+	 * Renders all entries available with the current filters. Is used by @see render_table.
+	 *
+	 * @since 1.0.0
+	 */
 	private function render_entries() {
 		if ( 0 === $this->entries->count() ) {
 			echo '' .
@@ -198,9 +287,7 @@ class Admin_Page_Table {
 				'					<div class="row-actions">' .
 				'						<span class="edit">' .
 				'							<a href="' .
-													esc_url(
-														Admin_Page_Table_Controller::get_entry_edit_url( $entry )
-													) .
+													esc_url( self::generate_entry_edit_url( $entry ) ) .
 													'" aria-label="\'' . esc_html( $entry->term ) . '\' ' .
 														'(' . esc_html( __( 'Edit', 'arteeo-glossary' ) ) . ')">' .
 					'								' . esc_html( __( 'Edit', 'arteeo-glossary' ) ) .
@@ -209,9 +296,7 @@ class Admin_Page_Table {
 				'						</span>' .
 				'						<span class="delete">' .
 				'							<a class="delete" href="' .
-													esc_url(
-														Admin_Page_Table_Controller::get_entry_delete_url( $entry )
-													) .
+													esc_url( self::generate_entry_delete_url( $entry ) ) .
 													'" aria-label="\'' . esc_html( $entry->term ) . '\' ' .
 													'(' . esc_html( __( 'Delete', 'arteeo-glossary' ) ) . ')">' .
 				'								' . esc_html( __( 'Delete', 'arteeo-glossary' ) ) .
@@ -221,13 +306,104 @@ class Admin_Page_Table {
 				'				</td>' .
 				'				<td class="description column-description" ' .
 										'data-colname="' . esc_html( __( 'Description', 'arteeo-glossary' ) ) . '">' .
-				'					' . nl2br( esc_html( $entry->description ) ) .	
+				'				' . nl2br( esc_html( $entry->description ) ) .
 				'				</td>' .
 				'				<td class="locale column-locale" ' .
 										'data-colname="' . esc_html( __( 'Language', 'arteeo-glossary' ) ) . '">' .
-				'					' . esc_html( Admin_Page_Table_Controller::get_readable_locale( $entry->locale ) ) .
+				'					' . esc_html( Helpers::get_readable_locale( $entry->locale ) ) .
 				'				</td>' .
 				'			</tr>';
 		}
+	}
+
+
+	/**
+	 * Generate letter sort url
+	 *
+	 * Generates the url which can be used to sort the table by the provided letter.
+	 *
+	 * @since 1.0.0
+	 * @param Letter $letter The letter for which the url should be created.
+	 * @return string The url which was generated.
+	 */
+	private static function generate_letter_sort_url( ?Letter $letter ) : string {
+		if ( null === $letter ) {
+			return Helpers::generate_url( array( 'glossary_show' => 'all' ) );
+		}
+		if ( '#' === $letter->letter ) {
+			return Helpers::generate_url( array( 'glossary_show' => 'hashtag' ) );
+		}
+		return Helpers::generate_url( array( 'glossary_show' => $letter->letter ) );
+	}
+
+	/**
+	 * Generate entry delete url
+	 *
+	 * Generates the url which can be used to show the delete form for the given entry.
+	 *
+	 * @since 1.0.0
+	 * @param Entry $entry The entry for which the url should be created.
+	 * @return string The url which was generated.
+	 */
+	private static function generate_entry_delete_url( Entry $entry ) : string {
+		return Helpers::generate_url(
+			array(
+				'action' => 'delete',
+				'id'     => $entry->id,
+			)
+		);
+	}
+
+	/**
+	 * Generate entry edit url
+	 *
+	 * Generates the url which can be used to show the edit form for the given entry.
+	 *
+	 * @since 1.0.0
+	 * @param Entry $entry The entry for which the url should be created.
+	 * @return string The url which was generated.
+	 */
+	private static function generate_entry_edit_url( Entry $entry ) : string {
+		return Helpers::generate_url(
+			array(
+				'action' => 'edit',
+				'id'     => $entry->id,
+			)
+		);
+	}
+
+	/**
+	 * Generate sorting url
+	 *
+	 * Generates the url which can be used to sort by the specified column.
+	 *
+	 * @since 1.0.0
+	 * @param string $sortable The column to sort by. Must be sortable.
+	 * @param string $sorting  The sorting asc or desc.
+	 * @return string The url which was generated.
+	 */
+	private static function generate_sort_url( string $sortable, string $sorting ) : string {
+		return Helpers::generate_url(
+			array(
+				'glossary_sort' => $sortable,
+				'order'         => $sorting,
+			)
+		);
+	}
+
+	/**
+	 * Get parameters for language picker
+	 *
+	 * Gets the parameters which are needed for the language picker to maintain the current url with its get-parameters.
+	 *
+	 * @since 1.0.0.
+	 * @return array The parameters which have to be added.
+	 */
+	private static function get_hidden_parameters() : array {
+		$result = $_GET;
+		if ( isset( $result['language_filter'] ) ) {
+			unset( $result['language_filter'] );
+		}
+		return $result;
 	}
 }

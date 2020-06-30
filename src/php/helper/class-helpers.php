@@ -68,7 +68,7 @@ class Helpers {
 	 * @since 1.0.0
 	 * @return array Array with the supported locales as values.
 	 */
-	public static function get_locales() {
+	public static function get_locales() : array {
 		$languages      = get_available_languages( __DIR__ . '/../../languages' );
 		$prefix         = 'arteeo-glossary-';
 		$language_count = count( $languages );
@@ -81,11 +81,25 @@ class Helpers {
 	}
 
 	/**
+	 * Convert locale to readable
+	 *
+	 * Takes a locale code and transforms it into a human readable string of the locale.
+	 *
+	 * @since 1.0.0
+	 * @param string $locale The locale code to be converted
+	 * @return string Returns the human readable locale string.
+	 */
+	public static function get_readable_locale( string $locale ) : string {
+		return \Locale::getDisplayName( $locale, get_user_locale() );
+	}
+
+	/**
 	 * Generate url with get parameters.
 	 *
 	 * Take current url as well as get parameters and adjust them by changing the provided get parameters.
 	 * Usage: generate_url( array( 'action' => 'edit' ) )
 	 *
+	 * @since 1.0.0
 	 * @param array $parameters {
 	 *     Array with the get-parameters which should be changed as keys and the desired values as values.
 	 *
@@ -95,7 +109,7 @@ class Helpers {
 	 *
 	 * @return string the resulting url after adjusting the parameters.
 	 */
-	public static function generate_url( $parameters ) {
+	public static function generate_url( $parameters ) : string {
 		$out_parameters  = array();
 		$url             = '';
 		$first_parameter = true;
@@ -134,6 +148,7 @@ class Helpers {
 	 *
 	 * Redirect to the page the url is refering to.
 	 *
+	 * @since 1.0.0
 	 * @param string $url the url to redirect to.
 	 */
 	public static function redirect_to( $url ) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Page CRUD controller
+ * Admin Page Table Controller
  *
  * @package arteeo\glossary
  */
@@ -47,6 +47,13 @@ class Admin_Page_Table_Controller {
 		$this->db = $db;
 	}
 
+	/**
+	 * Handle table creation
+	 *
+	 * Used for preparing and rendering the overview table.
+	 *
+	 * @since 1.0.0
+	 */
 	public function run() {
 		$filter = new Filter();
 
@@ -71,7 +78,7 @@ class Admin_Page_Table_Controller {
 			case 'all':
 				$filter->letter = null;
 				break;
-			case ( ( 1 === strlen( $filter->letter) )  && ( ctype_alpha(  $filter->letter ) ) ):
+			case ( ( 1 === strlen( $filter->letter ) ) && ( ctype_alpha( $filter->letter ) ) ):
 				$filter->letter = strtoupper( $filter->letter );
 				break;
 			case 'hashtag':
@@ -102,7 +109,7 @@ class Admin_Page_Table_Controller {
 		}
 
 		$message = null;
-		if ( isset( $_GET['message'], $_GET['message_type']) ) {
+		if ( isset( $_GET['message'], $_GET['message_type'] ) ) {
 			$message = new Message(
 				sanitize_text_field( $_GET['message_type'] ),
 				sanitize_text_field( $_GET['message'] ),
@@ -111,47 +118,5 @@ class Admin_Page_Table_Controller {
 
 		$table = new Admin_Page_Table( $entries, $letters, $message, $filter );
 		$table->render();
-	}
-
-
-	public static function get_letter_sort_url( ?Letter $letter ) : string {
-		if ( null === $letter ) {
-			return Helpers::generate_url( array( 'glossary_show' => 'all' ) );
-		}
-		if ( '#' === $letter->letter ) {
-			return Helpers::generate_url( array( 'glossary_show' => 'hashtag' ) );
-		}
-		return Helpers::generate_url( array( 'glossary_show' => $letter->letter ) );
-	}
-
-	public static function get_entry_delete_url( Entry $entry ) : string {
-		return Helpers::generate_url(
-			array(
-				'action' => 'delete',
-				'id'     => $entry->id,
-			)
-		);
-	}
-
-	public static function get_entry_edit_url( Entry $entry ) : string {
-		return Helpers::generate_url(
-			array(
-				'action' => 'edit',
-				'id'     => $entry->id,
-			)
-		);
-	}
-
-	public static function get_readable_locale( string $locale ) : string {
-		return \Locale::getDisplayName( $locale, get_user_locale() );
-	}
-
-	public static function generate_sort_url( string $sortable, string $sorting ) : string {
-		return Helpers::generate_url(
-			array(
-				'glossary_sort' => $sortable,
-				'order'         => $sorting,
-			)
-		);
 	}
 }

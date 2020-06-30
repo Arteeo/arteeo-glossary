@@ -1,11 +1,36 @@
 <?php
+/**
+ * Letter model
+ *
+ * @package arteeo\glossary
+ */
 
 namespace arteeo\glossary;
 
 require_once __DIR__ . '/../db/class-glossary-db.php';
 
-class Letter{
+/**
+ * Letter
+ *
+ * Represents one letter inside the glossary.
+ *
+ * @since 1.0.0
+ */
+class Letter {
+	/**
+	 * The letter itself.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
 	public string $letter;
+
+	/**
+	 * How many entries to this letter are int the database.
+	 *
+	 * @since 1.0.0
+	 * @var int
+	 */
 	public int $count;
 
 	/**
@@ -27,10 +52,25 @@ class Letter{
 		}
 	}
 
+	/**
+	 * Convert object
+	 *
+	 * Converts an object into a letter.
+	 *
+	 * @since 1.0.0
+	 * @param object $object The object to be converted.
+	 * @return Letter Returns the entry generated from the object.
+	 *
+	 * @throws \InvalidArgumentException If the object given is no entry.
+	 */
 	public static function from_object( $object ) : Letter {
 		if ( isset( $object->letter, $object->count ) ) {
-			$letter = new Letter( $object->letter, $object->count );
-			return $letter;
+			try {
+				$letter = new Letter( $object->letter, $object->count );
+				return $letter;
+			} catch ( \Exception $e ) {
+				// Is handled below.
+			}
 		}
 
 		throw new \InvalidArgumentException( 'The given object is no letter.' );

@@ -18,7 +18,7 @@ require_once __DIR__ . '/../../helper/class-helpers.php';
 /**
  * Handles the admin page entry form
  *
- * Contains the preparation and rendering of the entry form.
+ * Contains the rendering of the entry form.
  *
  * @since 1.0.0
  */
@@ -51,7 +51,7 @@ class Admin_Page_Entry_Form {
 	private ?string $error_message;
 
 	/**
-	 * The Construction of the form .
+	 * The Constructor of the form
 	 *
 	 * Constructs the form which can then later be rendered.
 	 *
@@ -59,15 +59,21 @@ class Admin_Page_Entry_Form {
 	 * @param string  $action        @see $action class variable.
 	 * @param ?Entry  $entry         The entry to change. @see Entry.
 	 * @param ?string $error_message @see $error_message class variable.
+	 *
+	 * @throws InvalidArgumentException If the action set is not defined for this form.
 	 */
 	public function __construct( string $action, ?Entry $entry, ?string $error_message = null ) {
 		$this->action        = $action;
 		$this->entry         = $entry;
 		$this->error_message = $error_message;
 
-		// ToDo: Check for errors:
-		// Add and id? Edit and no id? Action not known?
-		// I think class should be called correctly.
+		switch ( $this->action ) {
+			case self::ADD:
+			case self::EDIT:
+				break;
+			default:
+				throw new InvalidArgumentException( "Action '{$this->action}' is not defined for the entry form." );
+		}
 	}
 
 
@@ -122,10 +128,6 @@ class Admin_Page_Entry_Form {
 							esc_html( __( 'Edit glossary entry', 'arteeo-glossary' ) ) .
 					'	</h1>' .
 					'	<p>' . esc_html( __( 'Adjust the entry from the glossary.', 'arteeo-glossary' ) ) . '</p>';
-				break;
-			default:
-				// ToDo: Show error?
-				echo 'error';
 				break;
 		}
 	}
@@ -229,10 +231,6 @@ class Admin_Page_Entry_Form {
 				echo '' .
 					'		<input id="entry_submit" class="button button-primary" type="submit" name="entry_form" ' .
 							'value="' . esc_html( __( 'Save entry', 'arteeo-glossary' ) ) . '">';
-				break;
-			default:
-				// ToDo: Show error?
-				echo 'error';
 				break;
 		}
 		echo '		</p>';

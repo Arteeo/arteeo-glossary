@@ -17,13 +17,26 @@ require_once __DIR__ . '/../models/class-entry.php';
 require_once __DIR__ . '/../models/class-entries.php';
 require_once __DIR__ . '/../models/class-letters.php';
 
+/**
+ * Glossary Database
+ *
+ * Contains all code which interacts with the WordPress $wpdb. Defines and maintains the glossary database table.
+ *
+ * @since 1.0.0
+ */
 class Glossary_DB {
+	/**
+	 * The name of the database table.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
 	private string $table_name;
-	private object $wpdb;
-
 
 	/**
 	 * Constructor.
+	 *
+	 * Defines the table name for the database.
 	 *
 	 * @since 1.0.0
 	 */
@@ -32,6 +45,13 @@ class Glossary_DB {
 		$this->table_name = $wpdb->prefix . 'arteeo_glossary';
 	}
 
+	/**
+	 * Register actions
+	 *
+	 * Registers the action which will be executed on plugin activation and deinstallation as well as plugin upgrades.
+	 *
+	 * @since 1.0.0
+	 */
 	public function register_actions() {
 		add_action( 'plugins_loaded', array( $this, 'check_for_glossary_table_update' ) );
 		add_action( 'arteeo_glossary_activate', array( $this, 'prepare_glossary_table' ) );
@@ -41,10 +61,11 @@ class Glossary_DB {
 	/**
 	 * Setup the glossary database.
 	 *
-	 * This function checks if the database exists if this is not the case it creates the database and fills it with some
+	 * This function checks if the database exists if this is not the case it creates the database and fills it with
 	 * sample data.
 	 *
-	 * @global object $wpdb                The WordPress database instance.
+	 * @since 1.0.0
+	 * @global object $wpdb The WordPress database instance.
 	 */
 	public function prepare_glossary_table() {
 		global $wpdb;
@@ -52,17 +73,22 @@ class Glossary_DB {
 		if ( $this->table_name !== $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $this->table_name ) ) ) {
 			self::create_glossary_table();
 			self::fill_glossary_table();
-		} else {
-			// In case a upgrade is necessary this is the place to check since after the upgrade this 
-			// function is called to.
 		}
 	}
 
+	/**
+	 * Create table
+	 *
+	 * Creates the glossary database table. And saves the current glossary version inside a WordPress option.
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb The WordPress database instance.
+	 */
 	private function create_glossary_table() {
 		global $wpdb;
-	
+
 		$charset_collate = $wpdb->get_charset_collate();
-	
+
 		$sql = "CREATE TABLE $this->table_name (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			letter char NOT NULL,
@@ -72,12 +98,20 @@ class Glossary_DB {
 			PRIMARY KEY  (id)
 		) $charset_collate;";
 
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 
 		add_option( 'glossary_version', Glossary::VERSION );
 	}
 
+	/**
+	 * Fill table
+	 *
+	 * Fills the created table with some sample data.
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb The WordPress database instance.
+	 */
 	private function fill_glossary_table() {
 		global $wpdb;
 
@@ -141,19 +175,45 @@ class Glossary_DB {
 		);
 	}
 
+	/**
+	 * Uninstall table
+	 *
+	 * Drops the glossary table and removes the version option as to completely remove the plugin from the system.
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb The WordPress database instance.
+	 */
 	public function drop_glossary_table() {
 		global $wpdb;
 		$wpdb->query( 'DROP TABLE IF EXISTS ' . $this->table_name );
 		delete_option( 'glossary_version' );
 	}
 
+	/**
+	 * Check for update
+	 *
+	 * On plugin update this function checks if the glossary version has changed and updates the table if necessary.
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb The WordPress database instance.
+	 */
 	public function check_for_glossary_table_update() {
 		if ( Glossary::VERSION !== get_site_option( 'glossary_version' ) ) {
-			self::create_glossary_table();
+			function (){};
 		}
 	}
 
-	public function insert_entry(  $entry ) {
+	/**
+	 * Insert entry into database
+	 *
+	 * Takes a new entry and inserts it into the database table.
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb  The WordPress database instance.
+	 * @param Entry $entry The entry to be inserted.
+	 * @return int Returns the number of rows updated or -1 if an error occured.
+	 */
+	public function insert_entry( Entry $entry ) : int {
 		global $wpdb;
 
 		$result = $wpdb->insert(
@@ -171,10 +231,25 @@ class Glossary_DB {
 				'%s',
 			)
 		);
+
+		if ( false === $result ) {
+			return -1;
+		}
+
 		return $result;
 	}
 
-	public function update_entry( Entry $entry ) {
+	/**
+	 * Update entry from database
+	 *
+	 * Takes an existing entry and updates its values inside the database.
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb  The WordPress database instance.
+	 * @param Entry $entry The entry to be updated.
+	 * @return int Returns the number of rows updated or -1 if an error occured.
+	 */
+	public function update_entry( Entry $entry ) : int {
 		global $wpdb;
 
 		$result = $wpdb->update(
@@ -194,17 +269,45 @@ class Glossary_DB {
 			array( '%d' )
 		);
 
+		if ( false === $result ) {
+			return -1;
+		}
+
 		return $result;
 	}
 
-	public function delete_entry( Entry $entry ) {
+	/**
+	 * Delete entry from database
+	 *
+	 * Takes an existing entry and removes it from the database.
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb  The WordPress database instance.
+	 * @param Entry $entry The entry to be updated.
+	 * @return int Returns the number of rows updated or -1 if an error occured.
+	 */
+	public function delete_entry( Entry $entry ) : int {
 		global $wpdb;
 		$result = $wpdb->delete( $this->table_name, array( 'id' => $entry->id ) );
-		
+
+		if ( false === $result ) {
+			return -1;
+		}
+
 		return $result;
 	}
 
-	public function get_entry_by_id( int $id ) {
+	/**
+	 * Get entry from database
+	 *
+	 * Takes an entry id and returns the entry if it exists
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb  The WordPress database instance.
+	 * @param int $id The id of the entry.
+	 * @return ?Entry Returns entry or null if it couldn't be found.
+	 */
+	public function get_entry_by_id( int $id ) : ?Entry {
 		global $wpdb;
 
 		$entries = $wpdb->get_results(
@@ -224,6 +327,16 @@ class Glossary_DB {
 		return null;
 	}
 
+	/**
+	 * Get entries with filter
+	 *
+	 * Takes a filter object and returns all entries filtered by the parameters defined in that object.
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb  The WordPress database instance.
+	 * @param Filter $filter Contains the filters to be used.
+	 * @return Entries Returns a entries object containing all entries matching the parameters.
+	 */
 	public function get_filtered_entries( Filter $filter ) : Entries {
 		global $wpdb;
 
@@ -267,6 +380,16 @@ class Glossary_DB {
 		return $result;
 	}
 
+	/**
+	 * Get letters with filter
+	 *
+	 * Takes a filter object and returns all letters filtered by the parameters defined in that object.
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb  The WordPress database instance.
+	 * @param Filter $filter Contains the filters to be used.
+	 * @return Letters Returns a letters object containing all letters matching the parameters.
+	 */
 	public function get_filtered_letters( Filter $filter ) : Letters {
 		global $wpdb;
 

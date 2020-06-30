@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Page CRUD controller
+ * Admin Page CRUD Controller
  *
  * @package arteeo\glossary
  */
@@ -52,6 +52,7 @@ class Admin_Page_CRUD_Controller {
 	 *
 	 * Used for CRUD operation on glossary entries
 	 *
+	 * @since 1.0.0
 	 * @param string $action the action which has to be done.
 	 */
 	public function run( $action ) {
@@ -71,7 +72,7 @@ class Admin_Page_CRUD_Controller {
 			$entry->description = sanitize_textarea_field( $_POST['description'] );
 			$entry->locale      = sanitize_text_field( $_POST['locale'] );
 
-			$error = $this->check_entry_for_errors( $entry );
+			$error = $this->check_entry_for_errors_or_redirect( $entry );
 
 			$entry->letter = substr( $entry->term, 0, 1 );
 			if ( ! ctype_alpha( $entry->letter ) ) {
@@ -104,6 +105,7 @@ class Admin_Page_CRUD_Controller {
 	 *
 	 * Calls the forms depending on the action.
 	 *
+	 * @since 1.0.0
 	 * @param string $action the action which has to be done.
 	 * @param ?int   $id id of the entry to change. Set to null for new entry.
 	 */
@@ -142,13 +144,14 @@ class Admin_Page_CRUD_Controller {
 	 *
 	 * Saves the entry. After processing the function redirects to the admin page.
 	 *
+	 * @since 1.0.0
 	 * @param Entry $entry the entry to be saved.
-	 * @param bool           $new if it is a new entry to be saved. Default false.
+	 * @param bool  $new   indicates if it is a new entry to be saved. Default false.
 	 */
 	private function save_entry_and_redirect( Entry $entry, bool $new = false ) {
 		$db_result = $entry->save();
 
-		if ( false === $db_result ) {
+		if ( -1 === $db_result ) {
 			Admin_Page::redirect_and_show_message(
 				new Message( Message::ERROR, __( 'Database error.', 'arteeo-glossary' ) )
 			);
@@ -174,12 +177,13 @@ class Admin_Page_CRUD_Controller {
 	 *
 	 * Deletes the entry. After processing the function redirects to the admin page.
 	 *
-	 * @param Entry $entry the id of the entry to be deleted.
+	 * @since 1.0.0
+	 * @param Entry $entry the entry to be deleted.
 	 */
 	private function delete_entry_and_redirect( Entry $entry ) {
 		$result = $entry->delete();
 
-		if ( false === $result ) {
+		if ( -1 === $result ) {
 			Admin_Page::redirect_and_show_message(
 				new Message( Message::ERROR, __( 'Database error.', 'arteeo-glossary' ) )
 			);
@@ -193,13 +197,14 @@ class Admin_Page_CRUD_Controller {
 	/**
 	 * Validate entry
 	 *
-	 * Used for validating the entry received from the entry form
+	 * Used for validating the entry received from the entry form. Returns an error message or redirects if no error
+	 * correction is possible anymore.
 	 *
-	 * @param object $entry The entry which was submitted by the form.
-	 *
-	 * @return string the error message if an error was found else returns null
+	 * @since 1.0.0
+	 * @param   object $entry The entry which was submitted by the form.
+	 * @return ?string the error message if an error was found else returns null
 	 */
-	private function check_entry_for_errors( $entry ) {
+	private function check_entry_for_errors_or_redirect( $entry ) : ?string {
 		$languages = Helpers::get_locales();
 
 		if ( '' === $entry->term ) {
@@ -224,6 +229,8 @@ class Admin_Page_CRUD_Controller {
 		if ( null !== $entry->id ) {
 			$this->get_entry_or_redirect( $entry->id );
 		}
+
+		return null;
 	}
 
 	/**
@@ -231,11 +238,11 @@ class Admin_Page_CRUD_Controller {
 	 *
 	 * Tries to get the entry with the provided id or redirects to the admin page if no single entry could be found.
 	 *
+	 * @since 1.0.0
 	 * @param mixed $id the id of the entry which should be found.
-	 *
 	 * @return Entry the entry object if one was found.
 	 */
-	private function get_entry_or_redirect( $id ) {
+	private function get_entry_or_redirect( $id ) : Entry {
 		if ( ! is_numeric( $id ) ) {
 			Admin_Page::redirect_and_show_message(
 				new Message( Message::ERROR, __( 'Entry id not valid.', 'arteeo-glossary' ) )

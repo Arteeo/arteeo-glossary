@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Page Entry Form
+ * Admin Page Delete Form
  *
  * @package arteeo\glossary
  */
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Handles the admin page delete form
  *
- * Contains the preparation and rendering of the delete form.
+ * Renders the delete form.
  *
  * @since 1.0.0
  */
@@ -46,7 +46,7 @@ class Admin_Page_Delete_Form {
 	private string $deletion_url;
 
 	/**
-	 * The Construction of the form .
+	 * The Constructor of the form
 	 *
 	 * Constructs the form which can then later be rendered.
 	 *
