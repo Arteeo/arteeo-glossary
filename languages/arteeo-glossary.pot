@@ -2,10 +2,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Glossary\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-24 12:31+0000\n"
+"Report-Msgid-Bugs-To: Vec7or\n"
+"POT-Creation-Date: 2020-06-30 14:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Vec7or <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
 "Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
@@ -15,204 +15,206 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.4.0; wp-5.4.2"
 
-#: php/db/db.php:61
+#: php/db/class-glossary-db.php:120
 msgid "Dog"
 msgstr ""
 
-#: php/db/db.php:62 php/db/db.php:88 php/db/db.php:101
+#: php/db/class-glossary-db.php:121 php/db/class-glossary-db.php:152 
+#: php/db/class-glossary-db.php:165
 msgid "Congratulations, you just completed the installation!"
 msgstr ""
 
-#: php/db/db.php:74
+#: php/db/class-glossary-db.php:133
 msgid "Sheep"
 msgstr ""
 
-#: php/db/db.php:87
+#: php/db/class-glossary-db.php:151
 msgid "Serpent"
 msgstr ""
 
-#: php/admin-page/admin-page-crud.php:24
-msgid "Entry id not valid."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:29
-msgid "Entry could not be found."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:49 
-#: php/admin-page/admin-page-crud.php:195 
-#: php/admin-page/admin-page-crud.php:204
-msgid "Database error."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:51
-msgid "Entry has been deleted."
-msgstr ""
-
-#. %s is replaced with the fieldname
-#: php/admin-page/admin-page-crud.php:93 php/admin-page/admin-page-crud.php:97
-#, php-format
-msgid "Field \"%s\" has to be filled in."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:93 
-#: php/admin-page/admin-page-crud.php:313 
-#: php/admin-page/admin-page-table.php:169 
-#: php/admin-page/admin-page-table.php:185 
-#: php/admin-page/admin-page-table.php:203
-msgid "Term"
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:97 
-#: php/admin-page/admin-page-crud.php:326 
-#: php/admin-page/admin-page-table.php:174 
-#: php/admin-page/admin-page-table.php:190 
-#: php/admin-page/admin-page-table.php:221
-msgid "Description"
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:101
-msgid "Selected language not supported."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:132
-msgid "Form has expired."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:197
-msgid "Entry has been created."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:209
-msgid "No changes have occured."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:214
-msgid "Entry has been adjusted."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:285
-msgid "Add glossary entry"
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:286
-msgid "Add a new entry to the glossary."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:290
-msgid "Edit glossary entry"
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:291
-msgid "Adjust the entry from the glossary."
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:314 
-#: php/admin-page/admin-page-crud.php:327 
-#: php/admin-page/admin-page-crud.php:340
-msgid "required"
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:339 
-#: php/admin-page/admin-page-table.php:177 
-#: php/admin-page/admin-page-table.php:193 
-#: php/admin-page/admin-page-table.php:224
-msgid "Language"
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:363
-msgid "Create new entry"
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:368
-msgid "Save entry"
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:389
-msgid "Delete glossary entry"
-msgstr ""
-
-#. %s is replaced with the term of the entry
-#: php/admin-page/admin-page-crud.php:393
-#, php-format
-msgid "Do you really want to delete glossary entry \"%s\"?"
-msgstr ""
-
-#: php/admin-page/admin-page-crud.php:409 
-#: php/admin-page/admin-page-table.php:215 
-#: php/admin-page/admin-page-table.php:216
-msgid "Delete"
-msgstr ""
-
 #. Name of the plugin
-#: php/admin-page/admin-page.php:35 php/admin-page/admin-page.php:36 
-#: php/admin-page/admin-page-table.php:77 php/block/block.php:292
+#: php/admin-page/class-admin-page.php:96 
+#: php/admin-page/class-admin-page.php:97 php/block/block.php:305 
+#: php/admin-page/views/class-admin-page-table.php:108
 msgid "Glossary"
 msgstr ""
 
-#: php/admin-page/admin-page-table.php:77
-msgid "Add entry"
-msgstr ""
-
-#: php/admin-page/admin-page-table.php:86
-msgid "Hide this message"
-msgstr ""
-
-#: php/admin-page/admin-page-table.php:105 
-#: php/admin-page/admin-page-table.php:243
-msgid "All"
-msgstr ""
-
-#: php/admin-page/admin-page-table.php:141 
-#: php/admin-page/admin-page-table.php:160
-msgid "Filter by language"
-msgstr ""
-
-#: php/admin-page/admin-page-table.php:164
-msgid "Glossary entries"
-msgstr ""
-
-#: php/admin-page/admin-page-table.php:191
-msgid "No entries found."
-msgstr ""
-
-#: php/admin-page/admin-page-table.php:209 
-#: php/admin-page/admin-page-table.php:210
-msgid "Edit"
-msgstr ""
-
-#: php/block/block.php:150
+#: php/block/block.php:167
 msgid "No entry"
 msgstr ""
 
-#: php/block/block.php:151
+#: php/block/block.php:168
 msgid ""
 "Unfortunately no entries in your language could be found in this glossary."
 msgstr ""
 
-#: php/block/block.php:222 php/block/block.php:301
+#: php/block/block.php:239 php/block/block.php:314
 msgid "Select a letter:"
 msgstr ""
 
-#: php/block/block.php:293 php/block/block.php:294
+#: php/block/block.php:306 php/block/block.php:307
 msgid "glossary"
 msgstr ""
 
 #. Description of the plugin
-#: php/block/block.php:295
+#: php/block/block.php:308
 msgid "A simple beautiful glossary"
 msgstr ""
 
-#: php/block/block.php:299
+#: php/block/block.php:312
 msgid "Primary color"
 msgstr ""
 
-#: php/block/block.php:300
+#: php/block/block.php:313
 msgid "Accent color"
 msgstr ""
 
-#: php/block/block.php:302
+#: php/block/block.php:315
 msgid "Example"
+msgstr ""
+
+#: php/helper/class-helpers.php:40 
+#: php/admin-page/views/class-admin-page-table.php:159
+msgid "All"
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:65
+msgid "Form has expired."
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:156 
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:188
+msgid "Database error."
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:160
+msgid "No changes have occured."
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:165
+msgid "Entry has been adjusted."
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:169
+msgid "Entry has been created."
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:192
+msgid "Entry has been deleted."
+msgstr ""
+
+#. %s is replaced with the fieldname
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:213 
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:220
+#, php-format
+msgid "Field \"%s\" has to be filled in."
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:214 
+#: php/admin-page/views/class-admin-page-table.php:233 
+#: php/admin-page/views/class-admin-page-table.php:263 
+#: php/admin-page/views/class-admin-page-table.php:283 
+#: php/admin-page/views/class-admin-page-entry-form.php:151
+msgid "Term"
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:221 
+#: php/admin-page/views/class-admin-page-table.php:238 
+#: php/admin-page/views/class-admin-page-table.php:269 
+#: php/admin-page/views/class-admin-page-table.php:308 
+#: php/admin-page/views/class-admin-page-entry-form.php:166
+msgid "Description"
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:226
+msgid "Selected language not supported."
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:248
+msgid "Entry id not valid."
+msgstr ""
+
+#: php/admin-page/controllers/class-admin-page-crud-controller.php:257
+msgid "Entry could not be found."
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-table.php:112
+msgid "Add entry"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-table.php:132
+msgid "Hide this message"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-table.php:194 
+#: php/admin-page/views/class-admin-page-table.php:205
+msgid "Filter by language"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-table.php:220
+msgid "Glossary entries"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-table.php:241 
+#: php/admin-page/views/class-admin-page-table.php:273 
+#: php/admin-page/views/class-admin-page-table.php:312 
+#: php/admin-page/views/class-admin-page-entry-form.php:182
+msgid "Language"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-table.php:270
+msgid "No entries found."
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-table.php:292 
+#: php/admin-page/views/class-admin-page-table.php:293
+msgid "Edit"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-table.php:301 
+#: php/admin-page/views/class-admin-page-table.php:302 
+#: php/admin-page/views/class-admin-page-delete-form.php:82
+msgid "Delete"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-entry-form.php:122
+msgid "Add glossary entry"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-entry-form.php:123
+msgid "Add a new entry to the glossary."
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-entry-form.php:128
+msgid "Edit glossary entry"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-entry-form.php:130
+msgid "Adjust the entry from the glossary."
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-entry-form.php:153 
+#: php/admin-page/views/class-admin-page-entry-form.php:168 
+#: php/admin-page/views/class-admin-page-entry-form.php:184
+msgid "required"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-entry-form.php:228
+msgid "Create new entry"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-entry-form.php:233
+msgid "Save entry"
+msgstr ""
+
+#: php/admin-page/views/class-admin-page-delete-form.php:73
+msgid "Delete glossary entry"
+msgstr ""
+
+#. %s is replaced with the term of the entry
+#: php/admin-page/views/class-admin-page-delete-form.php:78
+#, php-format
+msgid "Do you really want to delete glossary entry \"%s\"?"
 msgstr ""
 
 #. URI of the plugin
