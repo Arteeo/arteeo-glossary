@@ -74,18 +74,5 @@ class Entries implements \IteratorAggregate {
 	public function getIterator() : \ArrayIterator {
 		return new \ArrayIterator( $this->entries );
 	}
-
-	/**
-	 * Get array
-	 *
-	 * Get a clone of the internal array
-	 *
-	 * @since 1.0.0
-	 * @return array Returns a clone of the internal array.
-	 */
-	public function get_array() : array {
-		$copy = $this->entries;
-		return $copy;
-	}
 }
 

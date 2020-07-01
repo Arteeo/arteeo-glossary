@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/../db/class-glossary-db.php';
+require_once __DIR__ . '/../helper/class-helpers.php';
 require_once __DIR__ . '/../models/class-filter.php';
 require_once __DIR__ . '/../models/class-letter.php';
 
@@ -90,12 +91,23 @@ class API {
 				'args'     => $this->get_entries_args(),
 			)
 		);
+
+		register_rest_route(
+			$this->namespace,
+			'/letters',
+			array(
+				'methods'  => \WP_REST_Server::READABLE,
+				'callback' => array( $this, 'get_letters' ),
+				'args'     => $this->get_letters_args(),
+			)
+		);
 	}
 
 	/**
-	 * Register endpoints
+	 * Entries endpoint
 	 *
-	 * Registers all API-Endpoints with WordPress.
+	 * Get the entries based on the filters defined in the request. Returns a json of all entries matching with the
+	 * filter.
 	 *
 	 * @since 1.0.0
 	 * @param \WP_REST_Request $request The request which was received by the api.
@@ -105,19 +117,103 @@ class API {
 		if ( isset( $request['letter'] ) ) {
 			$filter->letter = $request['letter'];
 		}
-		$entries = $this->db->get_filtered_entries( $filter )->get_array();
-		wp_send_json( $entries );
+
+		if ( isset( $request['locale'] ) ) {
+			$filter->locale = $request['locale'];
+		}
+
+		$entries = $this->db->get_filtered_entries( $filter );
+		$output  = array();
+		foreach ( $entries as $entry ) {
+			$simple_entry              = new \stdClass();
+			$simple_entry->term        = $entry->term;
+			$simple_entry->description = $entry->description;
+
+			array_push( $output, $simple_entry );
+		}
+		wp_send_json( $output );
 	}
 
+	/**
+	 * Letters endpoint
+	 *
+	 * Get the letters based on the filters defined in the request. Returns a json of all letters matching with the
+	 * filter.
+	 *
+	 * @since 1.0.0
+	 * @param \WP_REST_Request $request The request which was received by the api.
+	 */
+	public function get_letters( \WP_REST_Request $request ) {
+		$filter = new Filter();
+
+		if ( isset( $request['locale'] ) ) {
+			$filter->locale = $request['locale'];
+		}
+
+		$letters = $this->db->get_filtered_letters( $filter );
+		$output  = array();
+		foreach ( $letters as $letter ) {
+			$simple_letter = $letter->letter;
+
+			array_push( $output, $simple_letter );
+		}
+		wp_send_json( $output );
+	}
+
+	/**
+	 * Arguments for get_entries endpoint
+	 *
+	 * This function defines the supported arguments for the get_entries endpoint.
+	 *
+	 * @since 1.0.0
+	 * @return array Returns the supported arguments.
+	 */
 	public function get_entries_args() : array {
 		$args           = array();
 		$args['letter'] = array(
 			'description'       => esc_html__(
-				'The letter parameter is used to filter the collection of entries by letter',
+				'The letter parameter is used to filter the collection of entries by letter.',
 				'arteeo-glossary'
 			),
 			'type'              => 'string',
 			'validate_callback' => array( $this, 'validate_letter_callback' ),
+		);
+		$args           = $this->add_locale_arg( $args );
+		return $args;
+	}
+
+	/**
+	 * Arguments for get_letters endpoint
+	 *
+	 * This function defines the supported arguments for the get_letters endpoint.
+	 *
+	 * @since 1.0.0
+	 * @return array Returns the supported arguments.
+	 */
+	public function get_letters_args() : array {
+		$args = array();
+		$args = $this->add_locale_arg( $args );
+		return $args;
+	}
+
+	/**
+	 * Add locale argument
+	 *
+	 * Adds the locale argument to the input args array.
+	 *
+	 * @since 1.0.0
+	 * @param array $args The args array that needs the locale argument.
+	 * @return array Returns the args array with the argument added.
+	 */
+	private function add_locale_arg( array $args ) : array {
+		$args['locale'] = array(
+			'description'       => esc_html__(
+				'The locale parameter is used to filter the collection by locale.',
+				'arteeo-glossary'
+			),
+			'type'              => 'string',
+			'validate_callback' => array( $this, 'validate_locale_callback' ),
+			'enum'              => Helpers::get_locales(),
 		);
 		return $args;
 	}
@@ -134,7 +230,11 @@ class API {
 		if ( ! is_string( $value ) ) {
 			return new \WP_Error(
 				'rest_invalid_param',
-				esc_html__( 'The letter argument must be a string.', 'arteeo-glossary' ),
+				sprintf(
+					/* translators: %s is replaced with the parameter name*/
+					__( 'The %s parameter must be a string.', 'arteeo-glossary' ),
+					$param
+				),
 				array( 'status' => 400 )
 			);
 		}
@@ -145,6 +245,44 @@ class API {
 			return new \WP_Error(
 				'rest_invalid_param',
 				esc_html__( 'The letter argument must be A-Z or #.', 'arteeo-glossary' ),
+				array( 'status' => 400 )
+			);
+		}
+	}
+
+	/**
+	 * Validate the locale argument.
+	 *
+	 * @param  mixed           $value   Value of the 'locale' argument.
+	 * @param  WP_REST_Request $request The current request object.
+	 * @param  string          $param   Key of the parameter. In this case it is 'locale'.
+	 * @return WP_Error|boolean
+	 */
+	public function validate_locale_callback( $value, $request, $param ) {
+		if ( ! is_string( $value ) ) {
+			return new \WP_Error(
+				'rest_invalid_param',
+				sprintf(
+					/* translators: %s is replaced with the parameter name*/
+					__( 'The %s parameter must be a string.', 'arteeo-glossary' ),
+					$param
+				),
+				array( 'status' => 400 )
+			);
+		}
+
+		$attributes = $request->get_attributes();
+		$args       = $attributes['args'][ $param ];
+
+		if ( ! in_array( $value, $args['enum'], true ) ) {
+			return new \WP_Error(
+				'rest_invalid_param',
+				sprintf(
+					/* translators: %1$s is replaced with the locale value and %2$s with the list of possible locales*/
+					__( '%1$s is not supported, must be one of: [ %2$s ]' ),
+					$value,
+					implode( ', ', $args['enum'] ),
+				),
 				array( 'status' => 400 )
 			);
 		}
