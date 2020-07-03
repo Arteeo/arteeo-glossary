@@ -141,7 +141,7 @@ class Glossary_Block {
 	 * }
 	 */
 	public function render( $attributes ) {
-		global $wpdb;
+		/* global $wpdb;
 		global $glossary_table_name;
 
 		$locale = get_locale();
@@ -224,8 +224,8 @@ class Glossary_Block {
 		}
 
 		return '' .
-			'<div class="wp-block-glossary-block-glossary"' .
-					'id="wp-block-glossary-block-glossary">' .
+			'<div class="wp-block-arteeo-glossary-glossary-block"' .
+					'id="wp-block-arteeo-glossary-glossary-block">' .
 			'	<div class="wrapper">' .
 			'		<section class="sidebar">' .
 			'			<div class="sidebar-header" style="background-color:' .
@@ -246,7 +246,7 @@ class Glossary_Block {
 			'			' . $this->generate_entries( $attributes, $entries, $current_letter ) .
 			'		</main>' .
 			'	</div>' .
-			'</div>';
+			'</div>';*/
 	}
 
 	/**
@@ -313,6 +313,7 @@ class Glossary_Block {
 				'__accentColor'         => __( 'Accent color', 'arteeo-glossary' ),
 				'__selectLetter'        => __( 'Select a letter:', 'arteeo-glossary' ),
 				'__example'             => __( 'Example', 'arteeo-glossary' ),
+				'locale'                => get_locale(),
 				// Add more data here that you want to access from `cgbGlobal` object.
 			)
 		);

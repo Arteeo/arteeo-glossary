@@ -6,7 +6,7 @@ const containerWidth = [];
 
 function animationFrameLoop() {
 	const containers = document.querySelectorAll(
-		'.wp-block-glossary-block-glossary'
+		'.wp-block-arteeo-glossary-glossary-block'
 	);
 
 	containers.forEach( function ( currentValue, currentIndex, listObj ) {
