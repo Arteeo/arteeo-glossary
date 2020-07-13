@@ -1,19 +1,10 @@
 // require modules
-var fs = require('fs');
-var archiver = require('archiver');
+const fs = require('fs');
+const archiver = require('archiver');
 
-fs.unlink('dist/blocks.build.js', (err) => {
-  if (err) throw err;
-});
-fs.unlink('dist/blocks.editor.build.css', (err) => {
-  if (err) throw err;
-});
-fs.unlink('dist/blocks.style.build.css', (err) => {
-  if (err) throw err;
-});
 
 // create a file to stream archive data to.
-var output = fs.createWriteStream(__dirname + '/arteeo-glossary.zip');
+var output = fs.createWriteStream('./arteeo-glossary.zip');
 var archive = archiver('zip', {
   zlib: { level: 9 } // Sets the compression level.
 });

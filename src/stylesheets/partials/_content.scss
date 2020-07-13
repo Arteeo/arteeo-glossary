@@ -1,5 +1,5 @@
 // Extra small
-.wp-block-arteeo-glossary-glossary-block {
+.#{$BLOCK_CLASS} {
     .content {
         padding-left: 5px;
         padding-right: 5px;
@@ -31,21 +31,21 @@
 }
 
 // Small
-.wp-block-arteeo-glossary-glossary-block {
+.#{$BLOCK_CLASS} {
     &.sm {
 
     }
 }
 
 // Medium
-.wp-block-arteeo-glossary-glossary-block {
+.#{$BLOCK_CLASS} {
     &.md {
 
     }
 }
 
 // Large
-.wp-block-arteeo-glossary-glossary-block {
+.#{$BLOCK_CLASS} {
     &.lg {
         .content {
             width: 0px;
@@ -55,7 +55,7 @@
 }
 
 // Xtra large
-.wp-block-arteeo-glossary-glossary-block {
+.#{$BLOCK_CLASS} {
     &.xl {
         .content {
             width: 0px;

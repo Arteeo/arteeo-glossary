@@ -1,10 +1,8 @@
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const { InspectorControls } = wp.blockEditor;
-const { PanelBody, ColorPicker, Spinner } = wp.components;
-const { Component } = wp.element;
-
-const { withSelect } = wp.data;
-const { apiFetch } = wp;
+import { __ } from '@wordpress/i18n'; // Import __() from wp.i18n
+import { InspectorControls } from '@wordpress/blockEditor';
+import { PanelBody, ColorPicker, Spinner } from '@wordpress/components';
+import { Component } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
 
 class Glossary extends Component {
 	constructor( props ) {
@@ -14,8 +12,6 @@ class Glossary extends Component {
 		// example how to bind `this` to the current component for our callbacks
 		this.onChangeContent = this.onChangeContent.bind(this);
 
-		this.editable = this.props.editable;
-
 		// some place for your state
 		this.state = {
 			letters: [],
@@ -24,18 +20,18 @@ class Glossary extends Component {
 			renderedEntries: [],
 			renderedLetters: [],
 			activeLetter: '',
+			editable: ( 'true' === this.props.editable )
 		};
 	}
 
 	renderLetters( letters, active ) {
 		console.log(active);
 		let result = [];
-
 		letters.forEach( ( letter ) => {
 			if( letter === active ) {
-				result.push(<a class="active" style={{ color: this.props.attributes.secondaryColor, borderColor: this.props.attributes.secondaryColor}}>{ letter }</a>);
+				result.push(<a key={letter} className="active" style={{ color: this.props.attributes.secondaryColor, borderColor: this.props.attributes.secondaryColor}}>{ letter }</a>);
 			} else {
-				result.push(<a onClick={ () => this.updateEntries( letter ) } >{ letter }</a>)
+				result.push(<a key={letter} onClick={ () => this.updateEntries( letter ) } >{ letter }</a>)
 			}
 		});
 
@@ -50,11 +46,11 @@ class Glossary extends Component {
 
 		entries.forEach( (entry) => {
 			result.push(
-				<article class="entry">
-					<div class="term">
+				<article className="entry" key={entry.term}>
+					<div className="term">
 						<h2 style={{ color: this.props.attributes.secondaryColor}}>{entry.term}</h2>
 					</div>
-					<div class="description">
+					<div className="description">
 						<p>{entry.description}</p>
 					</div>
 				</article>
@@ -65,7 +61,7 @@ class Glossary extends Component {
 	}
 
 	renderInspectorControls() {
-		if( this.editable ) {
+		if( this.state.editable ) {
 			return (
 				<InspectorControls>
 					<PanelBody
@@ -107,7 +103,7 @@ class Glossary extends Component {
 
 		this.setState( { loading: true } );
 
-		let entries = await apiFetch( { path: '/arteeo/glossary/v1/entries?locale=' + cgbGlobal.locale + '&letter=' + letter } );
+		let entries = await apiFetch( { path: '/arteeo/glossary/v1/entries?locale=' + this.props.locale + '&letter=' + letter } );
 
 		this.setState( { 
 			loading: false,
@@ -118,15 +114,18 @@ class Glossary extends Component {
 	}
 
 	async getLetters() {
+		console.log(1.1);
 		this.setState( { loading: true } );
+		console.log(1.2);
+		let letters = await apiFetch( { path: '/arteeo/glossary/v1/letters?locale=' + this.props.locale } );
 
-		let letters = await apiFetch( { path: '/arteeo/glossary/v1/letters?locale=' + cgbGlobal.locale } );
-
+		console.log(1.3);
 		this.setState( { 
 			loading: false,
 			letters: letters,
 		} );
 
+		console.log(1.4);
 		return letters;
 	}
 
@@ -139,8 +138,11 @@ class Glossary extends Component {
 	};
 
 	async componentDidMount() {
+		console.log(1);
 		let letters = await this.getLetters();
+		console.log(2);
 		this.renderLetters( letters, letters[0] );
+		console.log(3);
 		await this.updateEntries( letters[0] );
 		console.log(this.props.name, ": componentDidMount()");
 	}
@@ -163,29 +165,28 @@ class Glossary extends Component {
 	render() {
 		if( this.state.loading ) {
 			return <Spinner />;
-		} else {
-			return (
-				<div class="wrapper"> 
-					{ this.renderInspectorControls() }
-					<section class="sidebar">
-						<div class="sidebar-header" style={{ backgroundColor: this.props.attributes.primaryColor}}>
-						<div class="letter">
+		}
+		return (
+			<div className="wrapper"> 
+				{ this.renderInspectorControls() }
+				<section className="sidebar">
+					<div className="sidebar-header" style={{ backgroundColor: this.props.attributes.primaryColor}}>
+						<div className="letter">
 							<h2>{ this.state.activeLetter }</h2>
 						</div>
+					</div>
+					<div className="sidebar-content">
+						<h3 style={{ color: this.props.attributes.secondaryColor}} >{this.props.__selectLetter}</h3>
+						<div className="letters">
+							{ this.state.renderedLetters }
 						</div>
-						<div class="sidebar-content">
-							<h3 style={{ color: this.props.attributes.secondaryColor}} >{cgbGlobal.__selectLetter}</h3>
-							<div class="letters">
-								{ this.state.renderedLetters }
-							</div>
-						</div>
-					</section>
-					<main class="content">
-						{ this.state.renderedEntries }
-					</main>
-				</div>
-			);
-		}
+					</div>
+				</section>
+				<main className="content">
+					{ this.state.renderedEntries }
+				</main>
+			</div>
+		);
 	}
 }
 

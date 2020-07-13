@@ -267,34 +267,26 @@ class Glossary_Block {
 		// Register block styles for both frontend + backend.
 		wp_register_style(
 			'glossary-cgb-style-css', // Handle.
-			plugins_url( 'css/block/blocks.style.build.css', plugin_dir_path( __DIR__ ) ), // Block style CSS.
+			plugins_url( 'css/block/style-block.css', plugin_dir_path( __DIR__ ) ), // Block style CSS.
 			is_admin() ? array( 'wp-editor' ) : null, // Dependency to include the CSS after it.
-			filemtime( __DIR__ . '/../../css/block/blocks.style.build.css' ) // Version: File modification time.
+			filemtime( __DIR__ . '/../../css/block/style-block.css' ) // Version: File modification time.
 		);
 
 		// Register block editor script for backend.
 		wp_register_script(
 			'glossary-cgb-block-js', // Handle.
-			plugins_url( 'js/block/blocks.build.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
+			plugins_url( 'js/block/block.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
-			filemtime( __DIR__ . '/../../js/block/blocks.build.js' ), // Version: filemtime — Gets file modification time.
+			filemtime( __DIR__ . '/../../js/block/block.js' ), // Version: filemtime — Gets file modification time.
 			true // Enqueue the script in the footer.
 		);
 
 		wp_register_script(
-			'resize-js', // Handle.
-			plugins_url( 'js/resize.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-			null, // Dependencies, defined above.
-			filemtime( __DIR__ . '/../../js/resize.js' ), // Version: filemtime — Gets file modification time.
+			'arteeo-glossary-js', // Handle.
+			plugins_url( 'js/block/arteeo-glossary.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
+			array( 'wp-element', 'wp-components', 'wp-api-fetch' ), // Dependencies, defined above.
+			filemtime( __DIR__ . '/../../js/block/arteeo-glossary.js' ), // Version: filemtime — Gets file modification time.
 			true // Enqueue the script in the footer.
-		);
-
-		// Register block editor styles for backend.
-		wp_register_style(
-			'glossary-cgb-block-editor-css', // Handle.
-			plugins_url( 'css/block/blocks.editor.build.css', plugin_dir_path( __DIR__ ) ), // Block editor CSS.
-			array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
-			filemtime( __DIR__ . '/../../css/block/blocks.editor.build.css' ) // Version: File modification time.
 		);
 
 		// WP Localized globals. Use dynamic PHP stuff in JavaScript via `cgbGlobal` object.
@@ -331,15 +323,13 @@ class Glossary_Block {
 		 * @see generate_letters for explanation of attributes array.
 		 */
 		register_block_type(
-			'glossary/block-glossary',
+			'arteeo/glossary-block',
 			array(
 				// Enqueue blocks.style.build.css on both frontend & backend.
 				'style'           => 'glossary-cgb-style-css',
-				'script'          => 'resize-js',
+				'script'          => 'arteeo-glossary-js',
 				// Enqueue blocks.build.js in the editor only.
 				'editor_script'   => 'glossary-cgb-block-js',
-				// Enqueue blocks.editor.build.css in the editor only.
-				'editor_style'    => 'glossary-cgb-block-editor-css',
 				'attributes'      => array(
 					'primary_color'   => array(
 						'type'    => 'string',
@@ -350,7 +340,6 @@ class Glossary_Block {
 						'default' => '#82878c',
 					),
 				),
-				'render_callback' => array( $this, 'render' ),
 			)
 		);
 	}

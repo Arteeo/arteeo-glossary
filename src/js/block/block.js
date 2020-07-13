@@ -6,21 +6,12 @@
  */
 
 //  Import CSS.
-import './editor.scss';
+//import './editor.scss';
 import './style.scss';
 
 import Glossary from './glossary';
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-
-const { InspectorControls } = wp.blockEditor;
-const { PanelBody, ColorPicker, Spinner } = wp.components;
-const { Component } = wp.element;
-
-const { withSelect } = wp.data;
-const { apiFetch } = wp;
-
+import { registerBlockType } from '@wordpress/blocks'; // Import registerBlockType() from wp.blocks
 /**
  * Register: aa Gutenberg Block.
  *
@@ -34,7 +25,7 @@ const { apiFetch } = wp;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'arteeo-glossary/glossary-block', {
+registerBlockType( 'arteeo/glossary-block', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: cgbGlobal.__Glossary, // Block title.
 	icon: 'book-alt', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
@@ -57,10 +48,11 @@ registerBlockType( 'arteeo-glossary/glossary-block', {
 	 *
 	 */
 	edit: (props) => {
-		props.editable = true;
+		let className = props.className;
+		className += ' edit';
 		return (
-			<div className={props.className}>
-				<Glossary {...props} />
+			<div className={className}>
+				<Glossary  {...props} editable="true" locale={cgbGlobal.locale} __selectLetter={cgbGlobal.__selectLetter} />
             </div>
 		);
 	},
@@ -76,10 +68,14 @@ registerBlockType( 'arteeo-glossary/glossary-block', {
 	 * @returns {Mixed} JSX Frontend HTML.
 	 */
 	save: ( props ) => {
-		props.editable = false;
 		return (
-			<div className={props.className}>
-				<Glossary {...props} />
+			<div 
+				className={props.className} 
+				data-name={props.Name}
+				data-secondaryColor={props.attributes.secondaryColor}
+				data-primaryColor={props.attributes.primaryColor}
+				data-locale={cgbGlobal.locale}
+				data-__selectLetter={cgbGlobal.__selectLetter}>
             </div>
 		);
 	},
