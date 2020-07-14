@@ -19,8 +19,7 @@ class Glossary extends Component {
 			loading: false,
 			renderedEntries: [],
 			renderedLetters: [],
-			activeLetter: '',
-			editable: ( 'true' === this.props.editable )
+			activeLetter: ''
 		};
 	}
 
@@ -61,34 +60,30 @@ class Glossary extends Component {
 	}
 
 	renderInspectorControls() {
-		if( this.state.editable ) {
-			return (
-				<InspectorControls>
-					<PanelBody
-						title={cgbGlobal.__primaryColor}
-						initialOpen={false}
-					>
-						<ColorPicker
-							color={ this.props.attributes.primaryColor }
-							onChangeComplete={ this.setPrimaryColor }
-							disableAlpha
-						/>
-					</PanelBody>
-					<PanelBody
-						title={cgbGlobal.__accentColor}
-						initialOpen={false}
-					>
-						<ColorPicker
-							color={ this.props.attributes.secondaryColor }
-							onChangeComplete={ this.setSecondaryColor }
-							disableAlpha
-						/>
-					</PanelBody>
-				</InspectorControls>
-			);
-		} else {
-			return;
-		}
+		return (
+			<InspectorControls>
+				<PanelBody
+					title={cgbGlobal.__primaryColor}
+					initialOpen={false}
+				>
+					<ColorPicker
+						color={ this.props.attributes.primaryColor }
+						onChangeComplete={ this.setPrimaryColor }
+						disableAlpha
+					/>
+				</PanelBody>
+				<PanelBody
+					title={cgbGlobal.__accentColor}
+					initialOpen={false}
+				>
+					<ColorPicker
+						color={ this.props.attributes.secondaryColor }
+						onChangeComplete={ this.setSecondaryColor }
+						disableAlpha
+					/>
+				</PanelBody>
+			</InspectorControls>
+		);
 	}
 
 	async updateEntries( letter ) {

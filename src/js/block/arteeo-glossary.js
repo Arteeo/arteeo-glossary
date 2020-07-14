@@ -3,26 +3,21 @@ const BLOCK_CLASS = `wp-block-arteeo-glossary-block`;
 /**
  * Render glossary if necessary.
  */
-import { render } from '@wordpress/element';
-import Glossary from './glossary';
+import Glossary from './frontend-glossary';
 
-window.addEventListener( 'DOMContentLoaded', () => {
+document.addEventListener( 'DOMContentLoaded', () => {
 	const wrappers = document.getElementsByClassName(
 		BLOCK_CLASS
 	);
 
-	let props = {};
-	props.attributes = {};
-	props.name = 'arteeo/glossary-block';
-
 	for ( const wrapper of wrappers ) {
-		props.attributes.secondaryColor = wrapper.dataset.secondaryColor;
-		props.attributes.primaryColor   = wrapper.dataset.primaryColor;
-		props.name                      = wrapper.dataset.name;
-		props.locale                    = wrapper.dataset.locale;
-		props.__selectLetter            = wrapper.dataset.__selectLetter;
+		let secondaryColor = wrapper.dataset.secondaryColor;
+		let primaryColor   = wrapper.dataset.primaryColor;
+		let name           = wrapper.dataset.name;
+		let locale         = wrapper.dataset.locale;
+		let __selectLetter = wrapper.dataset.__selectLetter;
 		if ( ! wrapper.classList.contains('edit') ) {
-			render( <Glossary {...props}/>, wrapper );
+			let gloss = new Glossary(wrapper, primaryColor, secondaryColor, __selectLetter, locale);
 		}
 	}
 } );

@@ -267,9 +267,9 @@ class Glossary_Block {
 		// Register block styles for both frontend + backend.
 		wp_register_style(
 			'glossary-cgb-style-css', // Handle.
-			plugins_url( 'css/block/style-block.css', plugin_dir_path( __DIR__ ) ), // Block style CSS.
+			plugins_url( 'css/block/block.css', plugin_dir_path( __DIR__ ) ), // Block style CSS.
 			is_admin() ? array( 'wp-editor' ) : null, // Dependency to include the CSS after it.
-			filemtime( __DIR__ . '/../../css/block/style-block.css' ) // Version: File modification time.
+			filemtime( __DIR__ . '/../../css/block/block.css' ) // Version: File modification time.
 		);
 
 		// Register block editor script for backend.
@@ -284,7 +284,7 @@ class Glossary_Block {
 		wp_register_script(
 			'arteeo-glossary-js', // Handle.
 			plugins_url( 'js/block/arteeo-glossary.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-			array( 'wp-element', 'wp-components', 'wp-api-fetch' ), // Dependencies, defined above.
+			null, // Dependencies, defined above.
 			filemtime( __DIR__ . '/../../js/block/arteeo-glossary.js' ), // Version: filemtime — Gets file modification time.
 			true // Enqueue the script in the footer.
 		);

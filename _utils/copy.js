@@ -16,11 +16,11 @@ fs.copyFileSync('./readme.md', './dist/readme.md');
 console.log('readme.md was copied to /dist/readme.md'.green);
 
 fs.mkdirSync('./dist/css/block', { recursive: true });
-fs.copyFileSync('./dist/js/block/style-block.css', './dist/css/block/style-block.css');
-console.log('style-block.css was copied to /dist/css/block/style-block.css'.green);
+fs.copyFileSync('./dist/js/block/block.css', './dist/css/block/block.css');
+console.log('block.css was copied to /dist/css/block/block.css'.green);
 
 fs.unlinkSync('dist/js/block/arteeo-glossary.asset.php');
 fs.unlinkSync('dist/js/block/block.asset.php');
-fs.unlinkSync('dist/js/block/style-block.css');
+fs.unlinkSync('dist/js/block/block.css');
 console.log('Removed unused assets and files'.green);
   

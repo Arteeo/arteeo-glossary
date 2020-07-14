@@ -7,10 +7,9 @@
 
 //  Import CSS.
 //import './editor.scss';
-import './style.scss';
+import '../../stylesheets/main.scss';
 
-import Glossary from './glossary';
-
+import GlossaryWrapper from './class-glossary-wrapper';
 import { registerBlockType } from '@wordpress/blocks'; // Import registerBlockType() from wp.blocks
 /**
  * Register: aa Gutenberg Block.
@@ -48,13 +47,7 @@ registerBlockType( 'arteeo/glossary-block', {
 	 *
 	 */
 	edit: (props) => {
-		let className = props.className;
-		className += ' edit';
-		return (
-			<div className={className}>
-				<Glossary  {...props} editable="true" locale={cgbGlobal.locale} __selectLetter={cgbGlobal.__selectLetter} />
-            </div>
-		);
+		return ( <GlossaryWrapper {...props} />);
 	},
 	/**
 	 * The save function defines the way in which the different attributes should be combined
@@ -72,10 +65,10 @@ registerBlockType( 'arteeo/glossary-block', {
 			<div 
 				className={props.className} 
 				data-name={props.Name}
-				data-secondaryColor={props.attributes.secondaryColor}
-				data-primaryColor={props.attributes.primaryColor}
+				data-secondary-color={props.attributes.secondaryColor}
+				data-primary-color={props.attributes.primaryColor}
 				data-locale={cgbGlobal.locale}
-				data-__selectLetter={cgbGlobal.__selectLetter}>
+				data-__select-letter={cgbGlobal.__selectLetter}>
             </div>
 		);
 	},
