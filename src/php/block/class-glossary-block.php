@@ -24,6 +24,7 @@ class Glossary_Block {
 
 	public function init() {
 		$this->register();
+		add_action( 'enqueue_block_assets', array( $this, 'enqueue_frontend_js' ) );
 	}
 
 	/**
@@ -284,7 +285,7 @@ class Glossary_Block {
 		wp_register_script(
 			'arteeo-glossary-js', // Handle.
 			plugins_url( 'js/block/arteeo-glossary.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-			null, // Dependencies, defined above.
+			array('wp-polyfill'), // Dependencies, defined above.
 			filemtime( __DIR__ . '/../../js/block/arteeo-glossary.js' ), // Version: filemtime — Gets file modification time.
 			true // Enqueue the script in the footer.
 		);
@@ -327,7 +328,7 @@ class Glossary_Block {
 			array(
 				// Enqueue blocks.style.build.css on both frontend & backend.
 				'style'           => 'glossary-cgb-style-css',
-				'script'          => 'arteeo-glossary-js',
+				// 'script'          => 'arteeo-glossary-js',
 				// Enqueue blocks.build.js in the editor only.
 				'editor_script'   => 'glossary-cgb-block-js',
 				'attributes'      => array(
@@ -342,5 +343,11 @@ class Glossary_Block {
 				),
 			)
 		);
+	}
+
+	function enqueue_frontend_js() {
+		if ( has_block( 'arteeo/glossary-block' ) ) {
+			wp_enqueue_script('arteeo-glossary-js');
+		}
 	}
 }

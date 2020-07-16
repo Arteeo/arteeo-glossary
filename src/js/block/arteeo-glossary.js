@@ -3,6 +3,7 @@ const BLOCK_CLASS = `wp-block-arteeo-glossary-block`;
 /**
  * Render glossary if necessary.
  */
+import "@babel/runtime/regenerator";
 import Glossary from './frontend-glossary';
 
 document.addEventListener( 'DOMContentLoaded', () => {

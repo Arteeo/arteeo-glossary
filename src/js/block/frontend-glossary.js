@@ -7,18 +7,10 @@ class Glossary{
 		this.container = container;
 		this.selectedLetter = '';
 
-		/*this.getLetters()
-			.then( letters => {
-				this.letters = letters;
-				if( 0 < letters.lenght ) {
-					this.selectedLetter = letters[0];
-				} else {
-					//ToDo: Return empty.
-				}
+		this.wrapper = document.createElement('div');
+		this.wrapper.classList.add('wrapper');
+		this.container.appendChild(this.wrapper);
 
-				this.renderGlossary();
-			}
-		);*/
 		this.init();
 	}
 
@@ -28,11 +20,17 @@ class Glossary{
 		this.letters = letters;
 		if( 0 < letters.length ) {
 			this.selectedLetter = letters[0];
+			let entries = await this.getEntries( this.selectedLetter );
+			if( 0 < entries.length ) {
+				this.entries = entries;
+			} else {
+				//ToDo: Redirect?
+			}
 		} else {
 			//ToDo: Return empty.
 		}
 
-		this.renderGlossary();
+		this.render();
 	}
 
 	async getLetters() {
@@ -46,24 +44,49 @@ class Glossary{
 		}
 
 		return letters;
-	} 
-	renderLetters( parent ) {
-		let result = [];
-		this.letters.forEach(letter => {
-			let letterLink = document.createElement('a');
-			letterLink.innerHTML = letter
-			parent.appendChild(letterLink);
-		});
 	}
-	renderGlossary() {
-		let wrapper = document.createElement('div');
-		wrapper.classList.add('wrapper');
-		let template = this.getTemplate();
-		template = template.replace('{{selectedLetter}}', this.selectedLetter);
 
-		wrapper.innerHTML = template;
-		this.container.appendChild(wrapper);
+	async getEntries( letter ) {
+		let response = await fetch('/index.php?rest_route=/arteeo/glossary/v1/entries&locale=de_DE&letter=' + letter );
+		let entries  = await response.json();
+		return entries;
 	}
+
+	renderLetters() {
+		let result = '';
+		this.letters.forEach(letter => {
+			let letterTemplate = this.getLetterTemplate( (letter === this.selectedLetter) );
+			letterTemplate = letterTemplate.replace('{{letter}}', letter);
+
+			result += '				';
+			result += letterTemplate;
+		});
+		return result;
+	}
+
+	renderEntries() {
+		let result = '';
+		this.entries.forEach(entry => {
+			let entryTemplate = this.getEntryTemplate();
+			entryTemplate = entryTemplate.replace('{{term}}', entry.term);
+			entryTemplate = entryTemplate.replace('{{description}}', entry.description);
+
+			result += entryTemplate;
+		});
+		return result;
+	}
+
+	render() {
+		this.wrapper.innerHTML = '';
+		let glossary = this.getTemplate();
+		glossary = glossary.replace('{{selectedLetter}}', this.selectedLetter);
+		glossary = glossary.replace('{{__selectLetter}}', this.__selectLetter);
+		glossary = glossary.replace('{{renderedLetters}}', this.renderLetters());
+		glossary = glossary.replace('{{renderedEntries}}', this.renderEntries());
+
+		this.wrapper.innerHTML = glossary;
+	}
+
 	getTemplate() {
 		return '' +
 			'	<section class="sidebar">' + '\n' +
@@ -75,13 +98,41 @@ class Glossary{
 			'		<div class="sidebar-content">' + '\n' +
 			'			<h3>{{__selectLetter}}</h3>' + '\n' +
 			'			<div class="letters">'+ '\n' +
-			'				{{renderedLetters}}'+ '\n' +
+							'{{renderedLetters}}' +
 			'			</div>'+ '\n' +
 			'		</div>' + '\n' +
 			'	</section>' + '\n' +
-			'	<main class="content">'+ '\n' +
-			'		{{renderedEntries}}'+ '\n' +
-			'	</main>'+ '\n';
+			'	<main class="content">' + '\n' +
+					'{{renderedEntries}}' + 
+			'	</main>' + '\n';
+	}
+
+	getLetterTemplate( active = false ) {
+		if ( active ) {
+			return '' + 
+				'<a class="active" style="' + 
+						'color: ' + this.secondaryColor  + '; ' + 
+						'borderColor: ' + this.secondaryColor + ';">' + 
+					'{{letter}}' + 
+				'</a>' + '\n';
+		} else {
+			return '' + 
+				'<a>' + 
+					'{{letter}}' + 
+				'</a>' + '\n';
+		}
+	}
+
+	getEntryTemplate() {
+		return '' +
+			'		<article class="entry">' + '\n' +
+			'			<div class="term">' + '\n' +
+			'				<h2 style="color: ' + this.secondaryColor + ';">{{term}}</h2>' + '\n' +
+			'			</div>' + '\n' +
+			'			<div class="description">' + '\n' +
+			'				<p>{{description}}</p>' + '\n' +
+			'			</div>' + '\n' +
+			'		</article>' + '\n';
 	}
 }
 
