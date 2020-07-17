@@ -63,7 +63,7 @@ class Glossary extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody
-					title={cgbGlobal.__primaryColor}
+					title={arteeoGlossaryGlobal.__primaryColor}
 					initialOpen={false}
 				>
 					<ColorPicker
@@ -73,7 +73,7 @@ class Glossary extends Component {
 					/>
 				</PanelBody>
 				<PanelBody
-					title={cgbGlobal.__accentColor}
+					title={arteeoGlossaryGlobal.__accentColor}
 					initialOpen={false}
 				>
 					<ColorPicker

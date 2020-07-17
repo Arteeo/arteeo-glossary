@@ -1,10 +1,11 @@
+import apiFetch from '@wordpress/api-fetch';
+
 class Glossary{
-	constructor(container, primaryColor, secondaryColor, __selectLetter, locale) {
-		this.primaryColor  = primaryColor;
-		this.secondaryColor = secondaryColor;
-		this.__selectLetter = __selectLetter;
-		this.locale = locale;
-		this.container = container;
+	constructor(container, colors, translations, locale) {
+		this.container      = container;
+		this.colors         = colors;
+		this.translations   = translations;
+		this.locale         = locale;
 		this.selectedLetter = '';
 
 		this.wrapper = document.createElement('div');
@@ -16,26 +17,20 @@ class Glossary{
 
 	async init() {
 		let letters = await this.getLetters();
-
-		this.letters = letters;
-		if( 0 < letters.length ) {
-			this.selectedLetter = letters[0];
-			let entries = await this.getEntries( this.selectedLetter );
-			if( 0 < entries.length ) {
-				this.entries = entries;
-			} else {
-				//ToDo: Redirect?
-			}
+		
+		if ( letters !== undefined && letters.length != 0 ) {
+			this.letters = letters;
+			await this.setSelectedLetter( letters[0] );
+			this.render();
 		} else {
-			//ToDo: Return empty.
+			this.renderMessage( this.translations.noEntry );
 		}
-
-		this.render();
 	}
 
 	async getLetters() {
-		let response = await fetch('/index.php?rest_route=/arteeo/glossary/v1/letters&locale=de_DE');
-		let letters  = await response.json();
+		let letters = await apiFetch( { 
+			path: '/arteeo/glossary/v1/letters?locale=' + this.locale
+		} );
 
 		let count = letters.length;
 		letters = letters.filter( letter => ( '#' !== letter ) );
@@ -47,8 +42,10 @@ class Glossary{
 	}
 
 	async getEntries( letter ) {
-		let response = await fetch('/index.php?rest_route=/arteeo/glossary/v1/entries&locale=de_DE&letter=' + letter );
-		let entries  = await response.json();
+		let entries = await apiFetch( { 
+			path: '/arteeo/glossary/v1/entries?locale=' + this.locale + '&letter=' + letter 
+		} );
+		
 		return entries;
 	}
 
@@ -76,21 +73,46 @@ class Glossary{
 		return result;
 	}
 
+	renderMessage( message ) {
+		this.selectedLetter = '?';
+		this.letters        = [];
+		this.letters.push('?');
+
+		this.entries           = [];
+		let emptyEntry         = {}
+		emptyEntry.term        = '?';
+		emptyEntry.description = message;
+		this.entries.push(emptyEntry);
+
+		this.render();
+	}
+
 	render() {
 		this.wrapper.innerHTML = '';
 		let glossary = this.getTemplate();
 		glossary = glossary.replace('{{selectedLetter}}', this.selectedLetter);
-		glossary = glossary.replace('{{__selectLetter}}', this.__selectLetter);
+		glossary = glossary.replace('{{__selectLetter}}', this.translations.selectLetter);
 		glossary = glossary.replace('{{renderedLetters}}', this.renderLetters());
 		glossary = glossary.replace('{{renderedEntries}}', this.renderEntries());
 
 		this.wrapper.innerHTML = glossary;
+
+		//ToDo: Better!!!
+		let letterNodes = this.wrapper.getElementsByTagName('a');
+		for(let i = 0; i < letterNodes.length; i++)
+		{
+			const content = letterNodes[i].innerHTML;
+			letterNodes[i].onclick = async () => { 
+				await this.setSelectedLetter( content )
+				this.render();
+			}
+		}
 	}
 
 	getTemplate() {
 		return '' +
 			'	<section class="sidebar">' + '\n' +
-			'		<div class="sidebar-header">' + '\n' +
+			'		<div class="sidebar-header" style="background-color:' + this.colors.primary + ';">' + '\n' +
 			'			<div class="letter">' + '\n' +
 			'				<h2>{{selectedLetter}}</h2>' + '\n' +
 			'			</div>' + '\n' +
@@ -111,8 +133,8 @@ class Glossary{
 		if ( active ) {
 			return '' + 
 				'<a class="active" style="' + 
-						'color: ' + this.secondaryColor  + '; ' + 
-						'borderColor: ' + this.secondaryColor + ';">' + 
+						'color: ' + this.colors.accent  + '; ' + 
+						'border-color: ' + this.colors.accent + ';">' + 
 					'{{letter}}' + 
 				'</a>' + '\n';
 		} else {
@@ -127,12 +149,28 @@ class Glossary{
 		return '' +
 			'		<article class="entry">' + '\n' +
 			'			<div class="term">' + '\n' +
-			'				<h2 style="color: ' + this.secondaryColor + ';">{{term}}</h2>' + '\n' +
+			'				<h2 style="color: ' + this.colors.accent + ';">{{term}}</h2>' + '\n' +
 			'			</div>' + '\n' +
 			'			<div class="description">' + '\n' +
 			'				<p>{{description}}</p>' + '\n' +
 			'			</div>' + '\n' +
 			'		</article>' + '\n';
+	}
+
+	//ToDo: Better!!!
+	async setSelectedLetter( letter ) {
+		this.selectedLetter = letter;
+		let entries         = await this.getEntries( this.selectedLetter );
+		if( entries !== undefined && entries.length != 0 ) {
+			this.entries = entries;
+		} else {
+			console.error('No entries returned.')
+			this.renderMessage( this.translations.apiError );
+		}
+	}
+
+	setColors( colors ) {
+		this.colors = colors;
 	}
 }
 

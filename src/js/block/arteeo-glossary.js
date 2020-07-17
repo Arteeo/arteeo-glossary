@@ -12,13 +12,18 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	);
 
 	for ( const wrapper of wrappers ) {
-		let secondaryColor = wrapper.dataset.secondaryColor;
-		let primaryColor   = wrapper.dataset.primaryColor;
-		let name           = wrapper.dataset.name;
-		let locale         = wrapper.dataset.locale;
-		let __selectLetter = wrapper.dataset.__selectLetter;
+		let colors     = {}
+		colors.primary = wrapper.dataset.primaryColor;
+		colors.accent  = wrapper.dataset.accentColor;
+		
+
 		if ( ! wrapper.classList.contains('edit') ) {
-			let gloss = new Glossary(wrapper, primaryColor, secondaryColor, __selectLetter, locale);
+			let gloss = new Glossary(
+				wrapper, 
+				colors,
+				arteeoGlossaryGlobal.translations,
+				arteeoGlossaryGlobal.locale
+			);
 		}
 	}
 } );

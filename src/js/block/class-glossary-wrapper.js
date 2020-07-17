@@ -9,24 +9,32 @@ class GlossaryWrapper extends Component {
 		super( props );
 
 		this.setPrimaryColor = this.setPrimaryColor.bind(this);
-		this.setSecondaryColor = this.setSecondaryColor.bind(this);
+		this.setAccentColor = this.setAccentColor.bind(this);
 
-		this.wrapper  = document.createElement('div');
-		this.glossary = '';
-		this.props    = props;
+		this.wrapper      = document.createElement('div');
+		this.glossary     = '';
+		this.props        = props;
+		this.translations = arteeoGlossaryGlobal.translations;
 	}
 	componentDidMount() {
+		let colors = {};
+		colors.primary = this.props.attributes.primaryColor;
+		colors.accent  = this.props.attributes.accentColor;
+
 		this.glossary = new Glossary(
 			this.wrapper,
-			this.props.attributes.primaryColor,
-			this.props.attributes.secondaryColor,
-			cgbGlobal.__selectLetter,
-			cgbGlobal.locale
+			colors,
+			this.translations,
+			arteeoGlossaryGlobal.locale
 		);
 	}
 
 	componentDidUpdate() {
-		console.log(this.props.name, ": componentDidUpdate()");
+		let colors = {};
+		colors.primary = this.props.attributes.primaryColor;
+		colors.accent  = this.props.attributes.accentColor;
+		this.glossary.setColors( colors );
+		this.glossary.render();
 	}
   
 	componentWillUnmount() {
@@ -40,7 +48,7 @@ class GlossaryWrapper extends Component {
 			<div className={className} ref={wrapper => this.wrapper = wrapper} >
 				<InspectorControls>
 					<PanelBody
-						title={cgbGlobal.__primaryColor}
+						title={ this.translations.primaryColor }
 						initialOpen={false}
 					>
 						<ColorPicker
@@ -50,12 +58,12 @@ class GlossaryWrapper extends Component {
 						/>
 					</PanelBody>
 					<PanelBody
-						title={cgbGlobal.__accentColor}
+						title={this.translations.accentColor}
 						initialOpen={false}
 					>
 						<ColorPicker
-							color={ this.props.attributes.secondaryColor }
-							onChangeComplete={ this.setSecondaryColor }
+							color={ this.props.attributes.accentColor }
+							onChangeComplete={ this.setAccentColor }
 							disableAlpha
 						/>
 					</PanelBody>
@@ -68,8 +76,8 @@ class GlossaryWrapper extends Component {
 		this.props.setAttributes( { primaryColor: color === undefined ? '#0065AE' : color.hex } );
 	};
 
-	setSecondaryColor( color ) {
-		this.props.setAttributes( { secondaryColor: color === undefined ? '#0065AE' : color.hex } );
+	setAccentColor( color ) {
+		this.props.setAttributes( { accentColor: color === undefined ? '#0065AE' : color.hex } );
 	};
 }
 export default GlossaryWrapper;

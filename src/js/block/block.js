@@ -26,13 +26,23 @@ import { registerBlockType } from '@wordpress/blocks'; // Import registerBlockTy
  */
 registerBlockType( 'arteeo/glossary-block', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: cgbGlobal.__Glossary, // Block title.
+	title: arteeoGlossaryGlobal.translations.Glossary, // Block title.
 	icon: 'book-alt', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'embed', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	attributes: {
+        primaryColor: {
+            type: 'string',
+            default: '#0065AE',
+		},
+		accentColor: {
+            type: 'string',
+            default: '#82878c',
+		},
+    },
 	keywords: [
-		cgbGlobal.__glossaryDescription,
-		cgbGlobal.__glossary,
-		cgbGlobal.__Glossary,
+		arteeoGlossaryGlobal.translations.glossaryDescription,
+		arteeoGlossaryGlobal.translations.glossary,
+		arteeoGlossaryGlobal.translations.Glossary,
 	],
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -62,14 +72,10 @@ registerBlockType( 'arteeo/glossary-block', {
 	 */
 	save: ( props ) => {
 		return (
-			<div 
-				className={props.className} 
-				data-name={props.Name}
-				data-secondary-color={props.attributes.secondaryColor}
+			<div className={props.className}
 				data-primary-color={props.attributes.primaryColor}
-				data-locale={cgbGlobal.locale}
-				data-__select-letter={cgbGlobal.__selectLetter}>
-            </div>
+				data-accent-color={props.attributes.accentColor}
+			></div>
 		);
 	},
 } );
