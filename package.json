@@ -1,19 +1,46 @@
 {
-  "name": "glossary-cgb-guten-block",
+  "name": "arteeo-glossary",
   "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "start": "cgb-scripts start",
-    "build": "cgb-scripts build && node _utils/copy.js && node _utils/zip.js",
-    "eject": "cgb-scripts eject"
+  "description": "Glossary block for the Gutenberg editor.",
+  "author": {
+    "name": "Arteeo",
+    "email": "code@arteeo.ch",
+    "url": "https://github.com/Arteeo"
+  },
+  "license": "MIT",
+  "keywords": [
+    "Glossary",
+    "glossary",
+    "Arteeo",
+    "Gutenberg",
+    "Block"
+  ],
+  "homepage": "https://github.com/Arteeo/arteeo-glossary",
+  "repository": "https://github.com/Arteeo/arteeo-glossary",
+  "bugs": {
+    "url": "https://github.com/Arteeo/arteeo-glossary/issues",
+    "email": "code@arteeo.ch"
   },
   "devDependencies": {
     "@wordpress/api-fetch": "^3.18.0",
-    "@wordpress/eslint-plugin": "^7.1.0",
-    "@wordpress/scripts": "12.1.0",
+    "@wordpress/scripts": "^12.1.1",
     "archiver": "^4.0.1",
     "colors": "^1.4.0",
     "copy-dir": "^1.3.0",
-    "eslint": "^7.4.0"
+    "eslint": "^7.5.0"
+  },
+  "scripts": {
+    "build:dev": "wp-scripts build src/js/block/block.js src/js/block/arteeo-glossary.js --output-path dist/js/block/ --mode development && node _utils/copy.js && node _utils/zip.js",
+    "build:prod": "wp-scripts build src/js/block/block.js src/js/block/arteeo-glossary.js --output-path dist/js/block/ --mode production && node _utils/copy.js && node _utils/zip.js",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses --prod --mit",
+    "format:js": "wp-scripts format-js",
+    "lint:css": "wp-scripts lint-style ./src",
+    "lint:js": "wp-scripts lint-js ./src",
+    "lint:md:docs": "wp-scripts lint-md-docs -i  ./vendor -i ./dist",
+    "lint:md:js": "wp-scripts lint-md-js",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "start": "wp-scripts start"
   }
 }

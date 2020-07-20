@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Glossary
- * Plugin URI: https://github.com/Vec7or/glossary
- * Description: A simple beautiful glossary
- * Author: vec7or
- * Author URI: https://github.com/Vec7or
+ * Plugin URI: https://github.com/Arteeo/arteeo-glossary/
+ * Description: Glossary block for the Gutenberg editor.
  * Version: 1.0.0
+ * Author: Arteeo
+ * Author URI: https://github.com/Arteeo
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
  * Text Domain: arteeo-glossary

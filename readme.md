@@ -6,7 +6,7 @@ Todo: Insert screenshots etc. user documentation
 
 ## Developers
 ### Dependencies
-The following software has to be installed in order for you to be able to adjust and build this plugin (higher versions should also work):
+The following software has to be installed in order for you to be able to adjust and build this plugin (newer versions should also work):
 1. [npm v14.x](https://github.com/nodesource/distributions)
 2. [php 7.4](https://www.php.net/)
 3. [phpcs](https://github.com/squizlabs/PHP_CodeSniffer)
@@ -32,5 +32,3 @@ The following software has to be installed in order for you to be able to adjust
 - Provides all the configurations so you can customize the project as you want.
 - It's a one-way street, `eject` and you have to maintain everything yourself.
 - You don't normally have to `eject` a project because by ejecting you lose the connection with `create-guten-block` and from there onwards you have to update and maintain all the dependencies on your own.
-
-> This project was bootstrapped with [Create Guten Block](https://github.com/ahmadawais/create-guten-block).

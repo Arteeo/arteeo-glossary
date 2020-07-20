@@ -133,7 +133,7 @@ class Glossary_Block {
 				'Glossary'            => __( 'Glossary', 'arteeo-glossary' ),
 				'glossary'            => __( 'glossary', 'arteeo-glossary' ),
 				'glossaryDescription' => __( 'glossary', 'arteeo-glossary' ) . ' - ' .
-					__( 'A simple beautiful glossary', 'arteeo-glossary' ),
+					__( 'Glossary block for the Gutenberg editor.', 'arteeo-glossary' ),
 				'primaryColor'        => __( 'Primary color', 'arteeo-glossary' ),
 				'accentColor'         => __( 'Accent color', 'arteeo-glossary' ),
 				'selectLetter'        => __( 'Select a letter:', 'arteeo-glossary' ),
