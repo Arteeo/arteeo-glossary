@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Glossary\n"
 "Report-Msgid-Bugs-To: Vec7or\n"
-"POT-Creation-Date: 2020-06-30 14:18+0000\n"
+"POT-Creation-Date: 2020-07-21 07:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Vec7or <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,6 +14,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.4.0; wp-5.4.2"
+
+#: php/api/class-api.php:174
+msgid ""
+"The \"letter\" parameter is used to filter the collection of entries by "
+"letter."
+msgstr ""
+
+#: php/api/class-api.php:210
+msgid ""
+"The \"locale\" parameter is used to filter the collection of entries by "
+"locale."
+msgstr ""
+
+#. %s is replaced with the parameter name
+#: php/api/class-api.php:235 php/api/class-api.php:267
+#, php-format
+msgid "The %s parameter must be a string."
+msgstr ""
+
+#: php/api/class-api.php:247
+msgid "The \"letter\" argument must be A-Z or #."
+msgstr ""
 
 #: php/db/class-glossary-db.php:120
 msgid "Dog"
@@ -34,43 +56,41 @@ msgstr ""
 
 #. Name of the plugin
 #: php/admin-page/class-admin-page.php:96 
-#: php/admin-page/class-admin-page.php:97 php/block/block.php:305 
+#: php/admin-page/class-admin-page.php:97 
+#: php/block/class-glossary-block.php:168 
 #: php/admin-page/views/class-admin-page-table.php:108
 msgid "Glossary"
 msgstr ""
 
-#: php/block/block.php:167
-msgid "No entry"
-msgstr ""
-
-#: php/block/block.php:168
-msgid ""
-"Unfortunately no entries in your language could be found in this glossary."
-msgstr ""
-
-#: php/block/block.php:239 php/block/block.php:314
-msgid "Select a letter:"
-msgstr ""
-
-#: php/block/block.php:306 php/block/block.php:307
+#: php/block/class-glossary-block.php:169 
+#: php/block/class-glossary-block.php:170
 msgid "glossary"
 msgstr ""
 
 #. Description of the plugin
-#: php/block/block.php:308
-msgid "A simple beautiful glossary"
+#: php/block/class-glossary-block.php:171
+msgid "Glossary block for the Gutenberg editor."
 msgstr ""
 
-#: php/block/block.php:312
+#: php/block/class-glossary-block.php:172
 msgid "Primary color"
 msgstr ""
 
-#: php/block/block.php:313
+#: php/block/class-glossary-block.php:173
 msgid "Accent color"
 msgstr ""
 
-#: php/block/block.php:315
-msgid "Example"
+#: php/block/class-glossary-block.php:174
+msgid "Select a letter:"
+msgstr ""
+
+#: php/block/class-glossary-block.php:175
+msgid ""
+"Unfortunately no entries in your language could be found in this glossary."
+msgstr ""
+
+#: php/block/class-glossary-block.php:179
+msgid "Sorry, we were unable to retrieve entries from the server."
 msgstr ""
 
 #: php/helper/class-helpers.php:40 
@@ -218,13 +238,13 @@ msgid "Do you really want to delete glossary entry \"%s\"?"
 msgstr ""
 
 #. URI of the plugin
-msgid "https://github.com/Vec7or/glossary"
+msgid "https://github.com/Arteeo/arteeo-glossary/"
 msgstr ""
 
 #. Author of the plugin
-msgid "vec7or"
+msgid "Arteeo"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "https://github.com/Vec7or"
+msgid "https://github.com/Arteeo"
 msgstr ""

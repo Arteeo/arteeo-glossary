@@ -172,7 +172,7 @@ class API {
 		$args           = array();
 		$args['letter'] = array(
 			'description'       => esc_html__(
-				'The letter parameter is used to filter the collection of entries by letter.',
+				'The "letter" parameter is used to filter the collection of entries by letter.',
 				'arteeo-glossary'
 			),
 			'type'              => 'string',
@@ -208,7 +208,7 @@ class API {
 	private function add_locale_arg( array $args ) : array {
 		$args['locale'] = array(
 			'description'       => esc_html__(
-				'The locale parameter is used to filter the collection by locale.',
+				'The "locale" parameter is used to filter the collection of entries by locale.',
 				'arteeo-glossary'
 			),
 			'type'              => 'string',
@@ -244,7 +244,7 @@ class API {
 		} catch ( \Exception $e ) {
 			return new \WP_Error(
 				'rest_invalid_param',
-				esc_html__( 'The letter argument must be A-Z or #.', 'arteeo-glossary' ),
+				esc_html__( 'The "letter" argument must be A-Z or #.', 'arteeo-glossary' ),
 				array( 'status' => 400 )
 			);
 		}
