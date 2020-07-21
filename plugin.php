@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Glossary
+ * Plugin Name: Glossary by Arteeo
  * Plugin URI: https://github.com/Arteeo/arteeo-glossary/
  * Description: Glossary block for the Gutenberg editor.
  * Version: 1.0.0

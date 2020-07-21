@@ -32,15 +32,11 @@
   "scripts": {
     "build:dev": "wp-scripts build src/js/block/arteeo-glossary-block-backend.js src/js/block/arteeo-glossary-block-resize.js src/js/block/arteeo-glossary-block-frontend.js --output-path dist/js/block/ --mode development && node _utils/copy.js && node _utils/zip.js",
     "build:prod": "wp-scripts build src/js/block/arteeo-glossary-block-backend.js src/js/block/arteeo-glossary-block-resize.js src/js/block/arteeo-glossary-block-frontend.js --output-path dist/js/block/ --mode production && node _utils/copy.js && node _utils/zip.js",
-    "check-engines": "wp-scripts check-engines",
-    "check-licenses": "wp-scripts check-licenses --prod --mit",
-    "format:js": "wp-scripts format-js",
     "lint:css": "wp-scripts lint-style ./src",
     "lint:js": "wp-scripts lint-js ./src",
-    "lint:md:docs": "wp-scripts lint-md-docs -i  ./vendor -i ./dist",
+    "lint:md:docs": "wp-scripts lint-md-docs *.md",
     "lint:md:js": "wp-scripts lint-md-js",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
-    "packages-update": "wp-scripts packages-update",
-    "start": "wp-scripts start"
+    "packages-update": "wp-scripts packages-update"
   }
 }
