@@ -14,8 +14,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Glossary Block
+ *
+ * Registers and controlls the Gutenberg-Block of the Plugin.
+ *
+ * @since 1.0.0
+ */
 class Glossary_Block {
-
 	const BLOCK_NAME = 'arteeo/glossary-block';
 
 	/**
@@ -25,9 +31,14 @@ class Glossary_Block {
 	 */
 	public function __construct() {}
 
+	/**
+	 * Initialise the block and add required actions
+	 *
+	 * @since 1.0.0
+	 */
 	public function init() {
 		$this->register();
-		add_action( 'enqueue_block_assets', array( $this, 'enqueue_frontend_js' ) );
+		add_action( 'enqueue_block_assets', array( $this, 'enqueue_frontend_assets' ) );
 	}
 
 	/**
@@ -47,39 +58,50 @@ class Glossary_Block {
 	private function register() {
 		// Register block styles for both frontend + backend.
 		wp_register_style(
-			'arteeo-glossary-style-css', // Handle.
-			plugins_url( 'css/block/block.css', plugin_dir_path( __DIR__ ) ), // Block style CSS.
-			is_admin() ? array( 'wp-editor' ) : null, // Dependency to include the CSS after it.
-			filemtime( __DIR__ . '/../../css/block/block.css' ) // Version: File modification time.
+			'arteeo-glossary-style-css',
+			plugins_url( 'css/block/arteeo-glossary.css', plugin_dir_path( __DIR__ ) ),
+			is_admin() ? array( 'wp-editor' ) : null,
+			filemtime( __DIR__ . '/../../css/block/arteeo-glossary.css' )
 		);
 
 		// Register block editor script for backend.
 		wp_register_script(
-			'arteeo-glossary-block-js', // Handle.
-			plugins_url( 'js/block/block.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-			array( 'wp-api-fetch', 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
-			filemtime( __DIR__ . '/../../js/block/block.js' ), // Version: filemtime — Gets file modification time.
+			'arteeo-glossary-block-backend-js',
+			plugins_url( 'js/block/arteeo-glossary-block-backend.js', plugin_dir_path( __DIR__ ) ),
+			array( 'wp-api-fetch', 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ),
+			filemtime( __DIR__ . '/../../js/block/arteeo-glossary-block-backend.js' ),
 			true // Enqueue the script in the footer.
 		);
 
+		// Register script for frontend use.
 		wp_register_script(
-			'arteeo-glossary-frontend-js', // Handle.
-			plugins_url( 'js/block/arteeo-glossary.js', plugin_dir_path( __DIR__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-			array( 'wp-api-fetch', 'wp-polyfill' ), // Dependencies, defined above.
-			filemtime( __DIR__ . '/../../js/block/arteeo-glossary.js' ), // Version: filemtime — Gets file modification time.
+			'arteeo-glossary-block-frontend-js',
+			plugins_url( 'js/block/arteeo-glossary-block-frontend.js', plugin_dir_path( __DIR__ ) ),
+			array( 'wp-api-fetch', 'wp-polyfill' ),
+			filemtime( __DIR__ . '/../../js/block/arteeo-glossary-block-frontend.js' ),
+			true // Enqueue the script in the footer.
+		);
+
+		// Register script for frontend resizing.
+		wp_register_script(
+			'arteeo-glossary-block-resize-js',
+			plugins_url( 'js/block/arteeo-glossary-block-resize.js', plugin_dir_path( __DIR__ ) ),
+			array( 'wp-polyfill' ),
+			filemtime( __DIR__ . '/../../js/block/arteeo-glossary-block-resize.js' ),
 			true // Enqueue the script in the footer.
 		);
 
 		// WP Localized globals. Use dynamic PHP stuff in JavaScript via `arteeoGlossaryGlobal` object.
 		wp_localize_script(
-			'arteeo-glossary-block-js',
+			'arteeo-glossary-block-backend-js',
 			'arteeoGlossaryGlobal', // Array containing dynamic data for a JS Global.
 			$this->get_script_globals()
 		);
 
+		// WP Localized globals. Use dynamic PHP stuff in JavaScript via `arteeoGlossaryGlobal` object.
 		wp_localize_script(
-			'arteeo-glossary-frontend-js',
-			'arteeoGlossaryGlobal', // Array containing dynamic data for a JS Global.
+			'arteeo-glossary-block-frontend-js',
+			'arteeoGlossaryGlobal',
 			$this->get_script_globals()
 		);
 
@@ -91,28 +113,41 @@ class Glossary_Block {
 		 * enqueued when the editor loads.
 		 *
 		 * @link https://wordpress.org/gutenberg/handbook/blocks/writing-your-first-block-type#enqueuing-block-scripts
-		 * @since 1.16.0
-		 *
-		 * @see generate_letters for explanation of attributes array.
+		 * @since 1.0.0
 		 */
 		register_block_type(
 			self::BLOCK_NAME,
 			array(
-				// Enqueue blocks.style.build.css on both frontend & backend.
-				'style'           => 'arteeo-glossary-style-css',
-				// 'script'          => 'arteeo-glossary-js',
-				// Enqueue blocks.build.js in the editor only.
-				'editor_script'   => 'arteeo-glossary-block-js',
+				// Enqueue style for both frontend & backend.
+				'style'         => 'arteeo-glossary-style-css',
+				// Enqueue react-wrapper in the editor only.
+				'editor_script' => 'arteeo-glossary-block-backend-js',
 			)
 		);
 	}
 
-	public function enqueue_frontend_js() {
+	/**
+	 * Activate frontend script
+	 *
+	 * Callback which enqueues the glossary-frontend-assets if the block is present.
+	 *
+	 * @since 1.0.0
+	 */
+	public function enqueue_frontend_assets() {
 		if ( has_block( self::BLOCK_NAME ) ) {
-			wp_enqueue_script( 'arteeo-glossary-frontend-js' );
+			wp_enqueue_script( 'arteeo-glossary-block-frontend-js' );
+			wp_enqueue_script( 'arteeo-glossary-block-resize-js' );
 		}
 	}
 
+	/**
+	 * Get Globals
+	 *
+	 * Returns the needed translations and php-values to be used by the js-components.
+	 *
+	 * @since 1.0.0
+	 * @return array Array with the needed values.
+	 */
 	private function get_script_globals() : array {
 		$letters_endpoint = get_rest_url( null, '/arteeo/glossary/v1/letters' );
 		if ( strpos( $letters_endpoint, '?' ) !== false ) {
@@ -147,11 +182,6 @@ class Glossary_Block {
 				),
 			),
 			'locale'       => get_locale(),
-			'endpoints'    => array(
-				'letters' => $letters_endpoint,
-				'entries' => $entries_endpoint,
-			),
-			// Add more data here that you want to access from `arteeoGlossaryGlobal` object.
 		);
 	}
 }

@@ -1,6 +1,25 @@
 import apiFetch from '@wordpress/api-fetch';
 
+/**
+ * Glossary
+ *
+ * Renders and manages the glossary. Gets the letters and entries with fetch calls from the api.
+ *
+ * @since 1.0.0
+ */
 class Glossary {
+	/**
+	 * Constructor
+	 *
+	 * Constructs and renders the glossary component. Also sets all necessary class attributes.
+	 *
+	 * @since 1.0.0
+	 * @constructs
+	 * @param {Element} container the container in which the Glossary will be injected.
+	 * @param {Object} colors An object with the primary and accent color.
+	 * @param {Object} translations An object with the translations needed by this class.
+	 * @param {string} locale The current locale set for this site by php.
+	 */
 	constructor( container, colors, translations, locale ) {
 		this.container = container;
 		this.colors = colors;
@@ -15,6 +34,13 @@ class Glossary {
 		this.init();
 	}
 
+	/**
+	 * Initialiser
+	 *
+	 * Initialiess the glossary with the first letter available for the locale.
+	 *
+	 * @since 1.0.0
+	 */
 	async init() {
 		try {
 			const letters = await this.getLetters();
@@ -28,6 +54,15 @@ class Glossary {
 		}
 	}
 
+	/**
+	 * Get letters
+	 *
+	 * Requests the letters for the current locale from the api and returns them.
+	 *
+	 * @since 1.0.0
+	 * @throws {Error} If the fetch call gets a wrong response.status or no letters are returned by the api.
+	 * @return {Array} The letters provided by the api.
+	 */
 	async getLetters() {
 		const response = await apiFetch( {
 			path: '/arteeo/glossary/v1/letters?locale=' + this.locale,
@@ -52,6 +87,15 @@ class Glossary {
 		return letters;
 	}
 
+	/**
+	 * Get entries
+	 *
+	 * Requests the entries for the current locale from the api and returns them.
+	 *
+	 * @since 1.0.0
+	 * @throws {Error} If the fetch call gets a wrong response.status or no entries are returned by the api.
+	 * @return {Array} The entries provided by the api.
+	 */
 	async getEntries() {
 		const response = await apiFetch( {
 			path:
@@ -74,6 +118,14 @@ class Glossary {
 		return entries;
 	}
 
+	/**
+	 * Render letters
+	 *
+	 * Generates the html code for the letters currently loaded by the glossary.
+	 *
+	 * @since 1.0.0
+	 * @return {string} The html-code for the letters.
+	 */
 	renderLetters() {
 		let result = '';
 		this.letters.forEach( ( letter ) => {
@@ -88,6 +140,14 @@ class Glossary {
 		return result;
 	}
 
+	/**
+	 * Render entries
+	 *
+	 * Generates the html code for the entries currently loaded by the glossary.
+	 *
+	 * @since 1.0.0
+	 * @return {string} The html-code for the entries.
+	 */
 	renderEntries() {
 		let result = '';
 		this.entries.forEach( ( entry ) => {
@@ -103,6 +163,14 @@ class Glossary {
 		return result;
 	}
 
+	/**
+	 * Render message
+	 *
+	 * Renders the message provided inside the glossary. This is primarily used to show errors.
+	 *
+	 * @since 1.0.0
+	 * @param {string} message The message to be rendered.
+	 */
 	renderMessage( message ) {
 		this.selectedLetter = '?';
 		this.letters = [];
@@ -117,6 +185,13 @@ class Glossary {
 		this.render();
 	}
 
+	/**
+	 * Render glossary
+	 *
+	 * Generates and injects the html-code for the glossary into the wrapper object.
+	 *
+	 * @since 1.0.0
+	 */
 	render() {
 		this.wrapper.innerHTML = '';
 		let glossary = this.getTemplate();
@@ -141,8 +216,17 @@ class Glossary {
 		this.setEventListeners();
 	}
 
+	/**
+	 * Get glossary template
+	 *
+	 * Returns the html-structure of the glossary component.
+	 *
+	 * @since 1.0.0
+	 * @return {string} html-code for glossary component.
+	 */
 	getTemplate() {
 		return (
+			/* eslint-disable */
 			'	<section class="sidebar">' + '\n' +
 			'		<div class="sidebar-header" style="background-color:' + this.colors.primary + ';">' + '\n' +
 			'			<div class="letter">' + '\n' +
@@ -159,29 +243,52 @@ class Glossary {
 			'	<main class="content">' + '\n' +
 					'{{renderedEntries}}' + 
 			'	</main>' + '\n'
+			/* eslint-enable */
 		);
 	}
 
+	/**
+	 * Get letter template
+	 *
+	 * Returns the html-structure of a letter within the glossary.
+	 *
+	 * @since 1.0.0
+	 * @param {boolean} active If the letter is currently selected.
+	 * @return {string} html-code for glossary letter.
+	 */
 	getLetterTemplate( active = false ) {
 		if ( active ) {
 			return (
+				/* eslint-disable */
 				'<a class="active letter-control" data-letter="{{letter}}" style="' +
 						'color: ' + this.colors.accent  + '; ' + 
 						'border-color: ' + this.colors.accent + ';">' + 
 					'{{letter}}' + 
 				'</a>' + '\n'
+				/* eslint-enable */
 			);
 		}
 
 		return (
+			/* eslint-disable */
 			'<a class="letter-control" data-letter="{{letter}}" >' +
 			'	{{letter}}' +
 			'</a>' + '\n'
+			/* eslint-enable */
 		);
 	}
 
+	/**
+	 * Get enty template
+	 *
+	 * Returns the html-structure of an entry within the glossary.
+	 *
+	 * @since 1.0.0
+	 * @return {string} html-code for glossary entry.
+	 */
 	getEntryTemplate() {
 		return (
+			/* eslint-disable */
 			'		<article class="entry">' + '\n' +
 			'			<div class="term">' + '\n' +
 			'				<h2 style="color: ' + this.colors.accent + ';">{{term}}</h2>' + '\n' +
@@ -190,13 +297,29 @@ class Glossary {
 			'				<p>{{description}}</p>' + '\n' +
 			'			</div>' + '\n' +
 			'		</article>' + '\n'
+			/* eslint-enable */
 		);
 	}
 
+	/**
+	 * Set colors
+	 *
+	 * Replaces the colors of the glossary component.
+	 *
+	 * @since 1.0.0
+	 * @param {Object} colors Object which contains the new primary and accent color for the glossary.
+	 */
 	setColors( colors ) {
 		this.colors = colors;
 	}
 
+	/**
+	 * Set letter listener
+	 *
+	 * Sets the event listeners on the glossary letters in order for them to be able to change the current letter.
+	 *
+	 * @since 1.0.0
+	 */
 	setEventListeners() {
 		const letterNodes = this.wrapper.getElementsByClassName(
 			'letter-control'

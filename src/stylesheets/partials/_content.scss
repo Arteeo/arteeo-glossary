@@ -1,65 +1,61 @@
 // Extra small
 .#{$BLOCK_CLASS} {
-    .content {
-        padding-left: 5px;
-        padding-right: 5px;
-        width: 100%;
-        //background-color: blueviolet;
 
-        .entry {
-            background-color: white;
-            padding: 5px;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-            transition: 0.3s;
-            margin-bottom: 10px;
-            &:last-child{
-                margin-bottom: 0px;
-            }
-            .name {
-                h2 {
-                    color: $eh-text-gray;
-                    margin: 0px;
-                }
-            }
-            .description {
-                p {
-                    margin: 0px;
-                }
-            }
-        }
-    }
-}
+	.content {
+		padding-left: 5px;
+		padding-right: 5px;
+		width: 100%;
+		//background-color: blueviolet;
 
-// Small
-.#{$BLOCK_CLASS} {
-    &.sm {
+		.entry {
+			background-color: #fff;
+			padding: 5px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+			transition: 0.3s;
+			margin-bottom: 10px;
 
-    }
-}
+			&:last-child {
+				margin-bottom: 0;
+			}
 
-// Medium
-.#{$BLOCK_CLASS} {
-    &.md {
+			.name {
 
-    }
-}
+				h2 {
+					color: $eh-text-gray;
+					margin: 0;
+				}
+			}
 
-// Large
-.#{$BLOCK_CLASS} {
-    &.lg {
-        .content {
-            width: 0px;
-            flex-grow: 1;
-        }
-    }
-}
+			.description {
 
-// Xtra large
-.#{$BLOCK_CLASS} {
-    &.xl {
-        .content {
-            width: 0px;
-            flex-grow: 1;
-        }
-    }
+				p {
+					margin: 0;
+				}
+			}
+		}
+	}
+	// Small
+	&.sm {
+
+	}
+	// Medium
+	&.md {
+
+	}
+	// Large
+	&.lg {
+
+		.content {
+			width: 0;
+			flex-grow: 1;
+		}
+	}
+	// Xtra large
+	&.xl {
+
+		.content {
+			width: 0;
+			flex-grow: 1;
+		}
+	}
 }

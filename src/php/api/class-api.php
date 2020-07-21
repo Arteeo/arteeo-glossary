@@ -22,7 +22,7 @@ require_once __DIR__ . '/../models/class-letter.php';
  *
  * Registers and controlls api-endpoints for the glossary plugin.
  *
- * @package arteeo\glossary
+ * @since 1.0.0
  */
 class API {
 	/**

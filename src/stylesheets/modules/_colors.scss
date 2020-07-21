@@ -1,8 +1,9 @@
-$eh-background-primary: #0065AE;
+$eh-background-primary: #0065ae;
 $eh-background-light: #b4b9be;
-$eh-background-gray: 82878c;
+// Has to be like this because it is inserted into svg
+$eh-background-gray: "82878c";
 
-$eh-text-white: #ffffff;
+$eh-text-white: #fff;
 $eh-text-gray: #82878c;
-$text-color: black;
+$text-color: #000;
 $eh-letter-active: $eh-background-primary;

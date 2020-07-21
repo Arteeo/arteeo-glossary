@@ -1,97 +1,89 @@
-// Extra small
 .#{$BLOCK_CLASS} {
-    .sidebar {
-        padding: 0;
-        width: 100%;
-        margin: 0px;
-        margin-bottom: 50px;
+	// Extra small
+	.sidebar {
+		padding: 0;
+		width: 100%;
+		margin: 0;
+		margin-bottom: 50px;
 
-        .sidebar-header {
-            background-color: $eh-background-primary;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ffffff' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
-            text-align: center;
-        
-            height: 90px;
-            .letter {
-                height: 100%;
-                width: 100%;
-                h2 {
-                    margin: 0px;
-                    font-size: 80px;
-                    color: $eh-text-white;
-                    position: relative;
-                    top: 50%;
-                    transform: translateY(-50%);
-                }
-            }
-        }
-        
-        .sidebar-content {
-            // background-color: $eh-background-light;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23#{$eh-background-gray}' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
-            padding: 5px;
+		.sidebar-header {
+			background-color: $eh-background-primary;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ffffff' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+			text-align: center;
+			height: 90px;
 
-            h3 {
-                margin: 0px;
-                color: $eh-text-gray;
-                font-size: 20px;
-                font-weight: 400;
-            }
+			.letter {
+				height: 100%;
+				width: 100%;
 
-            .letters {
-                display: flex;
-                flex-wrap: wrap;
-                a {
-                    text-decoration: none;
-                    color: $text-color;
-                    font-weight: 800;
-                    margin: 5px;
-                    border-top: solid black 2px;
-                    cursor: pointer;
-                    
-                    &.active {
-                        color: $eh-letter-active;
-                        border-color: $eh-letter-active;
-                    }
-                }
-            }
-        }
-    }
-}
+				h2 {
+					margin: 0;
+					font-size: 80px;
+					color: $eh-text-white;
+					position: relative;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+			}
+		}
 
-// Small
-.#{$BLOCK_CLASS} {
-    &.sm {
+		.sidebar-content {
+			// background-color: $eh-background-light;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23#{$eh-background-gray}' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+			padding: 5px;
 
-    }
-}
+			h3 {
+				margin: 0;
+				color: $eh-text-gray;
+				font-size: 20px;
+				font-weight: 400;
+			}
 
-// Medium
-.#{$BLOCK_CLASS} {
-    &.md {
-        
-    }
-}
+			.letters {
+				display: flex;
+				flex-wrap: wrap;
 
-// Large
-.#{$BLOCK_CLASS} {
-    &.lg {
-        .sidebar {
-            width: 250px;
-            margin-right: 50px;
-            margin-left: 20px;
-            margin-bottom: 0px;
-            
-            .sidebar-header {
-                height: 160px;
-            }
-        }
-    }
-}
+				a {
+					text-decoration: none;
+					color: $text-color;
+					font-weight: 800;
+					margin: 5px;
+					border-top: solid #000 2px;
+					cursor: pointer;
 
-// Xtra large
-.#{$BLOCK_CLASS} {
-    &.xl {
-        
-    }
+					&.active {
+						color: $eh-letter-active;
+						border-color: $eh-letter-active;
+					}
+				}
+			}
+		}
+	}
+
+	// Small
+	&.sm {
+
+	}
+	//Medium
+	&.md {
+
+	}
+	// Large
+	&.lg {
+
+		.sidebar {
+			width: 250px;
+			margin-right: 50px;
+			margin-left: 20px;
+			margin-bottom: 0;
+
+			.sidebar-header {
+				height: 160px;
+			}
+		}
+	}
+	// Xtra large
+	&.xl {
+
+	}
 }
