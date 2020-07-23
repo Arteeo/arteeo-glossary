@@ -16,6 +16,11 @@ require_once __DIR__ . '/../class-glossary.php';
 require_once __DIR__ . '/../models/class-entry.php';
 require_once __DIR__ . '/../models/class-entries.php';
 require_once __DIR__ . '/../models/class-letters.php';
+require_once __DIR__ . '/../models/class-migrations.php';
+
+// Migrations.
+require_once __DIR__ . '/migrations/class-create-glossary-table.php';
+require_once __DIR__ . '/migrations/class-fill-glossary-table.php';
 
 /**
  * Glossary Database
@@ -31,7 +36,27 @@ class Glossary_DB {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	private string $table_name;
+	public static string $glossary_table_name = '';
+
+	/**
+	 * Static constructor
+	 *
+	 * Is called first and initialises static variables
+	 *
+	 * @since 1.0.0
+	 */
+	public static function constructor_static() {
+		global $wpdb;
+		self::$glossary_table_name = $wpdb->prefix . 'arteeo_glossary';
+	}
+
+	/**
+	 * List of migrations to be done.
+	 *
+	 * @since 1.0.0
+	 * @var Migrations
+	 */
+	private Migrations $migrations;
 
 	/**
 	 * Constructor.
@@ -41,8 +66,9 @@ class Glossary_DB {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		global $wpdb;
-		$this->table_name = $wpdb->prefix . 'arteeo_glossary';
+		$this->migrations = new Migrations();
+		$this->migrations->add( new Create_Glossary_Table() );
+		$this->migrations->add( new Fill_Glossary_Table() );
 	}
 
 	/**
@@ -53,154 +79,64 @@ class Glossary_DB {
 	 * @since 1.0.0
 	 */
 	public function register_actions() {
-		add_action( 'plugins_loaded', array( $this, 'check_for_glossary_table_update' ) );
-		add_action( 'arteeo_glossary_activate', array( $this, 'prepare_glossary_table' ) );
-		add_action( 'arteeo_glossary_uninstall', array( $this, 'drop_glossary_table' ) );
+		add_action( 'plugins_loaded', array( $this, 'do_migrations' ) );
+		add_action( 'arteeo_glossary_uninstall', array( $this, 'rollback_migrations' ) );
 	}
 
 	/**
-	 * Setup the glossary database.
+	 * Apply migrations
 	 *
-	 * This function checks if the database exists if this is not the case it creates the database and fills it with
-	 * sample data.
+	 * Applies all migrations not yet written to the Database. Prepares the database for use with the plugin.
 	 *
 	 * @since 1.0.0
 	 * @global object $wpdb The WordPress database instance.
 	 */
-	public function prepare_glossary_table() {
+	public function do_migrations() {
 		global $wpdb;
 
-		if ( $this->table_name !== $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $this->table_name ) ) ) {
-			self::create_glossary_table();
-			self::fill_glossary_table();
+		$current_migration = get_option( 'arteeo_glossary_current_migration' );
+
+		if ( false === $current_migration ) {
+			add_option( 'arteeo_glossary_current_migration', 0 );
+			$current_migration = 0;
 		}
-	}
 
-	/**
-	 * Create table
-	 *
-	 * Creates the glossary database table. And saves the current glossary version inside a WordPress option.
-	 *
-	 * @since 1.0.0
-	 * @global object $wpdb The WordPress database instance.
-	 */
-	private function create_glossary_table() {
-		global $wpdb;
-
-		$charset_collate = $wpdb->get_charset_collate();
-
-		$sql = "CREATE TABLE $this->table_name (
-			id mediumint(9) NOT NULL AUTO_INCREMENT,
-			letter char NOT NULL,
-			term tinytext NOT NULL,
-			description text NOT NULL,
-			locale text NOT NULL,
-			PRIMARY KEY  (id)
-		) $charset_collate;";
-
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		dbDelta( $sql );
-
-		add_option( 'glossary_version', Glossary::VERSION );
-	}
-
-	/**
-	 * Fill table
-	 *
-	 * Fills the created table with some sample data.
-	 *
-	 * @since 1.0.0
-	 * @global object $wpdb The WordPress database instance.
-	 */
-	private function fill_glossary_table() {
-		global $wpdb;
-
-		$locale = get_locale();
-
-		$term        = __( 'Dog', 'arteeo-glossary' );
-		$description = __( 'Congratulations, you just completed the installation!', 'arteeo-glossary' );
-
-		$wpdb->insert(
-			$this->table_name,
-			array(
-				'letter'      => strtoupper( substr( $term, 0, 1 ) ),
-				'term'        => $term,
-				'description' => $description,
-				'locale'      => $locale,
-			)
-		);
-
-		$term        = __( 'Sheep', 'arteeo-glossary' );
-		$description = 'Lorem ipsum dolor sit amet consectetur adipiscing elit nisl ultrices, dapibus ut fermentum' .
-						'luctus tellus magnis fames nunc curae curabitur, velit cubilia cum scelerisque phasellus' .
-						'fusce leo eget. Dis quam fusce vivamus congue felis sociosqu taciti, eget libero dignissim' .
-						'condimentum purus a, sed metus semper auctor torquent imperdiet. Sociis suscipit sociosqu' .
-						'turpis eros feugiat aliquam commodo vel et, non dictum malesuada nam ut netus hendrerit' .
-						'varius, natoque tincidunt magna litora placerat eleifend vehicula tristique.';
-
-		$wpdb->insert(
-			$this->table_name,
-			array(
-				'letter'      => strtoupper( substr( $term, 0, 1 ) ),
-				'term'        => $term,
-				'description' => $description,
-				'locale'      => $locale,
-			)
-		);
-
-		$term        = __( 'Serpent', 'arteeo-glossary' );
-		$description = __( 'Congratulations, you just completed the installation!', 'arteeo-glossary' );
-
-		$wpdb->insert(
-			$this->table_name,
-			array(
-				'letter'      => strtoupper( substr( $term, 0, 1 ) ),
-				'term'        => $term,
-				'description' => $description,
-				'locale'      => $locale,
-			)
-		);
-
-		$term        = '.htaccess';
-		$description = __( 'Congratulations, you just completed the installation!', 'arteeo-glossary' );
-
-		$wpdb->insert(
-			$this->table_name,
-			array(
-				'letter'      => '#',
-				'term'        => $term,
-				'description' => $description,
-				'locale'      => $locale,
-			)
-		);
-	}
-
-	/**
-	 * Uninstall table
-	 *
-	 * Drops the glossary table and removes the version option as to completely remove the plugin from the system.
-	 *
-	 * @since 1.0.0
-	 * @global object $wpdb The WordPress database instance.
-	 */
-	public function drop_glossary_table() {
-		global $wpdb;
-		$wpdb->query( 'DROP TABLE IF EXISTS ' . $this->table_name );
-		delete_option( 'glossary_version' );
-	}
-
-	/**
-	 * Check for update
-	 *
-	 * On plugin update this function checks if the glossary version has changed and updates the table if necessary.
-	 *
-	 * @since 1.0.0
-	 * @global object $wpdb The WordPress database instance.
-	 */
-	public function check_for_glossary_table_update() {
-		if ( Glossary::VERSION !== get_site_option( 'glossary_version' ) ) {
-			function (){};
+		if ( $this->migrations->get_latest_timestamp() <= $current_migration ) {
+			// No new migrations.
+			return;
 		}
+
+		foreach ( $this->migrations as $migration ) {
+			if ( $current_migration < $migration->get_timestamp() ) {
+				$migration->up( $wpdb );
+				$current_migration = $migration->get_timestamp();
+			}
+		}
+
+		update_option( 'arteeo_glossary_current_migration', $current_migration );
+	}
+
+	/**
+	 * Rollback migrations
+	 *
+	 * Does a rollback on all migrations effectively removing all elements of this plugin from within the Database.
+	 *
+	 * @since 1.0.0
+	 * @global object $wpdb The WordPress database instance.
+	 */
+	public function rollback_migrations() {
+		global $wpdb;
+
+		$current_migration = get_option( 'arteeo_glossary_current_migration' );
+		if ( false !== $current_migration && 0 < $current_migration ) {
+			foreach ( $this->migrations->get_reverse_iterator() as $migration ) {
+				if ( $current_migration >= $migration->get_timestamp() ) {
+					$migration->down( $wpdb );
+					$current_migration = $migration->get_timestamp();
+				}
+			}
+		}
+		delete_option( 'arteeo_glossary_current_migration' );
 	}
 
 	/**
@@ -217,7 +153,7 @@ class Glossary_DB {
 		global $wpdb;
 
 		$result = $wpdb->insert(
-			$this->table_name,
+			self::$glossary_table_name,
 			array(
 				'letter'      => $entry->letter,
 				'term'        => $entry->term,
@@ -253,7 +189,7 @@ class Glossary_DB {
 		global $wpdb;
 
 		$result = $wpdb->update(
-			$this->table_name,
+			self::$glossary_table_name,
 			array(
 				'letter'      => $entry->letter,
 				'term'        => $entry->term,
@@ -288,7 +224,7 @@ class Glossary_DB {
 	 */
 	public function delete_entry( Entry $entry ) : int {
 		global $wpdb;
-		$result = $wpdb->delete( $this->table_name, array( 'id' => $entry->id ) );
+		$result = $wpdb->delete( self::$glossary_table_name, array( 'id' => $entry->id ) );
 
 		if ( false === $result ) {
 			return -1;
@@ -312,7 +248,7 @@ class Glossary_DB {
 
 		$entries = $wpdb->get_results(
 			$wpdb->prepare(
-				'SELECT * FROM ' . $this->table_name . ' WHERE' .
+				'SELECT * FROM ' . self::$glossary_table_name . ' WHERE' .
 				' id = %d',
 				$id
 			)
@@ -345,7 +281,7 @@ class Glossary_DB {
 		if ( isset( $filter->locale ) && isset( $filter->letter ) ) {
 			$entries = $wpdb->get_results(
 				$wpdb->prepare(
-					'SELECT * FROM ' . $this->table_name .
+					'SELECT * FROM ' . self::$glossary_table_name .
 						' WHERE locale=%s AND letter=%s ORDER BY term ' . $filter->sorting,
 					$filter->locale,
 					$filter->letter
@@ -354,20 +290,20 @@ class Glossary_DB {
 		} elseif ( isset( $filter->locale ) ) {
 			$entries = $wpdb->get_results(
 				$wpdb->prepare(
-					'SELECT * FROM ' . $this->table_name . ' WHERE locale=%s ORDER BY term ' . $filter->sorting,
+					'SELECT * FROM ' . self::$glossary_table_name . ' WHERE locale=%s ORDER BY term ' . $filter->sorting,
 					$filter->locale
 				)
 			);
 		} elseif ( isset( $filter->letter ) ) {
 			$entries = $wpdb->get_results(
 				$wpdb->prepare(
-					'SELECT * FROM ' . $this->table_name . ' WHERE letter=%s ORDER BY term ' . $filter->sorting,
+					'SELECT * FROM ' . self::$glossary_table_name . ' WHERE letter=%s ORDER BY term ' . $filter->sorting,
 					$filter->letter
 				)
 			);
 		} else {
 			$entries = $wpdb->get_results(
-				'SELECT * FROM ' . $this->table_name . ' ORDER BY term ' . $filter->sorting
+				'SELECT * FROM ' . self::$glossary_table_name . ' ORDER BY term ' . $filter->sorting
 			);
 		}
 
@@ -398,14 +334,14 @@ class Glossary_DB {
 		if ( isset( $filter->locale ) ) {
 			$letters = $wpdb->get_results(
 				$wpdb->prepare(
-					'SELECT letter, count(letter) AS count FROM ' . $this->table_name .
+					'SELECT letter, count(letter) AS count FROM ' . self::$glossary_table_name .
 						' WHERE locale=%s GROUP BY letter ORDER BY letter ASC',
 					$filter->locale
 				)
 			);
 		} else {
 			$letters = $wpdb->get_results(
-				'SELECT letter, count(letter) AS count FROM ' . $this->table_name .
+				'SELECT letter, count(letter) AS count FROM ' . self::$glossary_table_name .
 						' GROUP BY letter ORDER BY letter ASC'
 			);
 		}
@@ -418,3 +354,5 @@ class Glossary_DB {
 		return $result;
 	}
 }
+
+Glossary_DB::constructor_static();

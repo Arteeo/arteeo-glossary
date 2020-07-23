@@ -26,19 +26,6 @@ require_once 'php/class-glossary.php';
 require_once 'php/db/class-glossary-db.php';
 
 /**
- * Trigger activation
- *
- * On plugin activation this function is called which does then trigger a custom action so that the plugin can be
- * prepared for activation.
- *
- * @since 1.0.0
- */
-function arteeo_glossary_activate() {
-	do_action( 'arteeo_glossary_activate' );
-}
-register_activation_hook( __FILE__, 'arteeo\glossary\arteeo_glossary_activate' );
-
-/**
  * Trigger uninstall
  *
  * On plugin deinstallation this function is called which does then trigger a custom action so that the plugin can be

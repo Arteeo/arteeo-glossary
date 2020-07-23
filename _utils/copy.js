@@ -14,8 +14,8 @@ console.log( 'Copied php folder'.green );
 fs.copyFileSync( './plugin.php', './dist/plugin.php' );
 console.log( 'plugin.php was copied to /dist/plugin.php'.green );
 
-fs.copyFileSync( './readme.md', './dist/readme.md' );
-console.log( 'readme.md was copied to /dist/readme.md'.green );
+fs.copyFileSync( './README.md', './dist/README.md' );
+console.log( 'README.md was copied to /dist/README.md'.green );
 
 fs.mkdirSync( './dist/css/block', { recursive: true } );
 fs.copyFileSync(

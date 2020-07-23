@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Glossary\n"
 "Report-Msgid-Bugs-To: Vec7or\n"
-"POT-Creation-Date: 2020-07-21 07:01+0000\n"
-"PO-Revision-Date: 2020-07-21 07:03+0000\n"
+"POT-Creation-Date: 2020-07-23 17:10+0000\n"
+"PO-Revision-Date: 2020-07-23 17:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de-DE\n"
@@ -40,24 +40,6 @@ msgstr "Der %s-Parameter muss eine Zeichenfolge sein."
 msgid "The \"letter\" argument must be A-Z or #."
 msgstr "Das Argument \"letter\" muss A-Z oder # sein."
 
-#: php/db/class-glossary-db.php:120
-msgid "Dog"
-msgstr "Hund"
-
-#: php/db/class-glossary-db.php:121 php/db/class-glossary-db.php:152 
-#: php/db/class-glossary-db.php:165
-msgid "Congratulations, you just completed the installation!"
-msgstr "Glückwunsch, du hast die installation abgeschlossen!"
-
-#: php/db/class-glossary-db.php:133
-msgid "Sheep"
-msgstr "Schaf"
-
-#: php/db/class-glossary-db.php:151
-msgid "Serpent"
-msgstr "Schlange"
-
-#. Name of the plugin
 #: php/admin-page/class-admin-page.php:96 
 #: php/admin-page/class-admin-page.php:97 
 #: php/block/class-glossary-block.php:168 
@@ -241,6 +223,10 @@ msgstr "Glossar-Eintrag löschen"
 #, php-format
 msgid "Do you really want to delete glossary entry \"%s\"?"
 msgstr "Willst du den Glossar-Eintrag \"%s\" wirklich löschen?"
+
+#. Name of the plugin
+msgid "Glossary by Arteeo"
+msgstr "Glossary by Arteeo"
 
 #. URI of the plugin
 msgid "https://github.com/Arteeo/arteeo-glossary/"
