@@ -76,7 +76,7 @@ class Glossary_DB {
 	 *
 	 * Registers the action which will be executed on plugin activation and deinstallation as well as plugin upgrades.
 	 *
-	 * @since 1.0.0
+	 *   @since 1.0.0
 	 */
 	public function register_actions() {
 		add_action( 'plugins_loaded', array( $this, 'do_migrations' ) );
