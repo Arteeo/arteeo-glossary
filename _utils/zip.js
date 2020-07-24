@@ -4,7 +4,7 @@ const fs = require( 'fs' );
 const archiver = require( 'archiver' );
 
 // create a file to stream archive data to.
-const output = fs.createWriteStream( './arteeo-glossary.zip' );
+const output = fs.createWriteStream( './glossary-by-arteeo.zip' );
 const archive = archiver( 'zip', {
 	zlib: { level: 9 }, // Sets the compression level.
 } );

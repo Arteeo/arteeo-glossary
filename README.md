@@ -67,13 +67,13 @@ The following software has to be installed in order for you to be able to adjust
 
 - Use to compile and the block in development mode.
 - Compiles the plugin into the `dist` folder.
-- Creates `arteeo-glossary.zip` which can be uploaded to a WordPress instance.
+- Creates `glossary-by-arteeo.zip` which can be uploaded to a WordPress instance.
 
 #### 📜📜 `npm run build:prod`
 
 - Use to build the plugin in production mode
 - Compiles the plugin into the `dist` folder.
-- Creates `arteeo-glossary.zip` which can be uploaded to a WordPress instance.
+- Creates `glossary-by-arteeo.zip` which can be uploaded to a WordPress instance.
 
 #### 📜📜 `npm run lint:css`
 

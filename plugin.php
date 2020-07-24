@@ -75,11 +75,6 @@ class Main {
 	 */
 	public function run() {
 		/**
-		 * Load Text Domain
-		 */
-		load_plugin_textdomain( 'arteeo-glossary', false, basename( dirname( __FILE__ ) ) . '/languages/' );
-
-		/**
 		 * Actions and Hooks
 		 */
 		$this->db->register_actions();
@@ -94,6 +89,11 @@ class Main {
 	 * @since 1.0.0
 	 */
 	public function includes() {
+		/**
+		 * Load Text Domain
+		 */
+		load_plugin_textdomain( 'arteeo-glossary', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+
 		$this->glossary = new Glossary( $this->db );
 	}
 }
