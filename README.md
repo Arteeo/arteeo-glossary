@@ -6,7 +6,7 @@ Glossary block for the Gutenberg editor.
 
 ### Overview 
 
-This plugin provides a glossary-block for the WordPress-Gutenberg-Editor. It also includes a backend to add, update and remove entries from within the glossary.
+This plugin provides a multilanguage glossary-block for the WordPress-Gutenberg-Editor. It also includes a backend to add, update and remove entries from within the glossary.
 
 ### Install
 
@@ -14,13 +14,11 @@ To install the plugin simply download it from the [WordPress repository](https:/
 
 ### Features
 
-The plugin currently supports the following languages in the frontend as well as the backend:
-
-1. English
-2. French
-3. German
-4. Italian
-
+- The plugin actively supports multi-language sites and offers the following languages in both the frontend and the backend:
+    - English
+    - French
+    - German
+    - Italian
 - The backend has filtering options to filter by letter and language. 
 - The colors of the frontend are completely adjustable.
 - The frontend adjusts itself to fit the container size (responsive / mobile friendly).
@@ -41,6 +39,10 @@ The plugin currently supports the following languages in the frontend as well as
 ![Block frontend](_assets/block-frontend.png)
 
 ## Developers
+
+### Contributing
+
+We really appreciate the time and effort many developers invest into open source. We welcome anyone interested in contributing to this repository. However, when contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
 
 ### Dependencies
 
@@ -101,4 +103,4 @@ The following software has to be installed in order for you to be able to adjust
 
 #### More
 
-WordPress-Scripts is a dependency, therefore all scripts described [here](https://developer.wordpress.org/block-editor/packages/packages-scripts/)  are theoretically available.
+WordPress-Scripts is a dependency, therefore all scripts described [here](https://developer.wordpress.org/block-editor/packages/packages-scripts/) are theoretically available.
