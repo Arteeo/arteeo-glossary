@@ -1,5 +1,5 @@
 {
-  "name": "arteeo-glossary",
+  "name": "glossary-by-arteeo",
   "version": "1.0.0",
   "description": "Glossary block for the Gutenberg editor.",
   "author": {
@@ -15,10 +15,10 @@
     "Gutenberg",
     "Block"
   ],
-  "homepage": "https://github.com/Arteeo/arteeo-glossary",
-  "repository": "https://github.com/Arteeo/arteeo-glossary",
+  "homepage": "https://github.com/Arteeo/glossary-by-arteeo",
+  "repository": "https://github.com/Arteeo/glossary-by-arteeo",
   "bugs": {
-    "url": "https://github.com/Arteeo/arteeo-glossary/issues",
+    "url": "https://github.com/Arteeo/glossary-by-arteeo/issues",
     "email": "code@arteeo.ch"
   },
   "devDependencies": {
@@ -30,8 +30,8 @@
     "eslint": "^7.5.0"
   },
   "scripts": {
-    "build:dev": "wp-scripts build src/js/block/arteeo-glossary-block-backend.js src/js/block/arteeo-glossary-block-resize.js src/js/block/arteeo-glossary-block-frontend.js --output-path dist/js/block/ --mode development && node _utils/copy.js && node _utils/zip.js",
-    "build:prod": "wp-scripts build src/js/block/arteeo-glossary-block-backend.js src/js/block/arteeo-glossary-block-resize.js src/js/block/arteeo-glossary-block-frontend.js --output-path dist/js/block/ --mode production && node _utils/copy.js && node _utils/zip.js",
+    "build:dev": "wp-scripts build src/js/block/glossary-by-arteeo-block-backend.js src/js/block/glossary-by-arteeo-block-resize.js src/js/block/glossary-by-arteeo-block-frontend.js --output-path dist/js/block/ --mode development && node _utils/copy.js && node _utils/zip.js",
+    "build:prod": "wp-scripts build src/js/block/glossary-by-arteeo-block-backend.js src/js/block/glossary-by-arteeo-block-resize.js src/js/block/glossary-by-arteeo-block-frontend.js --output-path dist/js/block/ --mode production && node _utils/copy.js && node _utils/zip.js",
     "lint:css": "wp-scripts lint-style ./src",
     "lint:js": "wp-scripts lint-js ./src",
     "lint:md:docs": "wp-scripts lint-md-docs *.md",

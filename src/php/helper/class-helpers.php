@@ -37,7 +37,7 @@ class Helpers {
 		if ( $include_all ) {
 			echo '' .
 			'	<option value=""' . ( ( '' === $selected ) ? 'selected >' : '>' ) .
-					esc_html__( 'All', 'arteeo-glossary' ) .
+					esc_html__( 'All', 'glossary-by-arteeo' ) .
 			'	</option>';
 		}
 
@@ -70,7 +70,7 @@ class Helpers {
 	 */
 	public static function get_locales() : array {
 		$languages      = get_available_languages( __DIR__ . '/../../languages' );
-		$prefix         = 'arteeo-glossary-';
+		$prefix         = 'glossary-by-arteeo-';
 		$language_count = count( $languages );
 
 		for ( $i = 0; $i < $language_count; $i++ ) {

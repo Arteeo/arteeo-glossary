@@ -62,7 +62,7 @@ class Admin_Page_CRUD_Controller {
 
 			if ( false === $nonce ) {
 				Admin_Page::redirect_and_show_message(
-					new Message( Message::ERROR, __( 'Form has expired.', 'arteeo-glossary' ) )
+					new Message( Message::ERROR, __( 'Form has expired.', 'glossary-by-arteeo' ) )
 				);
 			}
 
@@ -153,20 +153,20 @@ class Admin_Page_CRUD_Controller {
 
 		if ( -1 === $db_result ) {
 			Admin_Page::redirect_and_show_message(
-				new Message( Message::ERROR, __( 'Database error.', 'arteeo-glossary' ) )
+				new Message( Message::ERROR, __( 'Database error.', 'glossary-by-arteeo' ) )
 			);
 		} elseif ( 0 === $db_result ) {
 			Admin_Page::redirect_and_show_message(
-				new Message( Message::SUCCESS, __( 'No changes have occured.', 'arteeo-glossary' ) )
+				new Message( Message::SUCCESS, __( 'No changes have occured.', 'glossary-by-arteeo' ) )
 			);
 		} else {
 			if ( ! $new ) {
 				Admin_Page::redirect_and_show_message(
-					new Message( Message::SUCCESS, __( 'Entry has been adjusted.', 'arteeo-glossary' ) )
+					new Message( Message::SUCCESS, __( 'Entry has been adjusted.', 'glossary-by-arteeo' ) )
 				);
 			} else {
 				Admin_Page::redirect_and_show_message(
-					new Message( Message::SUCCESS, __( 'Entry has been created.', 'arteeo-glossary' ) )
+					new Message( Message::SUCCESS, __( 'Entry has been created.', 'glossary-by-arteeo' ) )
 				);
 			}
 		}
@@ -185,11 +185,11 @@ class Admin_Page_CRUD_Controller {
 
 		if ( -1 === $result ) {
 			Admin_Page::redirect_and_show_message(
-				new Message( Message::ERROR, __( 'Database error.', 'arteeo-glossary' ) )
+				new Message( Message::ERROR, __( 'Database error.', 'glossary-by-arteeo' ) )
 			);
 		} else {
 			Admin_Page::redirect_and_show_message(
-				new Message( Message::SUCCESS, __( 'Entry has been deleted.', 'arteeo-glossary' ) )
+				new Message( Message::SUCCESS, __( 'Entry has been deleted.', 'glossary-by-arteeo' ) )
 			);
 		}
 	}
@@ -210,20 +210,20 @@ class Admin_Page_CRUD_Controller {
 		if ( '' === $entry->term ) {
 			return sprintf(
 				/* translators: %s is replaced with the fieldname*/
-				__( 'Field "%s" has to be filled in.', 'arteeo-glossary' ),
-				__( 'Term', 'arteeo-glossary' ),
+				__( 'Field "%s" has to be filled in.', 'glossary-by-arteeo' ),
+				__( 'Term', 'glossary-by-arteeo' ),
 			);
 		}
 		if ( '' === $entry->description ) {
 			return sprintf(
 				/* translators: %s is replaced with the fieldname*/
-				__( 'Field "%s" has to be filled in.', 'arteeo-glossary' ),
-				__( 'Description', 'arteeo-glossary' )
+				__( 'Field "%s" has to be filled in.', 'glossary-by-arteeo' ),
+				__( 'Description', 'glossary-by-arteeo' )
 			);
 		}
 
 		if ( false === array_search( $entry->locale, $languages, true ) ) {
-			return sprintf( __( 'Selected language not supported.', 'arteeo-glossary' ) );
+			return sprintf( __( 'Selected language not supported.', 'glossary-by-arteeo' ) );
 		}
 
 		if ( null !== $entry->id ) {
@@ -245,7 +245,7 @@ class Admin_Page_CRUD_Controller {
 	private function get_entry_or_redirect( $id ) : Entry {
 		if ( ! is_numeric( $id ) ) {
 			Admin_Page::redirect_and_show_message(
-				new Message( Message::ERROR, __( 'Entry id not valid.', 'arteeo-glossary' ) )
+				new Message( Message::ERROR, __( 'Entry id not valid.', 'glossary-by-arteeo' ) )
 			);
 		}
 
@@ -254,7 +254,7 @@ class Admin_Page_CRUD_Controller {
 		$entry = $this->db->get_entry_by_id( $id );
 		if ( null === $entry ) {
 			Admin_Page::redirect_and_show_message(
-				new Message( Message::ERROR, __( 'Entry could not be found.', 'arteeo-glossary' ) )
+				new Message( Message::ERROR, __( 'Entry could not be found.', 'glossary-by-arteeo' ) )
 			);
 		}
 

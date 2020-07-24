@@ -19,17 +19,17 @@ console.log( 'README.md was copied to /dist/README.md'.green );
 
 fs.mkdirSync( './dist/css/block', { recursive: true } );
 fs.copyFileSync(
-	'./dist/js/block/arteeo-glossary-block-backend.css',
-	'./dist/css/block/arteeo-glossary.css'
+	'./dist/js/block/glossary-by-arteeo-block-backend.css',
+	'./dist/css/block/glossary-by-arteeo.css'
 );
 console.log(
-	'arteeo-glossary-block-backend.css was copied to /dist/css/block/arteeo-glossary.css'
+	'glossary-by-arteeo-block-backend.css was copied to /dist/css/block/glossary-by-arteeo.css'
 		.green
 );
 
-fs.unlinkSync( 'dist/js/block/arteeo-glossary-block-backend.asset.php' );
-fs.unlinkSync( 'dist/js/block/arteeo-glossary-block-frontend.asset.php' );
-fs.unlinkSync( 'dist/js/block/arteeo-glossary-block-resize.asset.php' );
-fs.unlinkSync( 'dist/js/block/arteeo-glossary-block-backend.css' );
-fs.unlinkSync( 'dist/js/block/arteeo-glossary-block-frontend.css' );
+fs.unlinkSync( 'dist/js/block/glossary-by-arteeo-block-backend.asset.php' );
+fs.unlinkSync( 'dist/js/block/glossary-by-arteeo-block-frontend.asset.php' );
+fs.unlinkSync( 'dist/js/block/glossary-by-arteeo-block-resize.asset.php' );
+fs.unlinkSync( 'dist/js/block/glossary-by-arteeo-block-backend.css' );
+fs.unlinkSync( 'dist/js/block/glossary-by-arteeo-block-frontend.css' );
 console.log( 'Removed unused assets and files'.green );
