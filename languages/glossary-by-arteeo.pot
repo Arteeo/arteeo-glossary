@@ -1,13 +1,14 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Glossary\n"
 "Report-Msgid-Bugs-To: Vec7or\n"
 "POT-Creation-Date: 2020-07-23 17:10+0000\n"
-"PO-Revision-Date: 2020-07-23 17:11+0000\n"
-"Last-Translator: \n"
-"Language-Team: Italian\n"
-"Language: it-IT\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Vec7or <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,102 +20,97 @@ msgid ""
 "The \"letter\" parameter is used to filter the collection of entries by "
 "letter."
 msgstr ""
-"Il parametro \"letter\" viene utilizzato per filtrare la raccolta di voci "
-"per lettera."
 
 #: php/api/class-api.php:210
 msgid ""
 "The \"locale\" parameter is used to filter the collection of entries by "
 "locale."
 msgstr ""
-"Il parametro \"locale\" serve a filtrare la raccolta di voci per locale."
 
 #. %s is replaced with the parameter name
 #: php/api/class-api.php:235 php/api/class-api.php:267
 #, php-format
 msgid "The %s parameter must be a string."
-msgstr "Il parametro %s deve essere una stringa."
+msgstr ""
 
 #: php/api/class-api.php:247
 msgid "The \"letter\" argument must be A-Z or #."
-msgstr "L'argomento \"letter\" deve essere A-Z o #."
+msgstr ""
 
 #: php/admin-page/class-admin-page.php:96 
 #: php/admin-page/class-admin-page.php:97 
 #: php/block/class-glossary-block.php:168 
 #: php/admin-page/views/class-admin-page-table.php:108
 msgid "Glossary"
-msgstr "Glossario"
+msgstr ""
 
 #: php/block/class-glossary-block.php:169 
 #: php/block/class-glossary-block.php:170
 msgid "glossary"
-msgstr "glossario"
+msgstr ""
 
 #. Description of the plugin
 #: php/block/class-glossary-block.php:171
 msgid "Glossary block for the Gutenberg editor."
-msgstr "Blocco del glossario per l'editore di Gutenberg."
+msgstr ""
 
 #: php/block/class-glossary-block.php:172
 msgid "Primary color"
-msgstr "Colore primario"
+msgstr ""
 
 #: php/block/class-glossary-block.php:173
 msgid "Accent color"
-msgstr "Colore dell'accento"
+msgstr ""
 
 #: php/block/class-glossary-block.php:174
 msgid "Select a letter:"
-msgstr "Selezionare una lettera:"
+msgstr ""
 
 #: php/block/class-glossary-block.php:175
 msgid ""
 "Unfortunately no entries in your language could be found in this glossary."
 msgstr ""
-"Purtroppo in questo glossario non è stato possibile trovare alcuna voce "
-"nella vostra lingua."
 
 #: php/block/class-glossary-block.php:179
 msgid "Sorry, we were unable to retrieve entries from the server."
-msgstr "Siamo spiacenti, non siamo riusciti a recuperare le voci dal server."
+msgstr ""
 
 #: php/helper/class-helpers.php:40 
 #: php/admin-page/views/class-admin-page-table.php:159
 msgid "All"
-msgstr "Tutti"
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:65
 msgid "Form has expired."
-msgstr "Il formulario è scaduto."
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:156 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:188
 msgid "Database error."
-msgstr "Errore del database."
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:160
 msgid "No changes have occured."
-msgstr "Non ci sono stati cambiamenti."
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:165
 msgid "Entry has been adjusted."
-msgstr "La voce è stata modificata."
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:169
 msgid "Entry has been created."
-msgstr "La voce è stata creata."
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:192
 msgid "Entry has been deleted."
-msgstr "La voce è stata cancellata."
+msgstr ""
 
 #. %s is replaced with the fieldname
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:213 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:220
 #, php-format
 msgid "Field \"%s\" has to be filled in."
-msgstr "Il campo \"%s\" deve essere compilato."
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:214 
 #: php/admin-page/views/class-admin-page-table.php:233 
@@ -122,7 +118,7 @@ msgstr "Il campo \"%s\" deve essere compilato."
 #: php/admin-page/views/class-admin-page-table.php:283 
 #: php/admin-page/views/class-admin-page-entry-form.php:151
 msgid "Term"
-msgstr "Termine"
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:221 
 #: php/admin-page/views/class-admin-page-table.php:238 
@@ -130,111 +126,111 @@ msgstr "Termine"
 #: php/admin-page/views/class-admin-page-table.php:308 
 #: php/admin-page/views/class-admin-page-entry-form.php:166
 msgid "Description"
-msgstr "Descrizione"
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:226
 msgid "Selected language not supported."
-msgstr "Lingua selezionata non supportata."
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:248
 msgid "Entry id not valid."
-msgstr "l'id della voce non è valido"
+msgstr ""
 
 #: php/admin-page/controllers/class-admin-page-crud-controller.php:257
 msgid "Entry could not be found."
-msgstr "Impossibile trovare la voce."
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-table.php:112
 msgid "Add entry"
-msgstr "Aggiungi voce"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-table.php:132
 msgid "Hide this message"
-msgstr "Nascondi questo messaggio"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-table.php:194 
 #: php/admin-page/views/class-admin-page-table.php:205
 msgid "Filter by language"
-msgstr "Filtrare per lingua"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-table.php:220
 msgid "Glossary entries"
-msgstr "Voci del glossario"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-table.php:241 
 #: php/admin-page/views/class-admin-page-table.php:273 
 #: php/admin-page/views/class-admin-page-table.php:312 
 #: php/admin-page/views/class-admin-page-entry-form.php:182
 msgid "Language"
-msgstr "Lingua"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-table.php:270
 msgid "No entries found."
-msgstr "Nessuna voce trovata."
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-table.php:292 
 #: php/admin-page/views/class-admin-page-table.php:293
 msgid "Edit"
-msgstr "Modifica"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-table.php:301 
 #: php/admin-page/views/class-admin-page-table.php:302 
 #: php/admin-page/views/class-admin-page-delete-form.php:82
 msgid "Delete"
-msgstr "Cancellare"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-entry-form.php:122
 msgid "Add glossary entry"
-msgstr "Aggiungere la voce del glossario"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-entry-form.php:123
 msgid "Add a new entry to the glossary."
-msgstr "Aggiungere una nuova voce al glossario."
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-entry-form.php:128
 msgid "Edit glossary entry"
-msgstr "Modifica voce del glossario"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-entry-form.php:130
 msgid "Adjust the entry from the glossary."
-msgstr "Regolare la voce del glossario."
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-entry-form.php:153 
 #: php/admin-page/views/class-admin-page-entry-form.php:168 
 #: php/admin-page/views/class-admin-page-entry-form.php:184
 msgid "required"
-msgstr "richiesto"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-entry-form.php:228
 msgid "Create new entry"
-msgstr "Creare una nuova voce"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-entry-form.php:233
 msgid "Save entry"
-msgstr "Salva voce"
+msgstr ""
 
 #: php/admin-page/views/class-admin-page-delete-form.php:73
 msgid "Delete glossary entry"
-msgstr "Cancellare la voce del glossario"
+msgstr ""
 
 #. %s is replaced with the term of the entry
 #: php/admin-page/views/class-admin-page-delete-form.php:78
 #, php-format
 msgid "Do you really want to delete glossary entry \"%s\"?"
-msgstr "Volete davvero cancellare la voce \"%s\" del glossario?"
+msgstr ""
 
 #. Name of the plugin
 msgid "Glossary by Arteeo"
-msgstr "Glossary by Arteeo"
+msgstr ""
 
 #. URI of the plugin
-msgid "https://github.com/Arteeo/arteeo-glossary/"
-msgstr "https://github.com/Arteeo/arteeo-glossary/"
+msgid "https://github.com/Arteeo/glossary-by-arteeo/"
+msgstr ""
 
 #. Author of the plugin
 msgid "Arteeo"
-msgstr "Arteeo"
+msgstr ""
 
 #. Author URI of the plugin
 msgid "https://github.com/Arteeo"
-msgstr "https://github.com/Arteeo"
+msgstr ""

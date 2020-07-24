@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name: Glossary by Arteeo
- * Plugin URI: https://github.com/Arteeo/arteeo-glossary/
+ * Plugin URI: https://github.com/Arteeo/glossary-by-arteeo/
  * Description: Glossary block for the Gutenberg editor.
  * Version: 1.0.0
  * Author: Arteeo
  * Author URI: https://github.com/Arteeo
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
- * Text Domain: arteeo-glossary
+ * Text Domain: glossary-by-arteeo
  * Domain Path: /languages
  * Requires PHP: 7.4
  *
@@ -33,10 +33,10 @@ require_once 'php/db/class-glossary-db.php';
  *
  * @since 1.0.0
  */
-function arteeo_glossary_uninstall() {
-	do_action( 'arteeo_glossary_uninstall' );
+function uninstall() {
+	do_action( 'glossary_by_arteeo_uninstall' );
 }
-register_uninstall_hook( __FILE__, 'arteeo\glossary\arteeo_glossary_uninstall' );
+register_uninstall_hook( __FILE__, 'arteeo\glossary\uninstall' );
 
 /**
  * The loader for the plugin
@@ -92,7 +92,7 @@ class Main {
 		/**
 		 * Load Text Domain
 		 */
-		load_plugin_textdomain( 'arteeo-glossary', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'glossary-by-arteeo', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 		$this->glossary = new Glossary( $this->db );
 	}

@@ -47,7 +47,7 @@ class Glossary_DB {
 	 */
 	public static function constructor_static() {
 		global $wpdb;
-		self::$glossary_table_name = $wpdb->prefix . 'arteeo_glossary';
+		self::$glossary_table_name = $wpdb->prefix . 'glossary_by_arteeo';
 	}
 
 	/**
@@ -80,7 +80,7 @@ class Glossary_DB {
 	 */
 	public function register_actions() {
 		add_action( 'plugins_loaded', array( $this, 'do_migrations' ) );
-		add_action( 'arteeo_glossary_uninstall', array( $this, 'rollback_migrations' ) );
+		add_action( 'glossary_by_arteeo_uninstall', array( $this, 'rollback_migrations' ) );
 	}
 
 	/**
@@ -94,10 +94,10 @@ class Glossary_DB {
 	public function do_migrations() {
 		global $wpdb;
 
-		$current_migration = get_option( 'arteeo_glossary_current_migration' );
+		$current_migration = get_option( 'glossary_by_arteeo_current_migration' );
 
 		if ( false === $current_migration ) {
-			add_option( 'arteeo_glossary_current_migration', 0 );
+			add_option( 'glossary_by_arteeo_current_migration', 0 );
 			$current_migration = 0;
 		}
 
@@ -113,7 +113,7 @@ class Glossary_DB {
 			}
 		}
 
-		update_option( 'arteeo_glossary_current_migration', $current_migration );
+		update_option( 'glossary_by_arteeo_current_migration', $current_migration );
 	}
 
 	/**
@@ -127,7 +127,7 @@ class Glossary_DB {
 	public function rollback_migrations() {
 		global $wpdb;
 
-		$current_migration = get_option( 'arteeo_glossary_current_migration' );
+		$current_migration = get_option( 'glossary_by_arteeo_current_migration' );
 		if ( false !== $current_migration && 0 < $current_migration ) {
 			foreach ( $this->migrations->get_reverse_iterator() as $migration ) {
 				if ( $current_migration >= $migration->get_timestamp() ) {
@@ -136,7 +136,7 @@ class Glossary_DB {
 				}
 			}
 		}
-		delete_option( 'arteeo_glossary_current_migration' );
+		delete_option( 'glossary_by_arteeo_current_migration' );
 	}
 
 	/**

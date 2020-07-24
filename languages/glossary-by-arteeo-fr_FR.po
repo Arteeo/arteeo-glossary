@@ -229,8 +229,8 @@ msgid "Glossary by Arteeo"
 msgstr "Glossary by Arteeo"
 
 #. URI of the plugin
-msgid "https://github.com/Arteeo/arteeo-glossary/"
-msgstr "https://github.com/Arteeo/arteeo-glossary/"
+msgid "https://github.com/Arteeo/glossary-by-arteeo/"
+msgstr "https://github.com/Arteeo/glossary-by-arteeo/"
 
 #. Author of the plugin
 msgid "Arteeo"

@@ -8,7 +8,7 @@
 /*global arteeoGlossaryGlobal */
 import '../../stylesheets/main.scss';
 import Glossary from './class-glossary';
-const BLOCK_CLASS = `wp-block-arteeo-glossary-block`;
+const BLOCK_CLASS = `wp-block-glossary-by-arteeo-frontend`;
 
 /**
  * Event listener
