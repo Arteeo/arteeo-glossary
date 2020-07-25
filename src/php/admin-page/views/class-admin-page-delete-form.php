@@ -70,16 +70,16 @@ class Admin_Page_Delete_Form {
 	public function render() {
 		echo '' .
 		'<div class="wrap">' .
-		'	<h1 class="delete-entry">' . esc_html__( 'Delete glossary entry', 'arteeo-glossary' ) . '</h1>' .
+		'	<h1 class="delete-entry">' . esc_html__( 'Delete glossary entry', 'glossary-by-arteeo' ) . '</h1>' .
 		'	<p>' .
 		'		' .
 		esc_html(
 			/* translators: %s is replaced with the term of the entry */
-			sprintf( __( 'Do you really want to delete glossary entry "%s"?', 'arteeo-glossary' ), $this->term )
+			sprintf( __( 'Do you really want to delete glossary entry "%s"?', 'glossary-by-arteeo' ), $this->term )
 		) .
 		'	</p>' .
 		'	<a id="entry_delete" class="button button-primary" href="' . esc_url( $this->deletion_url ) . '">' .
-		'		' . esc_html__( 'Delete', 'arteeo-glossary' ) .
+		'		' . esc_html__( 'Delete', 'glossary-by-arteeo' ) .
 		'	</a>' .
 		'</div>';
 	}

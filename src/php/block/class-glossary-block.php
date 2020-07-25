@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 class Glossary_Block {
-	const BLOCK_NAME = 'arteeo/glossary-block';
+	const BLOCK_NAME = 'glossary-by-arteeo/frontend';
 
 	/**
 	 * Constructor.
@@ -58,49 +58,49 @@ class Glossary_Block {
 	private function register() {
 		// Register block styles for both frontend + backend.
 		wp_register_style(
-			'arteeo-glossary-style-css',
-			plugins_url( 'css/block/arteeo-glossary.css', plugin_dir_path( __DIR__ ) ),
+			'glossary-by-arteeo-style-css',
+			plugins_url( 'css/block/glossary-by-arteeo.css', plugin_dir_path( __DIR__ ) ),
 			is_admin() ? array( 'wp-editor' ) : null,
-			filemtime( __DIR__ . '/../../css/block/arteeo-glossary.css' )
+			filemtime( __DIR__ . '/../../css/block/glossary-by-arteeo.css' )
 		);
 
 		// Register block editor script for backend.
 		wp_register_script(
-			'arteeo-glossary-block-backend-js',
-			plugins_url( 'js/block/arteeo-glossary-block-backend.js', plugin_dir_path( __DIR__ ) ),
+			'glossary-by-arteeo-block-backend-js',
+			plugins_url( 'js/block/glossary-by-arteeo-block-backend.js', plugin_dir_path( __DIR__ ) ),
 			array( 'wp-api-fetch', 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ),
-			filemtime( __DIR__ . '/../../js/block/arteeo-glossary-block-backend.js' ),
+			filemtime( __DIR__ . '/../../js/block/glossary-by-arteeo-block-backend.js' ),
 			true // Enqueue the script in the footer.
 		);
 
 		// Register script for frontend use.
 		wp_register_script(
-			'arteeo-glossary-block-frontend-js',
-			plugins_url( 'js/block/arteeo-glossary-block-frontend.js', plugin_dir_path( __DIR__ ) ),
+			'glossary-by-arteeo-block-frontend-js',
+			plugins_url( 'js/block/glossary-by-arteeo-block-frontend.js', plugin_dir_path( __DIR__ ) ),
 			array( 'wp-api-fetch', 'wp-polyfill' ),
-			filemtime( __DIR__ . '/../../js/block/arteeo-glossary-block-frontend.js' ),
+			filemtime( __DIR__ . '/../../js/block/glossary-by-arteeo-block-frontend.js' ),
 			true // Enqueue the script in the footer.
 		);
 
 		// Register script for frontend resizing.
 		wp_register_script(
-			'arteeo-glossary-block-resize-js',
-			plugins_url( 'js/block/arteeo-glossary-block-resize.js', plugin_dir_path( __DIR__ ) ),
+			'glossary-by-arteeo-block-resize-js',
+			plugins_url( 'js/block/glossary-by-arteeo-block-resize.js', plugin_dir_path( __DIR__ ) ),
 			array( 'wp-polyfill' ),
-			filemtime( __DIR__ . '/../../js/block/arteeo-glossary-block-resize.js' ),
+			filemtime( __DIR__ . '/../../js/block/glossary-by-arteeo-block-resize.js' ),
 			true // Enqueue the script in the footer.
 		);
 
 		// WP Localized globals. Use dynamic PHP stuff in JavaScript via `arteeoGlossaryGlobal` object.
 		wp_localize_script(
-			'arteeo-glossary-block-backend-js',
+			'glossary-by-arteeo-block-backend-js',
 			'arteeoGlossaryGlobal', // Array containing dynamic data for a JS Global.
 			$this->get_script_globals()
 		);
 
 		// WP Localized globals. Use dynamic PHP stuff in JavaScript via `arteeoGlossaryGlobal` object.
 		wp_localize_script(
-			'arteeo-glossary-block-frontend-js',
+			'glossary-by-arteeo-block-frontend-js',
 			'arteeoGlossaryGlobal',
 			$this->get_script_globals()
 		);
@@ -119,9 +119,9 @@ class Glossary_Block {
 			self::BLOCK_NAME,
 			array(
 				// Enqueue style for both frontend & backend.
-				'style'         => 'arteeo-glossary-style-css',
+				'style'         => 'glossary-by-arteeo-style-css',
 				// Enqueue react-wrapper in the editor only.
-				'editor_script' => 'arteeo-glossary-block-backend-js',
+				'editor_script' => 'glossary-by-arteeo-block-backend-js',
 			)
 		);
 	}
@@ -135,8 +135,8 @@ class Glossary_Block {
 	 */
 	public function enqueue_frontend_assets() {
 		if ( has_block( self::BLOCK_NAME ) ) {
-			wp_enqueue_script( 'arteeo-glossary-block-frontend-js' );
-			wp_enqueue_script( 'arteeo-glossary-block-resize-js' );
+			wp_enqueue_script( 'glossary-by-arteeo-block-frontend-js' );
+			wp_enqueue_script( 'glossary-by-arteeo-block-resize-js' );
 		}
 	}
 
@@ -165,20 +165,20 @@ class Glossary_Block {
 
 		return array(
 			'translations' => array(
-				'Glossary'            => __( 'Glossary', 'arteeo-glossary' ),
-				'glossary'            => __( 'glossary', 'arteeo-glossary' ),
-				'glossaryDescription' => __( 'glossary', 'arteeo-glossary' ) . ' - ' .
-					__( 'Glossary block for the Gutenberg editor.', 'arteeo-glossary' ),
-				'primaryColor'        => __( 'Primary color', 'arteeo-glossary' ),
-				'accentColor'         => __( 'Accent color', 'arteeo-glossary' ),
-				'selectLetter'        => __( 'Select a letter:', 'arteeo-glossary' ),
+				'Glossary'            => __( 'Glossary', 'glossary-by-arteeo' ),
+				'glossary'            => __( 'glossary', 'glossary-by-arteeo' ),
+				'glossaryDescription' => __( 'glossary', 'glossary-by-arteeo' ) . ' - ' .
+					__( 'Glossary block for the Gutenberg editor.', 'glossary-by-arteeo' ),
+				'primaryColor'        => __( 'Primary color', 'glossary-by-arteeo' ),
+				'accentColor'         => __( 'Accent color', 'glossary-by-arteeo' ),
+				'selectLetter'        => __( 'Select a letter:', 'glossary-by-arteeo' ),
 				'noEntry'             => __(
 					'Unfortunately no entries in your language could be found in this glossary.',
-					'arteeo-glossary'
+					'glossary-by-arteeo'
 				),
 				'apiError'            => __(
 					'Sorry, we were unable to retrieve entries from the server.',
-					'arteeo-glossary'
+					'glossary-by-arteeo'
 				),
 			),
 			'locale'       => get_locale(),

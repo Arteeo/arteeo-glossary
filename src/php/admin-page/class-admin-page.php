@@ -30,7 +30,7 @@ class Admin_Page {
 	const DELETE       = 'delete';
 	const FORCE_DELETE = 'force-delete';
 
-	const PAGE_ID = 'arteeo_glossary_admin_page';
+	const PAGE_ID = 'glossary_by_arteeo_admin_page';
 
 	/**
 	 * The controller for the admin page table.
@@ -93,8 +93,8 @@ class Admin_Page {
 	 */
 	public function register_menu_page() {
 		add_menu_page(
-			__( 'Glossary', 'arteeo-glossary' ),
-			__( 'Glossary', 'arteeo-glossary' ),
+			__( 'Glossary', 'glossary-by-arteeo' ),
+			__( 'Glossary', 'glossary-by-arteeo' ),
 			'manage_options',
 			self::PAGE_ID,
 			array( $this, 'run' ),

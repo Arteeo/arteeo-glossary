@@ -173,7 +173,7 @@ class API {
 		$args['letter'] = array(
 			'description'       => esc_html__(
 				'The "letter" parameter is used to filter the collection of entries by letter.',
-				'arteeo-glossary'
+				'glossary-by-arteeo'
 			),
 			'type'              => 'string',
 			'validate_callback' => array( $this, 'validate_letter_callback' ),
@@ -209,7 +209,7 @@ class API {
 		$args['locale'] = array(
 			'description'       => esc_html__(
 				'The "locale" parameter is used to filter the collection of entries by locale.',
-				'arteeo-glossary'
+				'glossary-by-arteeo'
 			),
 			'type'              => 'string',
 			'validate_callback' => array( $this, 'validate_locale_callback' ),
@@ -232,7 +232,7 @@ class API {
 				'rest_invalid_param',
 				sprintf(
 					/* translators: %s is replaced with the parameter name*/
-					__( 'The %s parameter must be a string.', 'arteeo-glossary' ),
+					__( 'The %s parameter must be a string.', 'glossary-by-arteeo' ),
 					$param
 				),
 				array( 'status' => 400 )
@@ -244,7 +244,7 @@ class API {
 		} catch ( \Exception $e ) {
 			return new \WP_Error(
 				'rest_invalid_param',
-				esc_html__( 'The "letter" argument must be A-Z or #.', 'arteeo-glossary' ),
+				esc_html__( 'The "letter" argument must be A-Z or #.', 'glossary-by-arteeo' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -264,7 +264,7 @@ class API {
 				'rest_invalid_param',
 				sprintf(
 					/* translators: %s is replaced with the parameter name*/
-					__( 'The %s parameter must be a string.', 'arteeo-glossary' ),
+					__( 'The %s parameter must be a string.', 'glossary-by-arteeo' ),
 					$param
 				),
 				array( 'status' => 400 )

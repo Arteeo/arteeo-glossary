@@ -5,7 +5,7 @@
  *
  * @since 1.0.0
  */
-const BLOCK_CLASS = `wp-block-arteeo-glossary-block`;
+const BLOCK_CLASS = `wp-block-glossary-by-arteeo-frontend`;
 const containerWidth = [];
 
 /**

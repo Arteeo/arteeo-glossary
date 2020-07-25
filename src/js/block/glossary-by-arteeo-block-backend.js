@@ -23,7 +23,7 @@ import { registerBlockType } from '@wordpress/blocks';
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'arteeo/glossary-block', {
+registerBlockType( 'glossary-by-arteeo/frontend', {
 	title: arteeoGlossaryGlobal.translations.Glossary,
 	icon: 'book-alt',
 	category: 'embed',
