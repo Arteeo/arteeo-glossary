@@ -12,6 +12,9 @@ This plugin provides a multilanguage glossary-block for the WordPress-Gutenberg-
 
 To install the plugin simply download it from the [WordPress repository](https://wordpress.org/plugins/search/glossary-by-arteeo/). After activation within your WordPress instance the plugin is ready to go.
 
+Alternatively you can download the release from [Github](https://github.com/Arteeo/glossary-by-arteeo) and activate the 
+plugin with the plugin-upload function of your WordPress instance.
+
 ### Features
 
 - The plugin actively supports multi-language sites and offers the following languages in both the frontend and the backend:
@@ -27,16 +30,16 @@ To install the plugin simply download it from the [WordPress repository](https:/
 
 #### Backend Overview
 
-![Backend overview](_assets/admin-page.png)
-![Backend overview with buttons](_assets/admin-page-buttons.png)
-
+![Backend overview](assets/screenshot-1.png)
+![Backend overview with buttons](assets/screenshot-2.png)
+![Backend add entry](assets/screenshot-5.png)
 #### Block inside Gutenberg
 
-![Block inside Editor](_assets/block-backend.png)
+![Block inside Editor](assets/screenshot-3.png)
 
 #### Block frontend
 
-![Block frontend](_assets/block-frontend.png)
+![Block frontend](assets/screenshot-4.png)
 
 ## Developers
 
