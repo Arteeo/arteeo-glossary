@@ -46,6 +46,6 @@ archive.directory( 'dist/', false );
 archive.directory( 'languages/', 'languages' );
 
 // append files from a sub-directory and naming it `new-subdir` within the archive
-archive.directory( '_assets/', '_assets' );
+archive.directory( 'assets/', 'assets' );
 
 archive.finalize();
