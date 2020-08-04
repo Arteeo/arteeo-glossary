@@ -211,7 +211,7 @@ class Admin_Page_CRUD_Controller {
 			return sprintf(
 				/* translators: %s is replaced with the fieldname*/
 				__( 'Field "%s" has to be filled in.', 'glossary-by-arteeo' ),
-				__( 'Term', 'glossary-by-arteeo' ),
+				__( 'Term', 'glossary-by-arteeo' )
 			);
 		}
 		if ( '' === $entry->description ) {

@@ -112,7 +112,7 @@ class Admin_Page_Table_Controller {
 		if ( isset( $_GET['message'], $_GET['message_type'] ) ) {
 			$message = new Message(
 				sanitize_text_field( $_GET['message_type'] ),
-				sanitize_text_field( $_GET['message'] ),
+				sanitize_text_field( $_GET['message'] )
 			);
 		}
 

@@ -281,7 +281,7 @@ class API {
 					/* translators: %1$s is replaced with the locale value and %2$s with the list of possible locales*/
 					__( '%1$s is not supported, must be one of: [ %2$s ]' ),
 					$value,
-					implode( ', ', $args['enum'] ),
+					implode( ', ', $args['enum'] )
 				),
 				array( 'status' => 400 )
 			);

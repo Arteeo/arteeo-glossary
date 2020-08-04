@@ -226,7 +226,7 @@ class Admin_Page_Table {
 									esc_url(
 										self::generate_sort_url(
 											'term',
-											( ( 'DESC' === $this->filter->sorting ) ? 'asc' : 'desc' ),
+											( ( 'DESC' === $this->filter->sorting ) ? 'asc' : 'desc' )
 										)
 									) .
 			'					">' .
